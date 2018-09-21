@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MobileSub:Login</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'App/login.css' %}">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="title">MobileSub</div>
+		<div class="subtitle">
+			<p>Добро пожаловать в систему!</p>
+			<p>Для продолжения, пожалуйста, авторизируйтесь.</p>
+			{{ error }}
+		</div>
+		<div class="auth_form">
+			<form action="login" method="post">
+				{% csrf_token %}
+    			<input type="text" name="login" placeholder="Логин">
+    			<input type="password" name="password" placeholder="Пароль">
+			    <input type="submit" value="Войти">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

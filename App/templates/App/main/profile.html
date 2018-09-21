@@ -1,0 +1,11 @@
+{% extends "App/main/base.html" %}
+
+{% block profile %}
+	<div class="profile-info-title">Информация о профиле</div>
+	<div class="profile-info-key key-firstname">Имя</div>
+	<div class="profile-info-value val-firstname">{{ user.first_name }}</div>
+	<div class="profile-info-key key-secondname">Фамилия</div>
+	<div class="profile-info-value val-secondname">{{ user.last_name }}</div>
+	<div class="profile-info-key key-email">Email</div>
+	<div class="profile-info-value val-email">{{ user.email }}</div>
+{% endblock %}
