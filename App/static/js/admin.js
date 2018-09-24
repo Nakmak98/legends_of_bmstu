@@ -32,7 +32,7 @@ $('.grid, .nav, .menu-close').click(function(){
 	var str = arr.join(' ');
 	return str;
    	});
-	if(x == 7) { $('.add-member').remove() }
+	if(x == 6) { $('.add-member').remove() }
  });
 }
 

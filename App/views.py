@@ -9,7 +9,13 @@ from datetime import datetime, timedelta
 # Create your views here.
 
 def home(request):
-	return HttpResponse(request.user)
+	if request.user == 'MODERATOR':
+		return HttpResponseRedirect('signup')
+	if request.user == 'ADMIN':
+		return HttpResponseRedirect('score_table')
+	if request.user == 'PLAYER':
+		return HttpResponseRedirect('team')
+
 
 def test(request):
 	return HttpResponse(request.user)
@@ -71,7 +77,7 @@ def addMembertoJson(request, registration_data):
 		add_member(member,registration_data)
 
 def signup(request):
-	#if request.user == 'MODERATOR':
+	if request.user == 'MODERATOR':
 		if request.method == 'POST':
 			url = 'http://138.68.173.73:8080/moderator/team'
 			headers = {'Content-Type': 'application/json'}
@@ -106,8 +112,8 @@ def signup(request):
 	  		#return HttpResponseRedirect('signup')
 	  	else:
 	  		return render(request, 'App/admin/signup.html')
-	#else: 
-		#return HttpResponse("Эта страница доступна только модераторам")
+	else: 
+		return HttpResponse("Эта страница доступна только модераторам")
 
 
 def add_member(member,registration_data):
@@ -117,11 +123,11 @@ def add_member(member,registration_data):
  			return
 
 def proxy_request(request):
-	full = request.GET.get('full')
-	url='http://138.68.173.73:8080/moderator/team?full='+full
+	#full = request.GET.get('full')
+	url='http://138.68.173.73:8080/moderator/team?full=True'#+full
 	headers = {'Content-Type': 'application/json'}
 	r=requests.get(url,headers=headers)
-	print(r.json())
+	print(r.text)
 	return r.json()
 
 def score_table(request):
@@ -141,4 +147,10 @@ def task_view(request):
 	template = 'App/player/'+task_type+'/'+task_id+'.html'
 	#return render(template,r)
 
+def about_team(request):
+	teamID = request.GET.get('teamID')
+	url = 'http://138.68.173.73:8080/moderator/team/1'
+	headers = {'Content-Type': 'application/json'}
+	r = requests.get(url,headers)
+	return render('about_team.html',r.text)
 
