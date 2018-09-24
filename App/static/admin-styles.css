@@ -1,0 +1,337 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+	
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background-color: #16191c;
+}
+
+.grid{
+	min-height: 100vh;
+	max-width: 1200px;
+	margin: 0 auto;
+	display:grid;
+	grid-template-rows: 70px 1fr 15px 50px;
+	grid-template-columns: 15px 1fr 30px 1fr 15px;
+	background-color: #26292b;
+	z-index: 1;
+}
+
+header {
+	display: grid;
+	grid-template-columns: repeat(12,1fr);
+	height: 50px;
+	width: 100%;
+	background-color: #3b3e40;
+	align-items: center;
+	box-shadow: 0px 3px 49px 1px rgba(0,0,0,0.75);
+	z-index: 4;
+	position: fixed;
+}
+
+.burger {
+	grid-column: 2 / 3;
+	color: #f2f2f2;
+	cursor: pointer;
+	text-align: center;
+}
+
+.header-title {
+	grid-column: 3 / 11;
+	font-family: 'Ariar Regular';
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	color: #d5d5d5;
+}
+
+.logout {
+	grid-column: 11 / 12;
+	cursor: pointer;
+	text-align: center;
+}
+
+
+.menu-hidden{
+	position: fixed;
+    left: -120%;
+	height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+	font-family: "Neucha";
+	font-size: 20px;
+	width: 380px;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr repeat(5,1fr);
+}
+
+.nav:hover {
+	background-color: #5f6264; 
+	cursor: pointer;
+}
+.nav a {
+	text-decoration: none;
+	color: white;
+}
+
+.nav {
+	display: grid;
+	align-items: center;
+	height: 100%;
+}
+
+.logo {
+	margin-top: 50px;
+}
+
+.menu-close {
+	display: none;
+	position: absolute;
+	bottom: 50%;
+	right: 70%;
+	color: #5f6264;
+	cursor: pointer;
+}
+
+.block{
+	text-align: center;
+	grid-row-start: 2;
+	grid-column-start: 2;
+	grid-column-end: 5;
+	background-color: #3b3e40;
+	min-height: 600px;
+	height: 100%;
+	box-shadow: 0px 1px 40px 1px rgba(0,0,0,0.5);
+}
+
+footer {
+	display: grid;
+	grid-column: 2 / 5;
+	grid-row: 3 / 5;
+	align-items: center;
+	grid-template-columns:  repeat(12,1fr);
+}
+
+.footer-title {
+	grid-column: 5 / 9;
+	font-size: 20px;
+	font-family: 'Arial';
+	font-weight: bold;
+	color: #5f6264;
+	text-align: center;
+}
+
+.about-livy {
+	grid-column: 10 / 12;
+}
+
+.about-livy a{
+	color: #666a6c;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+.about-livy span {
+	color: #919698;
+}
+
+/***************************/
+/* CLASS BLOCK UNIC STYLES */
+/***************************/
+
+.signup {
+	display: grid;
+	grid-template-columns: repeat(12,1fr);
+	grid-template-rows: 60px 1fr 1fr 1fr 1fr 1fr;
+}
+
+.signup-block-title {
+	grid-column: 3 / 11;
+	grid-row: 1 / 2;
+	font-size: 24px;
+	font-family: 'Arial';
+	color: #d9d9d9;
+	text-align: center;
+	margin: 20px 0;
+
+}
+
+.signup-form {
+	display: inherit;
+	grid-template-rows: 30px 80px 90px 1fr 1fr 30px 20px;
+	grid-template-columns: inherit;
+	grid-column: 1 / 13;
+	grid-row: 2 / 7;
+}
+
+label[for="teamName"] {
+	grid-column: 4 / 7;
+	font-size: 24px;
+	color: #9e9e9e;
+}
+
+.form-label {
+	font-size: 24px;
+	color: #9e9e9e;
+	text-align: left;
+
+}
+
+.team-name-input {
+	grid-column: 7 / 10;
+	
+}
+
+.form {
+	margin-right: 25px;
+	font-size: 18px;
+}
+.capitan-inputs {
+	display: grid;
+	grid-template-columns: repeat(6,1fr);
+	grid-template-rows: 50px 30px 20px 30px 10px;
+	grid-column: 4 / 10;
+	grid-row: 2 / 4;
+	background-color: #65696b;
+	margin-top: 20px;
+}
+
+.capitan-inputs-title {	
+	font-size: 24px;
+	color: white;
+	margin-top: 10px;
+	grid-column: 1 / 7;
+	grid-row: 1 / 2;
+}
+
+.capitan-second-name {
+	grid-column: 4 / 7;
+	grid-row:  2 / 3;
+}
+
+.capitan-first-name {
+	grid-column: 4 / 7;
+	grid-row:  4 / 5;
+}
+
+
+label[for="teamleadSecondName"] {
+	grid-column: 2 / 4;
+	grid-row: 2 / 3;
+}
+
+label[for="teamleadFirstName"] {
+	grid-column: 2 / 4;
+	grid-row: 4 / 5;
+}
+
+.team-inputs {
+	display: grid;
+	grid-column: 4 / 10;
+	grid-row: 4 / 6;
+	grid-template-columns: repeat(6,1fr);
+	grid-template-rows: 50px 1fr 30px 20px;
+	min-height: 200px;
+	background-color: #65696b;
+	margin: 20px 0;
+}
+
+.team-title {
+	font-size: 24px;
+	color: white;
+	margin-top: 10px;
+	grid-column: 1 / 7;
+	grid-row: 1 / 2;
+}
+
+.member-inputs {
+	display: grid;
+	grid-column: 1 / 7;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: 50px 30px 20px 30px 10px;
+	background-color: #808486;
+	margin: 0 10px;
+	margin-bottom: 10px;
+
+
+}
+
+.member-inputs-title {
+	grid-column: 1 / 7;
+	grid-row: 1 / 2;
+	font-size: 24px;
+	color: #dadada;
+	margin-top: 10px;
+}
+
+.add-member {
+	grid-column: 2 / 6;
+	margin: 0 50px;
+	background-color: #9fa4a6;
+	color: white;
+	padding-top: 5px;
+	font-size: 18px;
+}
+.add-member:hover {
+	background-color: #424040;
+	cursor: pointer;
+}
+
+
+label[for="memberSecondName"] {
+	grid-column: 2 / 4;
+	grid-row: 2 / 3;
+}
+
+label[for="memberFirstName"] {
+	grid-column: 2 / 4;
+	grid-row: 4 / 5;
+}
+
+.member-second-name {
+	grid-column: 4 / 7;
+	grid-row:  2 / 3;
+	margin-right: 15px;
+}
+
+.member-first-name {
+	grid-column: 4 / 7;
+	grid-row:  4 / 5;
+	margin-right: 15px;
+}
+
+.signup-form-submit {
+	grid-column: 5 / 9;
+    grid-row: 6 / 7;
+    margin: 0 50px;
+	background-color:#808080;
+	border:0px solid #ffffff;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	text-decoration:none;
+}
+.signup-form-submit:hover {
+	background-color: #333;
+	cursor: pointer;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

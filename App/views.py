@@ -9,10 +9,18 @@ from datetime import datetime, timedelta
 # Create your views here.
 
 def home(request):
-	return HttpResponse(request.COOKIES)
+	return HttpResponse(request.user)
 
 def test(request):
 	return HttpResponse(request.user)
+
+def logout_view(request):
+	key=request.COOKIES.get('sessid')
+	response = HttpResponseRedirect('login')
+	response.delete_cookie('sessid')
+	response.delete_cookie('teamType')
+	cache.delete('sessid')
+	return response
 
 def login_view(request):
 	error = ''
@@ -23,15 +31,15 @@ def login_view(request):
 		sessid = do_login(login,password)
 		if sessid['sessid'] is not None:
 			response = HttpResponseRedirect(url)
-			response.set_cookie('sessid', sessid['sessid'], domain = '138.68.173.73:8080', expires = datetime.now()+timedelta(hours=3))
-			response.set_cookie('teamType', sessid['teamType'], domain = '138.68.173.73:8080', expires = datetime.now()+timedelta(hours=3))
+			response.set_cookie('sessid', sessid['sessid'])
+			response.set_cookie('teamType', sessid['teamType'])
 			return response
 		else: 
 			error = u'Неверный логин / пароль'
 	return render(request, 'App/auth/login.html', {'error': error})
 
 def do_login(login, password):
-	url = 'http://138.68.173.73:8080/test'
+	url = 'http://138.68.173.73:8080/auth'
 	headers = {
   		'Content-Type': 'application/json'
 	}
@@ -39,7 +47,7 @@ def do_login(login, password):
 		'login': login,
 	 	'password': password
 	 }
-	r = requests.post(url, json=json_text)
+	r = requests.post(url, json=json_text, headers=headers)
 	if (r.status_code == 200):
 		sessid = get_random_string(length=32)
 		cache.set('sessid', sessid,3600*3)
@@ -50,9 +58,23 @@ def do_login(login, password):
 		teamType = None
 	return {'sessid': sessid, 'teamType': teamType}
 
+def addMembertoJson(request, registration_data):
+	first_name = 'memberFirstName'
+	second_name = 'memberSecondName'
+	firstextramember = 4
+	lastextramember = 7
+	for i in range(firstextramember,lastextramember):
+		member = {
+		'first_name': request.POST.get(first_name+str(i)),
+		'second_name': request.POST.get(second_name+str(i))
+		}					
+		add_member(member,registration_data)
+
 def signup(request):
-	if request.user is 'Moderator':
+	#if request.user == 'MODERATOR':
 		if request.method == 'POST':
+			url = 'http://138.68.173.73:8080/moderator/team'
+			headers = {'Content-Type': 'application/json'}
 			registration_data = {
 	    		"team_name": request.POST.get('team_name'),
 	    		"leader": {
@@ -61,61 +83,31 @@ def signup(request):
 	    	},
 	    	"members": [
 		      	{
-		        	"first_name": request.POST.get('memberFirstName'),
-		        	"second_name": request.POST.get('memberSecondName')
-		      	},
-		      	{
 		        	"first_name": request.POST.get('memberFirstName1'),
 		        	"second_name": request.POST.get('memberSecondName1')
 		      	},
 		      	{
 				"first_name": request.POST.get('memberFirstName2'),
 				"second_name": request.POST.get('memberSecondName2')
-				}	  	
-		    ]
-	  		}
-	#Добавление новых участников команды для отправки на игровой сервер
-			new_member3 = {
+				},	  
+				{
 				"first_name": request.POST.get('memberFirstName3'),
 				"second_name": request.POST.get('memberSecondName3')
-			} 
-
-			add_member(new_member3, registration_data)
-
-			new_member4 = {
-				"first_name": request.POST.get('memberFirstName4'),
-				"second_name": request.POST.get('memberSecondName4')
-			} 
-
-			add_member(new_member4, registration_data)
-
-			new_member5 = {
-				"first_name": request.POST.get('memberFirstName5'),
-				"second_name": request.POST.get('memberSecondName5')
-			} 
-
-			add_member(new_member5, registration_data)
-
-			new_member6 = {
-				"first_name": request.POST.get('memberFirstName6'),
-				"second_name": request.POST.get('memberSecondName6')
-			} 
-
-			add_member(new_member6, registration_data)
-
-			new_member7 = {
-				"first_name": request.POST.get('memberFirstName7'),
-				"second_name": request.POST.get('memberSecondName7')
-			} 	
-
-			add_member(new_member7, registration_data)
+				}	  		
+		    ]
+	  		}
 	  		
-	  		return HttpResponse(registration_data.values())
+	#Добавление новых участников команды для отправки на игровой сервер
+			addMembertoJson(request,registration_data)
+	  		text = json.dumps(registration_data,ensure_ascii=False, indent = 4)
+	  		print(text)
+	  		r = requests.post(url, json=registration_data, headers=headers)
+	  		return HttpResponse(r.status_code)
+	  		#return HttpResponseRedirect('signup')
 	  	else:
-	  		return render(request, 'App/auth/signup.html')
-	else: 
-		return HttpResponse("Эта страница доступна только модераторам")
-
+	  		return render(request, 'App/admin/signup.html')
+	#else: 
+		#return HttpResponse("Эта страница доступна только модераторам")
 
 
 def add_member(member,registration_data):
@@ -123,3 +115,30 @@ def add_member(member,registration_data):
  				registration_data["members"].append(member)
  		else:
  			return
+
+def proxy_request(request):
+	full = request.GET.get('full')
+	url='http://138.68.173.73:8080/moderator/team?full='+full
+	headers = {'Content-Type': 'application/json'}
+	r=requests.get(url,headers=headers)
+	print(r.json())
+	return r.json()
+
+def score_table(request):
+	if request.method == 'GET':
+		data=proxy_request(request)
+		#return render('App/moderator/score_table.html',data)
+	if request.is_ajax():
+		data=proxy_request(request)
+	return HttpResponse(data)
+
+def task_view(request):
+	url = 'http://138.68.173.73:8080/player/task'
+	headers = {'Content-Type': 'application/json'}
+	r = requests.get(url,headers)
+	task_type=r['type']
+	task_id=r['id']
+	template = 'App/player/'+task_type+'/'+task_id+'.html'
+	#return render(template,r)
+
+

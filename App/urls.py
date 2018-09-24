@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
 	url(r'^login$', views.login_view, name='login'),
 	url(r'^signup$', views.signup, name='signup'),
+	url(r'^logout$', views.logout_view, name='logout'),
 	url(r'^test$', views.test, name='test'),
+	url(r'^score_table$', views.score_table, name='score_table'),
 	url(r'^$', views.home, name='home'),
 ]

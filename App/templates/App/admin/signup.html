@@ -1,0 +1,36 @@
+{% extends "App/admin/admin-base.html" %}
+
+{% block title%}Регистрация{% endblock%}
+
+{% block content %}
+<div class="block signup">
+			<div class="signup-block-title">
+				Добавление команды
+			</div>
+			<form class="signup-form" method="POST" action="signup">
+				<label for="teamName">Название команды</label>
+				<input required class="team-name-input form" name="team_name" type="text">
+				<div class="capitan-inputs">
+					<div class="capitan-inputs-title">Капитан</div>
+					<label class="form-label" for="teamleadSecondName">Фамилия</label>
+					<input required class="capitan-second-name form" name="teamleadSecondName" type="text">
+					<label class="form-label" for="teamleadFirstName">Имя</label>
+					<input required class="capitan-first-name form" name="teamleadFirstName" type="text">
+				</div>
+				<div class="team-inputs">
+					<div class="team-title">Команда</div>
+						<div class="member-inputs">
+							<div class="member-inputs-title">
+								Участник
+							</div>
+							<label class="form-label" for="memberSecondName">Фамилия</label>
+							<input required class="member-second-name form" name="memberSecondName" type="text">
+							<label class="form-label" for="memberFirstName">Имя</label>
+							<input required class="member-first-name form" name="memberFirstName" type="text">
+						</div>
+					<div class="add-member" id="add">Добавить участника</div>
+				</div>
+				<button class="signup-form-submit">Зарегистрировать</button>
+			</form>
+		</div>
+ {% endblock %}
