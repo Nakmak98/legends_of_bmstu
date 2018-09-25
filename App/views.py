@@ -142,15 +142,37 @@ def task_view(request):
 	url = 'http://138.68.173.73:8080/player/task'
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
+	if r.status_code == 204:
+		weekday = datetime.today().weekday()
+		if (weekday > 0) and (weekday != 5):
+			msg = 'Ждём вас в понедельник'	
+		if weekday == 5:
+			msg = 'Первый этап закончен. Подходите 12.10 в выбранное время на портал в гз'
+		return render(request, 'App/player/no-info.html', msg)
 	task_type=r['type']
 	task_id=r['id']
 	template = 'App/player/'+task_type+'/'+task_id+'.html'
 	#return render(template,r)
 
 def about_team(request):
+	if request.user != 'MODERATOR':
+		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
 	teamID = request.GET.get('teamID')
-	url = 'http://138.68.173.73:8080/moderator/team/1'
+	url = 'http://138.68.173.73:8080/moderator/team/1' #+teamID
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
-	return render('about_team.html',r.text)
+	return render(request, 'App/admin/about_team.html', r.json())
 
+def team_info(request):
+	teamID = request.GET.get('teamID')
+	url = 'http://138.68.173.73:8080/player/team/1' #+teamID
+	headers = {'Content-Type': 'application/json'}
+	r = requests.get(url,headers)
+	return render(request, 'App/player/team_info.html', r.json())
+
+def key_answer(request):
+	teamID = request.GET.get('teamID')
+	url = 'http://138.68.173.73:8080/moderator/photo/' #+teamID
+	headers = {'Content-Type': 'application/json'}
+	r = requests.get(url,headers)
+	return render(request, 'App/admin/answer_key.html', r.json())
