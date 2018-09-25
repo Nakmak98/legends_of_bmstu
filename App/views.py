@@ -176,3 +176,6 @@ def key_answer(request):
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	return render(request, 'App/admin/answer_key.html', r.json())
+
+def team_search(request):
+	return render(request, 'App/admin/start-finish.html')

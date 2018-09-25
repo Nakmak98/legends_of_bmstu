@@ -258,8 +258,6 @@ label[for="teamleadFirstName"] {
 	background-color: #808486;
 	margin: 0 10px;
 	margin-bottom: 10px;
-
-
 }
 
 .member-inputs-title {
@@ -321,8 +319,99 @@ label[for="memberFirstName"] {
 .signup-form-submit:hover {
 	background-color: #333;
 	cursor: pointer;
-
 }
+
+
+.start-finish {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: 100px 30px 10px 1fr 10px 30px 10px 30px 20px;
+}
+
+.start-finish-form {
+	grid-column: 3 / 11;
+	grid-row: 2 / 3;
+}
+
+label[for="teamID"] {
+	font-size: 24px;
+	color: #9e9e9e;
+	text-align: left;
+}
+
+input[name="teamID"] {
+	font-size: 18px;
+	width: 90px;
+    margin: 0 20px;
+}
+
+.search-button {
+	background-color:#808080;
+	border:0px solid #ffffff;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	text-decoration:none;
+	padding: 6px 16px 6px 16px;
+	cursor: pointer;
+}
+
+.start-finish-block {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: 30px 1fr;
+	grid-column: 3 / 11;
+	grid-row: 4 / 5;
+	background-color: #65696b;
+}
+
+.start-finish-title {
+	grid-column: 2 / 4;
+	grid-row: 1 / 2;
+	color: whitesmoke;
+	font-size: 24px;
+	font-family: 'Arial';
+	font-weight: bold;
+	margin: 10px 0px;
+}
+
+.start-finish-text {
+	grid-column: 1 / 5;
+	grid-row: 2 / 3;
+	margin: 10px 10px;
+	font-size: 18px;
+	color: #a2a2a2;
+}
+
+.start-finish-button {
+	margin: 0 25px;
+	background-color:#808080;
+	border:0px solid #ffffff;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	text-decoration:none;
+	cursor: pointer;
+}
+
+.start {
+	grid-column: 6 / 8;
+	grid-row: 6 / 7;
+}
+
+.finish {
+	grid-column: 6 / 8;
+	grid-row: 8 / 9;
+}
+
+
+
+
+
+
+
 
 
 

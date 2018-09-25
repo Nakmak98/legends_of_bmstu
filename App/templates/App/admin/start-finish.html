@@ -1,0 +1,23 @@
+{% extends "App/admin/admin-base.html" %}
+
+{% block title%}Поиск команды:старт и финиш{% endblock %}
+
+{% block content %}
+<div class="block start-finish">
+	<form class="start-finish-form" action="team_search">
+		<label for="teamID">Номер команды</label>
+		<input reqired type="text" name="teamID">
+		<button class="search-button">Показать</button>
+	</form>
+	<div class="start-finish-block">
+		<div class="start-finish-title">Какой-то текст</div>
+		<div class="start-finish-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur nesciunt esse quam aliquid ex tempora tempore cupiditate, sequi nulla earum quibusdam explicabo iste nihil, hic optio! Inventore nobis ipsam doloribus.
+			{{ text }}
+		</div>
+	</div>
+	<button class="start-finish-button start">Старт</button>
+	<button class="start-finish-button finish">Финиш</button>
+	
+
+</div>
+ {% endblock %}

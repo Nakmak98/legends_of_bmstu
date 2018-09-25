@@ -11,5 +11,6 @@ urlpatterns = [
 	url(r'^about_team$', views.about_team, name='about_team'),
 	url(r'^team_info$', views.team_info, name='team_info'),
 	url(r'^key_answer$', views.key_answer, name='key_answer'),
+	url(r'^team_search$', views.team_search, name='team_search'),
 	url(r'^$', views.home, name='home'),
 ]
