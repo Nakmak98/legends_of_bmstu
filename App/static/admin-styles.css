@@ -236,7 +236,7 @@ label[for="teamleadFirstName"] {
 	grid-column: 4 / 10;
 	grid-row: 4 / 6;
 	grid-template-columns: repeat(6,1fr);
-	grid-template-rows: 50px 1fr 30px 20px;
+	grid-template-rows: 50px 169.38px 30px 20px;
 	min-height: 200px;
 	background-color: #65696b;
 	margin: 20px 0;
