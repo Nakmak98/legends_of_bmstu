@@ -1,0 +1,57 @@
+{% extends "App/admin/admin-base.html" %}
+
+{% block title %}Таблица команд{% endblock %}
+
+{% block content %}
+<div class="block table">
+	<!--Сюды-->
+	<div class="tableButton_inTable">
+		<div class="tableButton_allTeams">
+			<input class="checkboxx" type="checkbox">
+			<p>Все команды</p>
+		</div>
+	</div>
+
+	<div class="table_aroundTeams">
+		<div class="table_teams_head">
+			<div class="table_teams_stroke">
+				<p> № </p>
+				<p> Название </p>
+				<p> Капитан </p>
+				<p> Этапы </p>
+				<p> Время старта </p>
+				<p> Время финиша </p>
+				<p> Фейлы </p>
+				<p> Баллы </p>
+				<p> Статус </p>
+			</div>
+		</div>
+
+		<div class="table_teams_body">
+			<div class="table_teams_stroke">
+				<p> 1 </p>
+				<p> Название </p>
+				<p> Имя Фамилия </p>
+				<p> 4/15 </p>
+				<p> 12:08 </p>
+				<p> - </p>
+				<p> 2 </p>
+				<p> 105 </p>
+				<p> unfinished </p>
+			</div>
+
+			<div class="table_teams_stroke">
+				<p> 2 </p>
+				<p> Название </p>
+				<p> Имя Фамилия </p>
+				<p> 4/15 </p>
+				<p> 12:08 </p>
+				<p> - </p>
+				<p> 2 </p>
+				<p> 105 </p>
+				<p> unfinished </p>
+			</div>
+		</div>
+	</div>
+</div>
+ {% endblock %}

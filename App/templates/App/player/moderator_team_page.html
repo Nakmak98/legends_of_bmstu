@@ -1,0 +1,10 @@
+{% extends "App/player/team_page.html" %}
+
+{% block title %}Страница команды: доступ модератора{% endblock %}
+
+{% block moderator_rules %}
+		<div class="mod_rules">
+			<div class="login">Логин: {{login}}</div>
+			<div class="password">Пароль: {{password}}</div>
+		</div>
+{% endblock %}

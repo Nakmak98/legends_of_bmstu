@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 import requests, json
 from django.core.cache import cache
@@ -12,9 +12,9 @@ def home(request):
 	if request.user == 'MODERATOR':
 		return HttpResponseRedirect('signup')
 	if request.user == 'ADMIN':
-		return HttpResponseRedirect('score_table')
+		return HttpResponseRedirect('route')
 	if request.user == 'PLAYER':
-		return HttpResponseRedirect('team')
+		return HttpResponseRedirect('team_info')
 
 
 def test(request):
@@ -39,6 +39,7 @@ def login_view(request):
 			response = HttpResponseRedirect(url)
 			response.set_cookie('sessid', sessid['sessid'])
 			response.set_cookie('teamType', sessid['teamType'])
+			response.set_cookie('teamID', sessid['teamID'])
 			return response
 		else: 
 			error = u'Неверный логин / пароль'
@@ -59,10 +60,13 @@ def do_login(login, password):
 		cache.set('sessid', sessid,3600*3)
 		json_response = r.json()
 		teamType = json_response['teamType']
+		teamID = json_response['teamID']
+		print(json_response['teamID'])
+		cache.set('teamID', teamID,3600*3)
 	else:
 		sessid = None
 		teamType = None
-	return {'sessid': sessid, 'teamType': teamType}
+	return {'sessid': sessid, 'teamType': teamType, 'teamID': teamID}
 
 def addMembertoJson(request, registration_data):
 	first_name = 'memberFirstName'
@@ -132,11 +136,14 @@ def proxy_request(request):
 
 def score_table(request):
 	if request.method == 'GET':
-		data=proxy_request(request)
-		#return render('App/moderator/score_table.html',data)
+		#data=proxy_request(request)
+		if request.user == 'MODERATOR':
+			return render(request,'App/admin/score_table_moderator.html')
+		if request.user == 'ADMIN':
+			return render(request,'App/admin/score_table_admin.html')
 	if request.is_ajax():
 		data=proxy_request(request)
-	return HttpResponse(data)
+		return HttpResponse(request.user)
 
 def task_view(request):
 	url = 'http://138.68.173.73:8080/player/task'
@@ -164,18 +171,70 @@ def about_team(request):
 	return render(request, 'App/admin/about_team.html', r.json())
 
 def team_info(request):
-	teamID = request.GET.get('teamID')
-	url = 'http://138.68.173.73:8080/player/team/1' #+teamID
+	teamID = cache.get('teamID')
+	url = 'http://138.68.173.73:8080/player/team/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
-	return render(request, 'App/player/team_info.html', r.json())
+	resp = r.json()
+	time = resp['start_time']
+	time = datetime.utcfromtimestamp(time).strftime('%M:%S')
+	resp.update({'start_time': time})
+	return render(request, 'App/player/team_page.html', resp)
 
-def key_answer(request):
-	teamID = request.GET.get('teamID')
-	url = 'http://138.68.173.73:8080/moderator/photo/' #+teamID
+def team_info_moderator(request):
+	teamID = cache.get('teamID') #должен брать из таблицы команд
+	url = 'http://138.68.173.73:8080/moderator/team/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
-	return render(request, 'App/admin/answer_key.html', r.json())
+	resp = r.json()
+	time = resp['start_time']
+	time = datetime.utcfromtimestamp(time).strftime('%M:%S')
+	resp.update({'start_time': time})
+	return render(request, 'App/player/moderator_team_page.html', resp)
 
 def team_search(request):
+	if request.user != 'MODERATOR':
+		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
+	#teamID = request.GET.get('teamID')
+	#if teamID is not None:
+	#	url = 'http://138.68.173.73:8080/moderator/photo/' + teamID
+	#	headers = {'Content-Type': 'application/json'}
+	#	r = requests.get(url,headers)
+	#	return render(request, 'App/admin/start-finish.html', r.json())
+	#else: 
 	return render(request, 'App/admin/start-finish.html')
+
+def team_search_key(request):
+	if request.user != 'MODERATOR':
+		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
+	#teamID = request.GET.get('teamID')
+	teamID = request.GET.get('teamID')
+	if teamID is None:
+		return render(request, 'App/admin/moderator-search.html')
+	url = 'http://138.68.173.73:8080/moderator/photo/' + teamID
+	headers = {'Content-Type': 'application/json'}
+	print(url)
+	r = requests.get(url,headers)
+	print(r)
+	return render(request, 'App/admin/admin-search.html', r.json())
+
+def route(request):
+	if request.user != 'ADMIN':
+		return render(request, 'App/main/error.html', {'error_msg': 'Необходимо обладать правами администратора, чтобы просматривать эту страницу'})
+	#if request.is_ajax():
+		#url = 'http://138.68.173.73:8080/moderator/team/5'
+		#headers = {'Content-Type': 'application/json'}
+		#r = requests.get(url,headers)
+		#print(r.json())
+		#return JsonResponse(r.json())
+	return render(request,'App/admin/route.html')
+
+def task(request):
+	if request.method == 'POST':
+		answer = request.POST.get('answer')
+		return render(request, 'App/player/taskB.html', {'answer': answer})
+	else:
+		tag = request.GET.get('submit')
+		if tag == 'Перейти к следующему этапу':
+			print('next stage')
+		return render(request, 'App/player/taskC.html')

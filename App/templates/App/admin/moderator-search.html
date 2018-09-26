@@ -1,0 +1,28 @@
+{% extends "App/admin/moderator-base.html" %}
+
+{% block title %}Поиск команды{% endblock %}
+
+{% block content %}
+<form class="block_search" method="GET" action="team_search_key">
+	<div class="search_team">
+		Номер команды
+		<input type="text" name="teamID">
+		<input type="submit" value="Показать" id="show">
+	</div>
+	<div class="search_text" id="question">
+		<h3>Вопрос</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		</p>
+		<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+	</div>
+	<div class="search_text" id="answer">
+		<h3>Правильный ответ</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		</p>
+		<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+	</div>
+	<div class="search_key">
+		<div>Ключ:</div><h3>{{key}}</h3>
+	</div>
+</form>	
+ {% endblock %}

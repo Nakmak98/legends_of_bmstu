@@ -35,8 +35,6 @@ $('.grid, .nav, .menu-close').click(function(){
 	if(x == 6) { $('.add-member').remove() }
  });
 }
-
-
-
+	
 
 

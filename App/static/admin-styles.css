@@ -59,6 +59,7 @@ header {
 
 .menu-hidden{
 	position: fixed;
+	z-index: 5;
     left: -120%;
 	height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
@@ -75,7 +76,7 @@ header {
 	background-color: #5f6264; 
 	cursor: pointer;
 }
-.nav a {
+.menu-hidden a {
 	text-decoration: none;
 	color: white;
 }
@@ -104,10 +105,16 @@ header {
 	grid-row-start: 2;
 	grid-column-start: 2;
 	grid-column-end: 5;
-	background-color: #3b3e40;
+	//background-color: #3b3e40;
 	min-height: 600px;
 	height: 100%;
 	box-shadow: 0px 1px 40px 1px rgba(0,0,0,0.5);
+}
+
+.table {
+	display: grid;
+	grid-template-rows: 7px 40px 10px 1fr 20px;
+	grid-template-columns: 20px 1fr 20px;
 }
 
 footer {
@@ -406,12 +413,266 @@ input[name="teamID"] {
 	grid-row: 8 / 9;
 }
 
+.block_search{
+	display: grid;
+	grid-template-columns: 1fr 410px 1fr;
+	grid-template-rows: 35px 30px auto auto 1fr;
+	grid-gap:20px; 
+	font-family: 'Arial';
+}
+
+.block_search>p{
+	background-color: #65696b;
+	color: #d7d7d7;
+}
+
+.block_search>div{
+	color: #d7d7d7;
+	grid-column: 2 / 3;
+}
+
+#question{
+	grid-row: 3 / 4;
+	background-color: #65696b;
+}
+
+#answer{
+	grid-row: 4 / 5;
+	background-color: #65696b;
+}
+
+.search_team{
+	grid-row: 2 / 3;
+	bottom: 0;
+	font-size: 25px;
+	color: #999999;
+}
+
+.search_team>input{
+	width: 100px;
+	font-size: 18px;
+	margin: 0;
+}
+
+#show{
+	background-color: #808486;
+	color: white;
+	border: none;
+	padding: 4px 8px 4px 8px ;
+}
+.search_key{
+	grid-row: 5 / 6;
+	top: 0;
+	
+}
+.search_key>div{
+	float: left;
+}
+
+/* -------------------- GALINA -----------------------*/
+.block{
+	text-align: center;
+	grid-row-start: 2;
+	grid-column-start: 2;
+	grid-column-end: 5;
+	//background-color: #3b3e40;
+	min-height: 600px;
+	height: 100%;
+	box-shadow: 0px 1px 40px 1px rgba(0,0,0,0.5);
+}
+
+.block2 {
+	grid-column-start: 2;
+	grid-column-end: 5;
+	height: 43vh;
+	background-color: #3b3e40;
+	margin-bottom: 15px;
+	padding: 15px;
+	text-align: left;
+	color: #9e9e9e;
+	font-size: 24px;
+}
+
+.inf_block {
+	width: 25vw;
+	height: 100px;
+	float: right;
+	background-color: #26292b;
+	font-size: 16px;
+	padding: 15px;
+}
+
+.d1 {
+	display: inline-block;
+	width: 60px; height: 60px;
+	background: #83A7C9;
+	border-radius: 50%;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.circle {
+	position: relative;
+	display: inline-block;
+	color: #FFFFFF;
+	width: 110px;
+}
+
+.circle>p {
+	//text-align: center;
+	font-size: 18px;
+}
+
+.triangle {
+	position: absolute;
+	display: inline-block;
+    border-right: 6px solid;
+    border-bottom: 6px solid;
+    height: 20px;
+    width: 20px;
+	top: 40px;
+	left: 85px;
+    transform: rotate(-45deg);
+}
+
+.check_knopka {
+	height: 60px;
+}
+
+.knopka {
+	margin: 20px;
+	padding: 5px;
+	padding-left: 20px;
+	height: 30px;
+	width: 170px;
+	color: #FFFFFF;
+	font-size: 20px;
+	background-color: #26292b;
+	text-align: left;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.checkbox {
+	display: none;
+}
+/* Задаем внешний вид для нашего кастомного чекбокса. Все обязательные свойства прокомментированы, остальные же свойства меняйте по вашему усмотрению */
+.checkbox-custom {
+	position: relative;      /* Обязательно задаем, чтобы мы могли абсолютным образом позиционировать псевдоэлемент внютри нашего кастомного чекбокса */
+	width: 15px;             /* Обязательно задаем ширину */
+	height: 15px;            /* Обязательно задаем высоту */
+	border: 2px solid #ccc;
+	border-radius: 2px;
+}
+/* Кастомный чекбокс и лейбл центрируем по вертикали. Если вам это не требуется, то вы можете убрать свойство vertical-align: middle из данного правила, но свойство display: inline-block обязательно должно быть */
+.checkbox-custom,
+.label {
+	display: inline-block;
+	vertical-align: middle;
+}
+/* Если реальный чекбокс у нас отмечен, то тогда добавляем данный признак и к нашему кастомному чекбоксу  */
+.checkbox:checked + .checkbox-custom::before {
+	content: "";             /* Добавляем наш псевдоэлемент */
+	display: block;			 /* Делаем его блочным элементом */
+	position: absolute;      /* Позиционируем его абсолютным образом */
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	left: 2px;
+	background: #FFFFFF;     /* Добавляем фон. Если требуется, можете поставить сюда картинку в виде "галочки", которая будет символизировать, что чекбокс отмечен */
+	border-radius: 2px;
+}
+
+/* -------------------- GALINA -----------------------*/
 
 
 
+/* -------------------- NIKOLYA -----------------------*/
 
 
+.tableButton_inTable{
+	grid-row: 2;
 
+	grid-column: 2/4;
+}
+
+.tableButton_allTeams{
+	height: auto;
+	width: auto;
+
+	padding-left: 3.5vw;
+	padding-right: 3.1vw;
+	padding-top: 10px;
+	padding-bottom: 8px;
+	
+	background-color: #26292b;
+	float: left;	
+}
+
+.tableButton_allTeams input{
+	margin-right: 5px;
+	margin-top: 1.5%;
+	float: left;
+}
+
+.checkboxx{
+	width: 20px;      
+	height: 20px;
+}
+
+.tableButton_allTeams p{
+	float: left;
+	font-size: 24px;
+	font-family:Arial;
+	color: #FFFFFF;
+}
+
+.table_aroundTeams{
+	grid-row: 4;
+	grid-column: 2;
+
+	background-color: #808486;
+
+	display:grid;
+	/*grid-template-rows: 7px 1fr 7px 10fr 7px;
+	grid-template-columns: 7px 5fr 13fr 23fr 10fr 10fr 12fr 10fr 10fr 10fr 7px;*/
+	grid-template-rows: 7px 1fr 7px 10fr 7px;
+	grid-template-columns: 7px 1fr 7px;
+
+	font-size: 24px;
+	font-family:Arial;
+	color: #FFFFFF;
+}
+
+.table_teams_head{
+	grid-row: 2;
+	grid-column: 2;
+}
+
+.table_teams_body{
+	grid-row: 4;
+	grid-column: 2;
+
+	background-color: #65696b;
+}
+
+.table_teams_stroke{
+	display:grid;
+	grid-template-rows: 48px;
+	grid-template-columns: 5fr 13fr 23fr 10fr 10fr 12fr 10fr 10fr 10fr;
+}
+
+.table_teams_stroke p{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-right: 2px solid #545859;
+}
+
+.table_teams_stroke p:last-child{
+    border-right: 0;
+}
 
 
 
