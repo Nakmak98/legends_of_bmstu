@@ -216,7 +216,7 @@ def team_search_key(request):
 	print(url)
 	r = requests.get(url,headers)
 	print(r)
-	return render(request, 'App/admin/admin-search.html', r.json())
+	return render(request, 'App/admin/moderator-search.html', r.json())
 
 def route(request):
 	if request.user != 'ADMIN':
