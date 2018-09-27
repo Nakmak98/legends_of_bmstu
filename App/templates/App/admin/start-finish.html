@@ -57,19 +57,19 @@
 		
 	</div>
 		{% if started %}
+		<button type="submit" class="start-finish-button start disable">Старт</button>	
+		{% else %}	...
 		<form class="start-form" method="POST" action="start">
 			<button name="teamID" value="{{team_id}}" class="start-finish-button start enable">Старт</button>
 		</form>	
-		{% else %}	
-			<button type="submit" class="start-finish-button start disable">Старт</button>
 		{% endif %}
 
 		{% if finished %}
+		<button type="submit" class="start-finish-button finish disable">Финиш</button>
+		{% else %}	
 		<form class="finish-form" method="POST" action="finish">
 			<button name="teamID" value="{{team_id}}"" class="start-finish-button start enable">Финиш</button>
-		</form>	
-		{% else %}	
-			<button type="submit" class="start-finish-button finish disable">Финиш</button>
+		</form>
 		{% endif %}
 </div>
  {% endblock %}
