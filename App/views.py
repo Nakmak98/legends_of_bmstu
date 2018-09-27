@@ -221,17 +221,22 @@ def start(request):
 		print(url)
 		headers = {'Content-Type': 'application/json'}
 		r = requests.get(url,headers)
-		return render(request, 'App/admin/start-finish.html', r.json())
+		print(r.status_code)
+		if r.status_code == 202:
+			return render(request, 'App/admin/start-finish.html', {'success':'Команда стартовала'})
+		else:
+			return render(request, 'App/admin/start-finish.html', r.json())
 
 def finish(request):
 	if request.method == 'POST':
 		teamID = request.POST.get('teamID')
-		print(teamID)
 		url = 'http://138.68.173.73:8080/moderator/stop/' + str(teamID)
-		print(url)
 		headers = {'Content-Type': 'application/json'}
 		r = requests.get(url,headers)
-		return render(request, 'App/admin/start-finish.html',{'succes':'Команда успешно финишировала'})
+		if r.status_code == 202:
+			return render(request, 'App/admin/start-finish.html',{'succes':'Команда успешно финишировала'})
+		else:
+			return render(request, 'App/admin/start-finish.html',r.json())
 
 
 def team_search_key(request):

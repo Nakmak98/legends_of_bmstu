@@ -18,8 +18,8 @@
 		{% if error_msg %}
 			<div class="team-start-error">{{error_msg}}</div>
 		{% endif %}
-		{% if succes %}
-			<div class="team-start-success">{{succes}}</div>
+		{% if success %}
+			<div class="team-start-success">{{success}}</div>
 		{% endif %}
 		{% if team_id %}
 		<table class="start-finish-table">
@@ -57,16 +57,20 @@
 		
 	</div>
 		{% if started %}
-		<button type="submit" class="start-finish-button start disable">Старт</button>	
-		{% else %}	...
+		<button type="submit" class="start-finish-button start disable">Старт</button>
+		{% endif %}
+
+		{% if not started %}	
 		<form class="start-form" method="POST" action="start">
 			<button name="teamID" value="{{team_id}}" class="start-finish-button start enable">Старт</button>
 		</form>	
 		{% endif %}
-
-		{% if finished %}
+		
+		{% if not started and not finished %}
 		<button type="submit" class="start-finish-button finish disable">Финиш</button>
-		{% else %}	
+		{% endif %}
+
+		{% if started and not finished %}	
 		<form class="finish-form" method="POST" action="finish">
 			<button name="teamID" value="{{team_id}}"" class="start-finish-button start enable">Финиш</button>
 		</form>
