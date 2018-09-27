@@ -173,7 +173,7 @@ def about_team(request):
 	return render(request, 'App/admin/about_team.html', r.json())
 
 def team_info(request):
-	teamID = cache.get('teamID')
+	teamID = request.COOKIES.get('teamID')
 	url = 'http://138.68.173.73:8080/player/team/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
