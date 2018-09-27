@@ -14,5 +14,7 @@ urlpatterns = [
 	url(r'^team_info_moderator$', views.team_info_moderator, name='team_info_moderator'),
 	url(r'^team_search$', views.team_search, name='team_search'),
 	url(r'^team_search_key$', views.team_search_key, name='team_search'),
+	url(r'^start$', views.start, name='start'),
+	url(r'^finish$', views.finish, name='finish'),
 	url(r'^$', views.home, name='home'),
 ]

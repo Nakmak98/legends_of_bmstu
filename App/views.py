@@ -184,27 +184,55 @@ def team_info(request):
 	return render(request, 'App/player/team_page.html', resp)
 
 def team_info_moderator(request):
-	teamID = cache.get('teamID') #должен брать из таблицы команд
-	url = 'http://138.68.173.73:8080/moderator/team/' + str(teamID)
+ #должен брать из таблицы команд
+	url = 'http://138.68.173.73:8080/moderator/team/6' #+ str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()
 	time = resp['start_time']
-	time = datetime.utcfromtimestamp(time).strftime('%M:%S')
+	time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
 	resp.update({'start_time': time})
 	return render(request, 'App/player/moderator_team_page.html', resp)
 
 def team_search(request):
 	if request.user != 'MODERATOR':
-		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
-	#teamID = request.GET.get('teamID')
-	#if teamID is not None:
-	#	url = 'http://138.68.173.73:8080/moderator/photo/' + teamID
-	#	headers = {'Content-Type': 'application/json'}
-	#	r = requests.get(url,headers)
-	#	return render(request, 'App/admin/start-finish.html', r.json())
-	#else: 
-	return render(request, 'App/admin/start-finish.html')
+		return render(request, 'App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
+	teamID = request.GET.get('teamID')
+	if teamID != None:
+		url = 'http://138.68.173.73:8080/moderator/prepare/' + str(teamID)
+		headers = {'Content-Type': 'application/json'}
+		r = requests.get(url,headers)
+		if r.status_code == 200:
+				resp = r.json()
+				time = resp['start_time']
+				time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %M:%S')
+				resp.update({'start_time': time})
+				return render(request, 'App/admin/start-finish.html', resp)
+		if r.status_code == 404 or r.status_code == 500:
+			return render(request, 'App/admin/start-finish.html', {'error_msg': 'Данных о запрашиваемой команде не существует'})
+	else: 
+		return render(request, 'App/admin/start-finish.html')
+
+def start(request):
+	if request.method == 'POST':
+		teamID = request.POST.get('teamID')
+		print(teamID)
+		url = 'http://138.68.173.73:8080/moderator/start/' + str(teamID)
+		print(url)
+		headers = {'Content-Type': 'application/json'}
+		r = requests.get(url,headers)
+		return render(request, 'App/admin/start-finish.html', r.json())
+
+def finish(request):
+	if request.method == 'POST':
+		teamID = request.POST.get('teamID')
+		print(teamID)
+		url = 'http://138.68.173.73:8080/moderator/stop/' + str(teamID)
+		print(url)
+		headers = {'Content-Type': 'application/json'}
+		r = requests.get(url,headers)
+		return render(request, 'App/admin/start-finish.html',{'succes':'Команда успешно финишировала'})
+
 
 def team_search_key(request):
 	if request.user != 'MODERATOR':

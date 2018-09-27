@@ -10,14 +10,66 @@
 		<button class="search-button">Показать</button>
 	</form>
 	<div class="start-finish-block">
-		<div class="start-finish-title">Какой-то текст</div>
-		<div class="start-finish-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur nesciunt esse quam aliquid ex tempora tempore cupiditate, sequi nulla earum quibusdam explicabo iste nihil, hic optio! Inventore nobis ipsam doloribus.
-			{{ text }}
-		</div>
-	</div>
-	<button class="start-finish-button start">Старт</button>
-	<button class="start-finish-button finish">Финиш</button>
-	
+		<div class="start-finish-title">Информация о команде</div>
 
+		{% if message %}
+			<div class="start-finish-text">{{message}}</div>
+		{% endif %}
+		{% if error_msg %}
+			<div class="team-start-error">{{error_msg}}</div>
+		{% endif %}
+		{% if succes %}
+			<div class="team-start-success">{{succes}}</div>
+		{% endif %}
+		{% if team_id %}
+		<table class="start-finish-table">
+			<tbody>
+				 <tr>
+		        <td>Номер команды</td>
+		        <td>{{team_id}}</td>
+		    </tr>
+		    <tr>
+		        <td>Название команды</td>
+		        <td>{{team_name}}</td>
+		    </tr>
+		    <tr>
+		        <td>Число участников</td>
+		        <td>{{players_count}}</td>
+		    </tr>
+		    <tr>
+		        <td>Стартовое время</td>
+		        <td>{{start_time}}</td>
+		    </tr>
+		    <tr>
+		        <td>Количесво фото-квестов</td>
+		        <td>{{photo_task_count}}</td>
+		    </tr>
+		    <tr>
+		        <td>Количество экстра-квестов</td>
+		        <td>{{extra_task_count}}</td>
+		    </tr>
+			</tbody>
+		   
+		</table>
+		{% endif %}
+		
+
+		
+	</div>
+		{% if started %}
+		<form class="start-form" method="POST" action="start">
+			<button name="teamID" value="{{team_id}}" class="start-finish-button start enable">Старт</button>
+		</form>	
+		{% else %}	
+			<button type="submit" class="start-finish-button start disable">Старт</button>
+		{% endif %}
+
+		{% if finished %}
+		<form class="finish-form" method="POST" action="finish">
+			<button name="teamID" value="{{team_id}}"" class="start-finish-button start enable">Финиш</button>
+		</form>	
+		{% else %}	
+			<button type="submit" class="start-finish-button finish disable">Финиш</button>
+		{% endif %}
 </div>
  {% endblock %}
