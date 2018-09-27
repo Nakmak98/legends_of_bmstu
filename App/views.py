@@ -15,6 +15,8 @@ def home(request):
 		return HttpResponseRedirect('route')
 	if request.user == 'PLAYER':
 		return HttpResponseRedirect('team_info')
+	if request.user is None:
+		return HttpResponseRedirect('login')
 
 
 def test(request):
