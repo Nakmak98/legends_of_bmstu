@@ -1,5 +1,5 @@
-$(document ).ready(function() {
-  $("#popup").fadeIn(400);
+$('#close').click(function(){
+	$(".popup").fadeOut(400);
 });
 
 $('#prompt').click(function(){
@@ -21,14 +21,15 @@ $('#close1').click(function(){
           url: $form.attr('action'),
           data: $form.serialize(),
           success: function(data){
-          	if (data == 'False') {;
+          	if (data == 'False') {
           		$('#popup_text').replaceWith("Ответ неверный! Попробуйте снова");
+          		$('.after-timer-form').attr('method','GET');
           		$(".popup").fadeIn(400)
           	}
           	else {
 				$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
 				$('#close').attr('value', data);
-				$('#popup_text').replaceWith("Ответ верный! Для продолжения нажмите ОК");
+				$('#popup_text').replaceWith("Ответ верный! "+data);
 				$(".popup").fadeIn(400)
 	        }     	
         }
@@ -68,12 +69,5 @@ var timer = setInterval(function() {
   	}
   });
 }
-
-$('#close').click(function(){
-	$(".popup").fadeOut(400);
-});
-    
-
-
 }, 1000);
 

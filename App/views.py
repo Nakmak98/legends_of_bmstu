@@ -159,7 +159,7 @@ def get_current_task(request):
 
 def get_next_task(request):
 	task_id = request.COOKIES.get('task_id')
-	team_id = request.COOKIES.get('team_id')
+	team_id = request.COOKIES.get('teamID')
 	task_type = request.COOKIES.get('task_type')
 	url = 'http://138.68.173.73:8080/player/next'
 	headers = {'Content-Type': 'application/json'}
@@ -168,38 +168,73 @@ def get_next_task(request):
 	   "task_id": task_id,
 	   "task_type": task_type
 	  }
+	print(data)
 	r = requests.post(url, json=data, headers=headers)
 	print(r.text)
 	return r
 
+def render_task_photo_or_extra(request, resp):
+	task_id = resp['task_id']	
+	task_type = resp['task_type']
+	points = resp['points']
+	template = 'App/player/' + task_type + '/' +'task.html'
+	t = loader.get_template(template)
+	response = HttpResponse(t.render(resp))
+	response.set_cookie('points', points)
+	response.set_cookie('task_id', task_id)
+	response.set_cookie('task_type', task_type)
+	return response
+
 def check_task(request, r):
+	resp = r.json()
+	print(resp)
+	if resp['is_finished']:
+		return HttpResponse("Вы прошли все задания текущего этапа")
+	print(resp)
 	if r.status_code == 200:
-		resp = r.json()
-		task_id = resp['task_id']	
-		task_type = resp['task_type']
-		points = resp['points']	
-		started = resp['start_time']
-		duration = resp['duration']
-		template = 'App/player/' + task_type + '/' +'taskA.html'
-		t = loader.get_template(template)
-		response = HttpResponse(t.render(resp))
-		response.set_cookie('points', points)
-		response.set_cookie('task_id', task_id)
-		response.set_cookie('task_type', task_type)
-		response.set_cookie('duration', duration)
-		response.set_cookie('started', started)
-		return response
-	if r.status_code == 500:
-		return HttpResponse("Всё пошло по пизде")
+		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
+			return render_task_photo_or_extra(request, resp)
+		else:
+			task_id = resp['task_id']	
+			task_type = resp['task_type']
+			points = resp['points']	
+			started = resp['start_time']
+			duration = resp['duration']
+			template = 'App/player/' + task_type + '/' +'task.html'
+			t = loader.get_template(template)
+			response = HttpResponse(t.render(resp))
+			response.set_cookie('points', points)
+			response.set_cookie('task_id', task_id)
+			response.set_cookie('task_type', task_type)
+			response.set_cookie('duration', duration)
+			response.set_cookie('started', started)
+			return response
+	if r.status_code == 204:
+		weekday = datetime.today().weekday()
+		if (weekday > 0) and (weekday != 5):
+			msg = 'Ждём вас в понедельник'	
+		if weekday == 5:
+			msg = 'Первый этап закончен. Подходите 12.10 в выбранное время на портал в гз'
+		#return render(request, 'App/player/no-info.html', msg)
+		return HttpResponse(msg)
+	if r.status_code >= 400:
+		return HttpResponse(resp['message'])
 
 def check_answer(request, r, answer):
 	resp = r.json()
+	print(r.status_code)
 	if r.status_code == 202:
-
-		if resp['is_correct']:
-			return HttpResponse(answer)
+		if request.COOKIES.get('task_type') == 'FINAL':		
+			if resp['is_correct']:
+				return HttpResponse('True')
+			else:
+				return HttpResponse('False')
 		else:
-			return HttpResponse(False)
+			print(resp)
+			if resp['is_correct']:
+				return HttpResponse(resp['tooltip'])
+			else:
+				return HttpResponse('False')
 	if r.status_code == 404:
 		msg = r.json()
 		msg = msg['message']
@@ -209,19 +244,10 @@ def check_answer(request, r, answer):
 		return HttpRespone(msg) 
 
 def task_view(request):
-	if r.status_code == 204:
-		weekday = datetime.today().weekday()
-		if (weekday > 0) and (weekday != 5):
-			msg = 'Ждём вас в понедельник'	
-		if weekday == 5:
-			msg = 'Первый этап закончен. Подходите 12.10 в выбранное время на портал в гз'
-		#return render(request, 'App/player/no-info.html', msg)
-		return HttpResponse(msg)
 	if request.is_ajax():
-		#return render(request, 'App/player/FINAL/taskB.html')
 		if request.method == 'POST': 
 			task_id = request.COOKIES.get('task_id')
-			team_id = request.COOKIES.get('team_id')
+			team_id = request.COOKIES.get('teamID')
 			task_type = request.COOKIES.get('task_type')
 			answer = request.POST.get('answer')
 			url = 'http://138.68.173.73:8080/player/task'
@@ -239,20 +265,17 @@ def task_view(request):
 		
 	if request.method == 'GET':
 		if request.GET.get('next'):		
+			print('here')
 			answer = request.GET.get('answer')
 			points = request.COOKIES.get('points')
 			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points})
-		if request.GET.submit:
+		if request.GET.get('submit'):
 			r = get_next_task(request)
-			return check_answer(request, )	
-		print('get')
+			return check_task(request, r)
+		print('get')	
 		r = get_current_task(request)
 		return check_task(request, r)
-	
-
-
-
-	
+		
 def about_team(request):
 	if request.user != 'MODERATOR':
 		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})

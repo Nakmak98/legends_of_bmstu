@@ -5,8 +5,10 @@
 {% block popup %}
 <div id="popup" class="popup">
 	<div class="popup-block">
-		<p>Ответ верный!<br></p>
-		<button id="close" class="button">Ок</button>
+		<p id="popup_text">Ответ верный!<br></p>
+		<form method="GET" action="task" class="after-timer-form">
+			<button id="close" name="Photo" value="True" class="button">Ок</button>
+		</form>
 	</div>
 </div> 
 {% endblock %}
@@ -16,11 +18,15 @@
 <div class="block" style="padding-bottom: 250px; margin-bottom: -40px;">
 	<h2 class="task-header">Название задания</h2>
 	<p class="text">Lorem ipsum – псевдо-латинский текст, который используется для веб дизайна, типографии, оборудования, и распечатки вместо английского текста для того, чтобы сделать ударение не на содержание, а на элементы дизайна. Такой текст также называется как заполнитель. Это очень удобный инструмент для моделей (макетов). Он помогает выделить визуальные элементы в документе или презентации, например текст, шрифт или разметка. 
-	<form action="task" method="GET" class="task-form">
+	<form action="task" method="POST" class="task-form answer">
 		<p class="task-answer">Ваш ответ: <span>{{answer}}</span></p>
 		<p class="scores">Баллов получено: <span class="scores-value">{{points}}</span></p>
+		<input required type="text" name="answer" autocomplete="off">
 		<br>
-		<input name="submit" value="True" class="button" style="width: 250px;">
+		<input type="submit" name="submit" value="Ответить" class="button" style="width: 250px; margin-top: 10px;">
+	</form>
+	<form action="task" method="GET" class="pass">
+		<button type="submit" name="submit" value="True" class="button" style="width: 250px;">Пропустить</button>
 	</form>
 	<div class="footer"><p>Легенды Бауманки 2018 <a href="https://www.livy.website"> Веб-студия LivY</a></p></div>
 </div>

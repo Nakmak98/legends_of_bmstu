@@ -156,6 +156,7 @@ span{
 }
 
 .button, form>input{
+	margin-top: 15px;
 	border-radius: 20px 20px 20px 20px;
     border: 0px solid white;
     outline: none;
@@ -193,6 +194,14 @@ span{
 	bottom: 20px;
 }
 
+.answer {
+	margin: 80px auto 80px auto;
+}
+
+.pass button {
+	position: relative;
+	top: 175px;
+}
 .timer{
 	font-size: 36px;
 	color: #441920;
