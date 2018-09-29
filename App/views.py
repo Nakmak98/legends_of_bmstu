@@ -130,23 +130,25 @@ def add_member(member,registration_data):
  			return
 
 def proxy_request(request):
-	#full = request.GET.get('full')
-	url='http://138.68.173.73:8080/moderator/team?full=True'#+full
+	full = request.GET.get('isCheckbox')
+	url='http://138.68.173.73:8080/moderator/team?full='+full
 	headers = {'Content-Type': 'application/json'}
 	r=requests.get(url,headers=headers)
 	print(r.text)
 	return r.json()
 
 def score_table(request):
+	if request.is_ajax():
+		data=proxy_request(request)
+		return JsonResponse(data)
 	if request.method == 'GET':
+		print('hello')
 		#data=proxy_request(request)
 		if request.user == 'MODERATOR':
 			return render(request,'App/admin/score_table_moderator.html')
 		if request.user == 'ADMIN':
 			return render(request,'App/admin/score_table_admin.html')
-	if request.is_ajax():
-		data=proxy_request(request)
-		return HttpResponse(request.user)
+	
 
 
 def get_current_task(request):
@@ -302,8 +304,8 @@ def team_info(request):
 	return render(request, 'App/player/team_page.html', resp)
 
 def team_info_moderator(request):
- #должен брать из таблицы команд
-	url = 'http://138.68.173.73:8080/moderator/team/6' #+ str(teamID)
+	teamID = request.GET.get('team_id')
+	url = 'http://138.68.173.73:8080/moderator/team/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()

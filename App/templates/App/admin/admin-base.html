@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 	<script src="{% static 'js/admin.js' %}" defer></script>
+	<script src="{% static 'js/table.js' %}" defer></script>
 </head>
 <body>
 	<header>
@@ -40,6 +41,9 @@
 			<div class="footer-title">Легенды Бауманки 2018</div>
 			<div class="about-livy"><a href="https://livy.website">Веб-студия <span>LivY</span></a></div>
 		</footer>
+	<form  id="formId" action="team_info_moderator" method="GET" style="display: none;">
+    	<input type="submit" name="team_id" value="">
+	</form>
 	</div>
 </body>
 </html>

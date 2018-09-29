@@ -84,7 +84,7 @@ body{
 	grid-column-start: 1;
 	grid-column-end: 6;
 	background-color: rgba(255,255,255, 0.7);
-	min-height: 500px;
+	min-height: 650px;
 	height: 100%;
 	box-shadow: 0 0 20px rgba(0,0,0,0.75);
 	margin-bottom: -40px;
@@ -291,14 +291,11 @@ span{
 }
 
 .footer{
-	position: absolute;
-	
-	bottom: -40px;
+	display: grid;
+	grid-row: 4 / 5;
 	color: white;
 	text-align: center;
-	font-size: 18;
-	left: 0; 
-	right: 0; 
+	font-size: 18px;
 	margin: 0 auto;
 	width: 300px;
 }
@@ -351,12 +348,13 @@ span{
 
 
 .table-parent{
+	margin-top: 2%;
 	overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  width: 90%;
-  margin-left: 5%;
-  text-align: center;
+  	overflow-y: hidden;
+  	white-space: nowrap;
+  	width: 90%;
+  	margin-left: 5%;
+  	text-align: center;
 }
 
 table {
@@ -376,6 +374,7 @@ tbody>tr {
 tbody>tr>td {
 	border: 2px solid rgba(113,103,100, 0.3);
 	border-left: none;
+	padding: 1px;
 }
 
 tbody>tr>td:last-child {
