@@ -349,12 +349,20 @@ span{
 	display: inline-block;
 }
 
+
+.table-parent{
+	overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 90%;
+  margin-left: 5%;
+  text-align: center;
+}
+
 table {
-	margin: auto;
-	top: 200px;
+	display: inline-block;
 	border-collapse: collapse;
-	width: 250px;
-	background-color: #a39893;
+	background-color: rgba(154,144,143, 0.3);
 	color: #441920;
 	font-size: 18px;
 }
@@ -366,7 +374,7 @@ tbody>tr {
 }
 
 tbody>tr>td {
-	border: 1px solid #6c6563;
+	border: 2px solid rgba(113,103,100, 0.3);
 	border-left: none;
 }
 
@@ -375,6 +383,6 @@ tbody>tr>td:last-child {
 }
 
 thead {
-	background-color: #6c6563;
+	background-color: rgba(113,103,100, 0.6);
 	color: #ec7370;
 }
