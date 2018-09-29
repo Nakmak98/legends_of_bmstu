@@ -301,11 +301,11 @@ def team_info_moderator(request):
 	resp = r.json()
 	try: 
 		time = resp['start_time']
+		time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
+		resp.update({'start_time': time})
+		return render(request, 'App/player/moderator_team_page.html', resp)
 	except KeyError: 
-		HttpResponseRedirect('/') 
-	time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
-	resp.update({'start_time': time})
-	return render(request, 'App/player/moderator_team_page.html', resp)
+		return HttpResponseRedirect('/') 
 
 def team_search(request):
 	if request.user != 'MODERATOR':
