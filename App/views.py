@@ -185,9 +185,9 @@ def render_task_photo_or_extra(request, resp):
 def check_task(request, r):
 	resp = r.json()
 	print(resp)
-	if resp['is_finished']:
-		return HttpResponse("Вы прошли все задания текущего этапа")
 	if r.status_code == 200:
+		if resp['is_finished']:
+			return HttpResponse("Вы прошли все задания текущего этапа")
 		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
 			return render_task_photo_or_extra(request, resp)
 		else:
