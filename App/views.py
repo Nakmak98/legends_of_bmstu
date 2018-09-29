@@ -74,8 +74,8 @@ def do_login(login, password):
 def addMembertoJson(request, registration_data):
 	first_name = 'memberFirstName'
 	second_name = 'memberSecondName'
-	firstextramember = 3
-	lastextramember = 6
+	firstextramember = 4
+	lastextramember = 7
 	for i in range(firstextramember,lastextramember):
 		member = {
 		'first_name': request.POST.get(first_name+str(i)),
@@ -96,16 +96,16 @@ def signup(request):
 	    	},
 	    	"members": [
 		      	{
-		        	"first_name": request.POST.get('memberFirstName'),
-		        	"second_name": request.POST.get('memberSecondName')
+		        	"first_name": request.POST.get('memberFirstName1'),
+		        	"second_name": request.POST.get('memberSecondName1')
 		      	},
 		      	{
-				"first_name": request.POST.get('memberFirstName1'),
-				"second_name": request.POST.get('memberSecondName1')
+					"first_name": request.POST.get('memberFirstName2'),
+					"second_name": request.POST.get('memberSecondName2')
 				},	  
 				{
-				"first_name": request.POST.get('memberFirstName2'),
-				"second_name": request.POST.get('memberSecondName2')
+					"first_name": request.POST.get('memberFirstName3'),
+					"second_name": request.POST.get('memberSecondName3')
 				}	  		
 		    ]
 	  		}
