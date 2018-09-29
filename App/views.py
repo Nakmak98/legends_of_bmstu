@@ -15,7 +15,7 @@ def home(request):
 	if request.user == 'ADMIN':
 		return HttpResponseRedirect('route')
 	if request.user == 'PLAYER':
-		return HttpResponseRedirect('team_info')
+		return HttpResponseRedirect('task')
 	if request.user is None:
 		return HttpResponseRedirect('login')
 
@@ -229,10 +229,15 @@ def check_answer(request, r, answer):
 				return HttpResponse('True')
 			else:
 				return HttpResponse('False')
-		else:
+		if request.COOKIES.get('task_type') == 'EXTRA':
 			print(resp)
 			if resp['is_correct']:
 				return HttpResponse(resp['tooltip'])
+			else:
+				return HttpResponse('False')
+		else:
+			if resp['is_correct']:
+				return HttpResponse('True')
 			else:
 				return HttpResponse('False')
 	if r.status_code == 404:

@@ -26,6 +26,12 @@ $('#close1').click(function(){
           		$('.after-timer-form').attr('method','GET');
           		$(".popup").fadeIn(400)
           	}
+          	else if (data=='True') {
+          		$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
+				$('#close').attr('value', data);
+				$('#popup_text').replaceWith("Ответ верный! Для продолжения нажмите ОК");
+				$(".popup").fadeIn(400)
+          	}
           	else {
 				$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
 				$('#close').attr('value', data);
