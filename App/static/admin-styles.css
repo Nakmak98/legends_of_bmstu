@@ -56,7 +56,6 @@ header {
 	text-align: center;
 }
 
-
 .menu-hidden{
 	position: fixed;
 	z-index: 5;
@@ -227,7 +226,6 @@ label[for="teamName"] {
 	grid-row:  4 / 5;
 }
 
-
 label[for="teamleadSecondName"] {
 	grid-column: 2 / 4;
 	grid-row: 2 / 3;
@@ -243,7 +241,7 @@ label[for="teamleadFirstName"] {
 	grid-column: 4 / 10;
 	grid-row: 4 / 6;
 	grid-template-columns: repeat(6,1fr);
-	grid-template-rows: 50px 169.38px 30px 20px;
+	grid-template-rows: 50px 169.38px 169.38px 169.38px 30px 20px;
 	min-height: 200px;
 	background-color: #65696b;
 	margin: 20px 0;
@@ -275,6 +273,18 @@ label[for="teamleadFirstName"] {
 	margin-top: 10px;
 }
 
+.delete_member {
+	display: grid;
+	grid-column: 6 / 7;
+	grid-row: 1 / 2;
+	align-self: center;
+	color: #333;
+}
+
+.delete_member:hover {
+	cursor: pointer;
+	color: #555;
+}
 .add-member {
 	grid-column: 2 / 6;
 	margin: 0 50px;
@@ -283,6 +293,7 @@ label[for="teamleadFirstName"] {
 	padding-top: 5px;
 	font-size: 18px;
 }
+
 .add-member:hover {
 	background-color: #424040;
 	cursor: pointer;
@@ -323,11 +334,11 @@ label[for="memberFirstName"] {
 	font-weight:bold;
 	text-decoration:none;
 }
+
 .signup-form-submit:hover {
 	background-color: #333;
 	cursor: pointer;
 }
-
 
 .start-finish {
 	display: grid;

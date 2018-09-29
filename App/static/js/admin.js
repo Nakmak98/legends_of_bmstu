@@ -1,4 +1,4 @@
-x = 0;
+x = 2;
 var second_name = $('.member-second-name').attr('name');
 var first_name = $('.member-first-name').attr('name');
 
