@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template import RequestContext, loader
 import requests, json
 from django.core.cache import cache
 from django.utils.crypto import get_random_string
@@ -147,22 +148,111 @@ def score_table(request):
 		data=proxy_request(request)
 		return HttpResponse(request.user)
 
-def task_view(request):
-	url = 'http://138.68.173.73:8080/player/task'
+
+def get_current_task(request):
+	teamID = request.COOKIES.get('teamID')
+	url = 'http://138.68.173.73:8080/player/task/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
+	print(r.status_code)
+	return r
+
+def get_next_task(request):
+	task_id = request.COOKIES.get('task_id')
+	team_id = request.COOKIES.get('team_id')
+	task_type = request.COOKIES.get('task_type')
+	url = 'http://138.68.173.73:8080/player/next'
+	headers = {'Content-Type': 'application/json'}
+	data =  {
+	   "team_id": team_id,
+	   "task_id": task_id,
+	   "task_type": task_type
+	  }
+	r = requests.post(url, json=data, headers=headers)
+	print(r.text)
+	return r
+
+def check_task(request, r):
+	if r.status_code == 200:
+		resp = r.json()
+		task_id = resp['task_id']	
+		task_type = resp['task_type']
+		points = resp['points']	
+		started = resp['start_time']
+		duration = resp['duration']
+		template = 'App/player/' + task_type + '/' +'taskA.html'
+		t = loader.get_template(template)
+		response = HttpResponse(t.render(resp))
+		response.set_cookie('points', points)
+		response.set_cookie('task_id', task_id)
+		response.set_cookie('task_type', task_type)
+		response.set_cookie('duration', duration)
+		response.set_cookie('started', started)
+		return response
+	if r.status_code == 500:
+		return HttpResponse("Всё пошло по пизде")
+
+def check_answer(request, r, answer):
+	resp = r.json()
+	if r.status_code == 202:
+
+		if resp['is_correct']:
+			return HttpResponse(answer)
+		else:
+			return HttpResponse(False)
+	if r.status_code == 404:
+		msg = r.json()
+		msg = msg['message']
+		return HttpResponse(msg)
+	if r.status_code == 500:
+		msg = 'Произошла ошибка на сервере'
+		return HttpRespone(msg) 
+
+def task_view(request):
 	if r.status_code == 204:
 		weekday = datetime.today().weekday()
 		if (weekday > 0) and (weekday != 5):
 			msg = 'Ждём вас в понедельник'	
 		if weekday == 5:
 			msg = 'Первый этап закончен. Подходите 12.10 в выбранное время на портал в гз'
-		return render(request, 'App/player/no-info.html', msg)
-	task_type=r['type']
-	task_id=r['id']
-	template = 'App/player/'+task_type+'/'+task_id+'.html'
-	#return render(template,r)
+		#return render(request, 'App/player/no-info.html', msg)
+		return HttpResponse(msg)
+	if request.is_ajax():
+		#return render(request, 'App/player/FINAL/taskB.html')
+		if request.method == 'POST': 
+			task_id = request.COOKIES.get('task_id')
+			team_id = request.COOKIES.get('team_id')
+			task_type = request.COOKIES.get('task_type')
+			answer = request.POST.get('answer')
+			url = 'http://138.68.173.73:8080/player/task'
+			headers = {'Content-Type': 'application/json'}
+			data =  {
+	   		"team_id": team_id,
+	    	"task_id": task_id,
+	    	"answer": answer,
+	    	"task_type": task_type
+	  		}
+		  	print(data)
+		  	r = requests.post(url, json=data, headers=headers)
+		  	print(r.status_code)
+		  	return check_answer(request, r, answer)
+		
+	if request.method == 'GET':
+		if request.GET.get('next'):		
+			answer = request.GET.get('answer')
+			points = request.COOKIES.get('points')
+			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points})
+		if request.GET.submit:
+			r = get_next_task(request)
+			return check_answer(request, )	
+		print('get')
+		r = get_current_task(request)
+		return check_task(request, r)
+	
 
+
+
+	
 def about_team(request):
 	if request.user != 'MODERATOR':
 		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
@@ -179,7 +269,7 @@ def team_info(request):
 	r = requests.get(url,headers)
 	resp = r.json()
 	time = resp['start_time']
-	time = datetime.utcfromtimestamp(time).strftime('%M:%S')
+	time = datetime.utcfromtimestamp(time).strftime('%Y.%m.%d %H:%M:%S')
 	resp.update({'start_time': time})
 	return render(request, 'App/player/team_page.html', resp)
 
@@ -264,12 +354,4 @@ def route(request):
 		#return JsonResponse(r.json())
 	return render(request,'App/admin/route.html')
 
-def task(request):
-	if request.method == 'POST':
-		answer = request.POST.get('answer')
-		return render(request, 'App/player/taskB.html', {'answer': answer})
-	else:
-		tag = request.GET.get('submit')
-		if tag == 'Перейти к следующему этапу':
-			print('next stage')
-		return render(request, 'App/player/taskC.html')
+

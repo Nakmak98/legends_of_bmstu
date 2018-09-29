@@ -2,12 +2,24 @@
 
 {% block title %}Задание{% endblock %}
 
+{% block popup %}
+<div  class="popup">
+	<div class="popup-block">
+		<p id="popup_text">Ответ {{ answer_status }}<br></p>
+		<form method="GET" action="task" class="after-timer-form">
+			<button id="close" name="next" value="True" class="button">Ок</button>
+		</form>
+		
+	</div>
+</div> 
+{% endblock %}
+
 {% block content %}
 <div class="block" style="padding-bottom: 250px; margin-bottom: -40px;">
 	<h2 class="task-header">Название задания</h2>
 	<p class="text">Lorem ipsum – псевдо-латинский текст, который используется для веб дизайна, типографии, оборудования, и распечатки вместо английского текста для того, чтобы сделать ударение не на содержание, а на элементы дизайна. Такой текст также называется как заполнитель. Это очень удобный инструмент для моделей (макетов). Он помогает выделить визуальные элементы в документе или презентации, например текст, шрифт или разметка. 
 	<form action="task" method="POST" class="task-form">
-		<p class="timer">11:12</p>
+		<p class="timer" id="timer"></p>
 		<p class="scores">Баллов за задание: <span class="scores-value">{{points}}</span></p>
 		<br>
 		<input required type="text" name="answer" autocomplete="off">

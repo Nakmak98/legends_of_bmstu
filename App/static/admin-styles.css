@@ -375,7 +375,7 @@ input[name="teamID"] {
 
 .start-finish-table {
 	grid-column: 2 / 4;
-	grid-row: 2 / 4;
+	grid-row: 2 / 3;
 	border: 1px solid black;
 	margin-top: 20px;
 	font-size: 20px;

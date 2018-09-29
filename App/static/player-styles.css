@@ -47,14 +47,14 @@ body{
 }
 
 .header-grid>p{
-	margin-top: 7px;
+	margin-top: 12px;
 	font-size: 24px;
 	grid-column: 3 / 4;
 	color: #ec7370;
 }
 
 .log-out{
-	margin-top: 10px;
+	margin-top: 12px;
 	grid-column-start: 4;
 }
 
@@ -156,23 +156,25 @@ span{
 }
 
 .button, form>input{
-	border-radius:20px 20px 20px 20px;
-	border: 0px solid white;
-	outline: none;
-	width: 150px;
-	height: 25px;
-	//margin-left: 20px;
-	box-shadow: 0 1px 20px black;
-	text-align: center;
+	border-radius: 20px 20px 20px 20px;
+    border: 0px solid white;
+    outline: none;
+    font-size: 20px;
+    width: 170px;
+    height: 30px;
+    margin-left: 0px;
+    box-shadow: 0 1px 20px black;
+    text-align: center;
 }
 .button{
 	font-size: 20px;
 	color: #ec7370;
-	width: 100px;
+	width: 130px;
+	height: 40px;
 	border-radius: 3px 3px 3px 3px;
 	background-color: white;
 	font-family: "Neucha";
-	//margin:auto 45px;
+	margin: auto 0px;
 }
  .button:hover{
 	background-color: MistyRose;
@@ -212,6 +214,10 @@ span{
 
 .task-answer>span{
 	color: #441920;
+}
+
+.after-timer-form {
+	margin: 20px auto;
 }
 
 .popup{
@@ -268,6 +274,7 @@ span{
 	font-family: 'Neucha', sans-serif;
 	font-size: 20px;
 	color: #441920;
+	margin-bottom: 20px;
 }
 
 span{
@@ -299,7 +306,7 @@ span{
 
 .capitan {
 	font-size: 18px;
-	margin-top: 20px;
+	margin-top: 4px;
 }
 
 .capitan>span {
