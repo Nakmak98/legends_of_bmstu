@@ -3,55 +3,36 @@
 {% block title %}Таблица команд{% endblock %}
 
 {% block content %}
-<div class="block table">
-	<!--Сюды-->
-	<div class="tableButton_inTable">
-		<div class="tableButton_allTeams">
-			<input class="checkboxx" type="checkbox">
-			<p>Все команды</p>
-		</div>
-	</div>
-
-	<div class="table_aroundTeams">
-		<div class="table_teams_head">
-			<div class="table_teams_stroke">
-				<p> № </p>
-				<p> Название </p>
-				<p> Капитан </p>
-				<p> Этапы </p>
-				<p> Время старта </p>
-				<p> Время финиша </p>
-				<p> Фейлы </p>
-				<p> Баллы </p>
-				<p> Статус </p>
-			</div>
-		</div>
-
-		<div class="table_teams_body">
-			<div class="table_teams_stroke">
-				<p> 1 </p>
-				<p> Название </p>
-				<p> Имя Фамилия </p>
-				<p> 4/15 </p>
-				<p> 12:08 </p>
-				<p> - </p>
-				<p> 2 </p>
-				<p> 105 </p>
-				<p> unfinished </p>
+		<div class="block table">
+			<!--Сюды-->
+			<div class="tableButton_inTable">
+				<div class="tableButton_allTeams">
+					<label>
+                    	<input class="tableCheckbox" type="checkbox">
+                    	<span class="tableCheckbox-custom"></span>
+                    	<span class="tableCheckLabel">Все команды</span>
+                	</label>
+				</div>
 			</div>
 
-			<div class="table_teams_stroke">
-				<p> 2 </p>
-				<p> Название </p>
-				<p> Имя Фамилия </p>
-				<p> 4/15 </p>
-				<p> 12:08 </p>
-				<p> - </p>
-				<p> 2 </p>
-				<p> 105 </p>
-				<p> unfinished </p>
+			<div class="table_aroundTeams">
+				<div class="table_teams_head">
+					<div class="table_teams_stroke">
+						<p id="1" class="sortUp"> № </p>
+						<p id="2"> Название </p>
+						<p id="3"> Капитан </p>
+						<p id="4"> Этапы </p>
+						<p id="5"> Время старта </p>
+						<p id="6"> Время финиша </p>
+						<p id="7"> Фейлы </p>
+						<p id="8"> Баллы </p>
+						<p id="9"> Статус </p>
+					</div>
+				</div>
+
+				<div class="table_teams_body">
+					<!--Таблица-->
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
  {% endblock %}

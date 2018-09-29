@@ -134,7 +134,6 @@ def proxy_request(request):
 	url='http://138.68.173.73:8080/moderator/team?full='+full
 	headers = {'Content-Type': 'application/json'}
 	r=requests.get(url,headers=headers)
-	print(r.text)
 	return r.json()
 
 def score_table(request):
@@ -142,7 +141,6 @@ def score_table(request):
 		data=proxy_request(request)
 		return JsonResponse(data)
 	if request.method == 'GET':
-		print('hello')
 		#data=proxy_request(request)
 		if request.user == 'MODERATOR':
 			return render(request,'App/admin/score_table_moderator.html')
@@ -170,9 +168,7 @@ def get_next_task(request):
 	   "task_id": task_id,
 	   "task_type": task_type
 	  }
-	print(data)
 	r = requests.post(url, json=data, headers=headers)
-	print(r.text)
 	return r
 
 def render_task_photo_or_extra(request, resp):
@@ -192,7 +188,6 @@ def check_task(request, r):
 	print(resp)
 	if resp['is_finished']:
 		return HttpResponse("Вы прошли все задания текущего этапа")
-	print(resp)
 	if r.status_code == 200:
 		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
 			return render_task_photo_or_extra(request, resp)
@@ -232,7 +227,6 @@ def check_answer(request, r, answer):
 			else:
 				return HttpResponse('False')
 		if request.COOKIES.get('task_type') == 'EXTRA':
-			print(resp)
 			if resp['is_correct']:
 				return HttpResponse(resp['tooltip'])
 			else:
@@ -265,21 +259,18 @@ def task_view(request):
 	    	"answer": answer,
 	    	"task_type": task_type
 	  		}
-		  	print(data)
 		  	r = requests.post(url, json=data, headers=headers)
 		  	print(r.status_code)
 		  	return check_answer(request, r, answer)
 		
 	if request.method == 'GET':
 		if request.GET.get('next'):		
-			print('here')
 			answer = request.GET.get('answer')
 			points = request.COOKIES.get('points')
 			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points})
 		if request.GET.get('submit'):
 			r = get_next_task(request)
-			return check_task(request, r)
-		print('get')	
+			return check_task(request, r)	
 		r = get_current_task(request)
 		return check_task(request, r)
 		
