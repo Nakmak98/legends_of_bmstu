@@ -299,7 +299,10 @@ def team_info_moderator(request):
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()
-	time = resp['start_time']
+	try: 
+		time = resp['start_time']
+	except KeyError: 
+		HttpResponseRedirect('/') 
 	time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
 	resp.update({'start_time': time})
 	return render(request, 'App/player/moderator_team_page.html', resp)
