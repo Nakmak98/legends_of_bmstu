@@ -141,7 +141,6 @@ def score_table(request):
 		data=proxy_request(request)
 		return JsonResponse(data)
 	if request.method == 'GET':
-		#data=proxy_request(request)
 		if request.user == 'MODERATOR':
 			return render(request,'App/admin/score_table_moderator.html')
 		if request.user == 'ADMIN':
@@ -315,7 +314,9 @@ def team_search(request):
 		r = requests.get(url,headers)
 		if r.status_code == 200:
 				resp = r.json()
-				time = resp['start_time']
+				try: time = resp['start_time']
+				except KeyError: 
+					HttpResponseRedirect('/') 
 				time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %M:%S')
 				resp.update({'start_time': time})
 				return render(request, 'App/admin/start-finish.html', resp)
