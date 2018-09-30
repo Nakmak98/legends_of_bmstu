@@ -61,7 +61,7 @@ $(document).ready(function(){
 
 function updateDATA(){
 	$(function(){
-    	$.getJSON("score_table", {'isCheckbox': isCheckbox}, function(data) { //сюда URL json'а (надо добавить передачу галки из чекбокса на сервер)$.getJSON('exp.json', {{data}}, function(data) {});
+    	$.getJSON('score_table', {'isCheckbox': isCheckbox}, function(data) { //сюда URL json'а (надо добавить передачу галки из чекбокса на сервер)$.getJSON('exp.json', {{data}}, function(data) {});
             for(var j=0;j<allTeams.length;j++){
                 var flag = 0;
                 for(var i=0;i<data.teams.length;i++){
@@ -102,50 +102,52 @@ function updateDATA(){
 function outputDATA(){
     $('.table_teams_body').children().remove();
     for(var i=0;i<allTeams.length;i++){
-        $('.table_teams_body').append('<div class="table_teams_stroke">' +
-              '<p>' +
-                  allTeams[i].team_id
-              + '</p>'
-    
-              + '<p>' +
-                  allTeams[i].name
-              + '</p>'
-    
-              + '<p>' +   
-                  allTeams[i].leader_name
-              + '</p>'
-    
-              + '<p>' +
-                  allTeams[i].number_of_tasks
-              + '</p>'
-    
-              + '<p>' +
-                  UNIXTimeToNormalTime(allTeams[i].start_time)
-              + '</p>'
-    
-              + '<p>' +
-                  UNIXTimeToNormalTime(allTeams[i].finish_time)
-              + '</p>'
-    
-              + '<p>' +
-                  allTeams[i].fails_count
-              + '</p>'
-    
-              + '<p>' +
-                  allTeams[i].score
-              + '</p>'
-    
-              + '<p' + 
+        if(allTeams[i].is_active || isCheckbox){//вывод всех или только не финишировших
+            $('.table_teams_body').append('<div class="table_teams_stroke">' +
+                  '<p>' +
+                      allTeams[i].team_id
+                  + '</p>'
+        
+                  + '<p>' +
+                      allTeams[i].name
+                  + '</p>'
+        
+                  + '<p>' +   
+                      allTeams[i].leader_name
+                  + '</p>'
+        
+                  + '<p>' +
+                      allTeams[i].number_of_tasks
+                  + '</p>'
+        
+                  + '<p>' +
+                      UNIXTimeToNormalTime(allTeams[i].start_time)
+                  + '</p>'
+        
+                  + '<p>' +
+                      UNIXTimeToNormalTime(allTeams[i].finish_time)
+                  + '</p>'
+        
+                  + '<p>' +
+                      allTeams[i].fails_count
+                  + '</p>'
+        
+                  + '<p>' +
+                      allTeams[i].score
+                  + '</p>'
+        
+                  + '<p' + 
                     coloredStatus(allTeams[i].is_active)//возвращает кусок <p> с классом и назание состояния
-                    //allTeams[i].is_active == "true"? 'finished':'unfinished'
-              + '</p>'
-        + '</div>');/*клон снизу*/
+                        //allTeams[i].is_active == "true"? 'finished':'unfinished'
+                  + '</p>'
+            + '</div>');/*клон снизу*/
+        }
     }
 
     /*отправка id команды на которую кликнули*/
     $('.table_teams_body').children('.table_teams_stroke').mousedown(function(eventObject){
         if(eventObject.which == 1){//только левая кнопка
-            console.log($(this).children().eq(0).text());
+            //console.log($(this).children().eq(0).text());
             $("#formId").children([name="team_id"]).attr({"value":$(this).children().eq(0).text()});
             $("#formId").children([name="team_id"]).click();/*клик по input для отправки*/
         }
@@ -225,7 +227,7 @@ function UNIXTimeToNormalTime(a){
 
 function coloredStatus(status){
     //console.log(status)
-    if(status == true){
+    if(status == false){
         return ' class = "finishedStatus">' + 'finished'
     }else{
         return ' class = "unfinishedStatus">' + 'unfinished'
