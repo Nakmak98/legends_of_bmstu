@@ -185,6 +185,10 @@ span{
 	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.task-timer {
+	font-size: 18px;
+}
+
 .task-form{
 	position: absolute;
 	width: 250px;
@@ -208,6 +212,7 @@ span{
 }
 
 .scores{
+	margin-top: 80px;
 	font-size: 20px;
 	color: #441920;
 }

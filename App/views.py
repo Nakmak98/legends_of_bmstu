@@ -112,11 +112,8 @@ def signup(request):
 	  		
 	#Добавление новых участников команды для отправки на игровой сервер
 			addMembertoJson(request,registration_data)
-	  		text = json.dumps(registration_data,ensure_ascii=False, indent = 4)
-	  		print(text)
 	  		r = requests.post(url, json=registration_data, headers=headers)
-	  		return HttpResponse(r.status_code)
-	  		#return HttpResponseRedirect('signup')
+	  		return HttpResponseRedirect('signup')
 	  	else:
 	  		return render(request, 'App/admin/signup.html')
 	else: 
@@ -184,10 +181,15 @@ def render_task_photo_or_extra(request, resp):
 
 def check_task(request, r):
 	resp = r.json()
+	print('check task')
 	print(resp)
 	if r.status_code == 200:
 		if resp['is_finished']:
 			return HttpResponse("Вы прошли все задания текущего этапа")
+		if resp['is_answered']:
+			points = request.COOKIES.get('points')
+			print("is_answered")
+			return render(request, 'App/player/FINAL/next_task.html', {'points': points})
 		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
 			return render_task_photo_or_extra(request, resp)
 		else:
@@ -218,8 +220,12 @@ def check_task(request, r):
 
 def check_answer(request, r, answer):
 	resp = r.json()
-	print(r.status_code)
+	print(resp)
+	answer = resp['answer']
 	if r.status_code == 202:
+		if resp['is_answered']:
+			points = resp['points']
+			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points})
 		if request.COOKIES.get('task_type') == 'FINAL':		
 			if resp['is_correct']:
 				return HttpResponse('True')
@@ -235,7 +241,7 @@ def check_answer(request, r, answer):
 				return HttpResponse('True')
 			else:
 				return HttpResponse('False')
-	if r.status_code == 404:
+	if r.status_code >= 400:
 		msg = r.json()
 		msg = msg['message']
 		return HttpResponse(msg)
@@ -243,35 +249,41 @@ def check_answer(request, r, answer):
 		msg = 'Произошла ошибка на сервере'
 		return HttpRespone(msg) 
 
+def send_answer(request):
+	task_id = request.COOKIES.get('task_id')
+	team_id = request.COOKIES.get('teamID')
+	task_type = request.COOKIES.get('task_type')
+	answer = request.POST.get('answer')
+	url = 'http://138.68.173.73:8080/player/task'
+	headers = {'Content-Type': 'application/json'}
+	data =  {
+	   "team_id": team_id,
+	   "task_id": task_id,
+	   "answer": answer,
+	   "task_type": task_type
+	  }
+	r = requests.post(url, json=data, headers=headers)
+	print(r.status_code)
+	return check_answer(request, r, answer)
+
 def task_view(request):
-	if request.is_ajax():
+	if request.is_ajax(): # answer comes from ajax-request
 		if request.method == 'POST': 
-			task_id = request.COOKIES.get('task_id')
-			team_id = request.COOKIES.get('teamID')
-			task_type = request.COOKIES.get('task_type')
-			answer = request.POST.get('answer')
-			url = 'http://138.68.173.73:8080/player/task'
-			headers = {'Content-Type': 'application/json'}
-			data =  {
-	   		"team_id": team_id,
-	    	"task_id": task_id,
-	    	"answer": answer,
-	    	"task_type": task_type
-	  		}
-		  	r = requests.post(url, json=data, headers=headers)
-		  	print(r.status_code)
-		  	return check_answer(request, r, answer)
-		
+			print('sended answer')
+			return send_answer(request)	
 	if request.method == 'GET':
 		if request.GET.get('next'):		
 			answer = request.GET.get('answer')
 			points = request.COOKIES.get('points')
 			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points})
 		if request.GET.get('submit'):
+			print('next nask')
 			r = get_next_task(request)
 			return check_task(request, r)	
 		r = get_current_task(request)
+		print('get current task')
 		return check_task(request, r)
+
 		
 def about_team(request):
 	if request.user != 'MODERATOR':
@@ -311,19 +323,22 @@ def team_search(request):
 	if request.user != 'MODERATOR':
 		return render(request, 'App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
 	teamID = request.GET.get('teamID')
+	print(teamID)
 	if teamID != None:
 		url = 'http://138.68.173.73:8080/moderator/prepare/' + str(teamID)
 		headers = {'Content-Type': 'application/json'}
 		r = requests.get(url,headers)
+		print(r.json())
 		if r.status_code == 200:
-				resp = r.json()
-				try: time = resp['start_time']
-				except KeyError: 
-					HttpResponseRedirect('/') 
-				time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %M:%S')
-				resp.update({'start_time': time})
-				return render(request, 'App/admin/start-finish.html', resp)
-		if r.status_code == 404 or r.status_code == 500:
+			resp = r.json()
+			print(resp)
+			try: time = resp['start_time']
+			except KeyError: 
+				HttpResponseRedirect('/') 
+			time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %M:%S')
+			resp.update({'start_time': time})
+			return render(request, 'App/admin/start-finish.html', resp)
+		if r.status_code >=400:
 			return render(request, 'App/admin/start-finish.html', {'error_msg': 'Данных о запрашиваемой команде не существует'})
 	else: 
 		return render(request, 'App/admin/start-finish.html')

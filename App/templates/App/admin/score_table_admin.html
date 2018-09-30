@@ -1,5 +1,5 @@
 {% extends "App/admin/admin-base.html" %}
-
+{% load staticfiles %}
 {% block title %}Таблица команд{% endblock %}
 
 {% block content %}
@@ -35,4 +35,8 @@
 				</div>
 			</div>
 		</div>
+		<form  id="formId" action="team_info_moderator" method="GET" style="display: none;">
+    	<input type="submit" name="team_id" value="">
+	</form>
+	<script src="{% static 'js/table.js' %}"></script>
  {% endblock %}

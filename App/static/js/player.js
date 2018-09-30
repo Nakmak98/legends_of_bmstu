@@ -1,3 +1,7 @@
+$(document).ready(function(){
+  $("#popup_next").fadeIn(400);
+})
+
 $('#close').click(function(){
 	$(".popup").fadeOut(400);
 });
@@ -12,7 +16,7 @@ $('#close1').click(function(){
 });
 
 
- $('.task-form').submit(function(e) {
+ $('#task-form').submit(function(e) {
  	//отмена действия по умолчанию для кнопки submit
  		e.preventDefault();
         var $form = $(this);
@@ -28,15 +32,15 @@ $('#close1').click(function(){
           	}
           	else if (data=='True') {
           		$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
-				$('#close').attr('value', data);
-				$('#popup_text').replaceWith("Ответ верный! Для продолжения нажмите ОК");
-				$(".popup").fadeIn(400)
+				      $('#close').attr('value', data);
+				      $('#popup_text').replaceWith("Ответ верный! Для продолжения нажмите ОК");
+				      $(".popup").fadeIn(400)
           	}
           	else {
-				$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
-				$('#close').attr('value', data);
-				$('#popup_text').replaceWith("Ответ верный! "+data);
-				$(".popup").fadeIn(400)
+				      $('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
+				      $('#close').attr('value', data);
+				      $('#popup_text').replaceWith("Ответ верный! " + data);
+				      $(".popup").fadeIn(400)
 	        }     	
         }
       });
@@ -55,7 +59,6 @@ var timer = setInterval(function() {
   duration = moment.duration(duration.asSeconds() - interval, 'seconds');
   var min = duration.minutes();
   var sec = duration.seconds();
-
   sec -= 1;
   if (min < 0) return clearInterval(timer);
   if (min < 10 && min.length != 2) min = '0' + min;
@@ -65,8 +68,8 @@ var timer = setInterval(function() {
   } else if (sec < 10 && length.sec != 2) sec = '0' + sec;
 
   $('.timer').text(min + ':' + sec);
-  if (min == 0 && sec == 0){
-  	clearInterval(timer);
+    if (min == 0 && sec == 0){
+      clearInterval(timer);
 		$.ajax({
   	  url: 'task',
   	  success: function(){

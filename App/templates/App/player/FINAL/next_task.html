@@ -3,7 +3,7 @@
 {% block title %}Задание{% endblock %}
 
 {% block popup %}
-<div id="popup" class="popup">
+<div id="popup_next" class="popup">
 	<div class="popup-block">
 		<p>Чтобы перейти к следующему заданию<br>Нажмите на кнопку "Перейти"</p>
 		<button id="close" class="button">Ок</button>
@@ -17,7 +17,11 @@
 	<h2 class="task-header">Название задания</h2>
 	<p class="text">Lorem ipsum – псевдо-латинский текст, который используется для веб дизайна, типографии, оборудования, и распечатки вместо английского текста для того, чтобы сделать ударение не на содержание, а на элементы дизайна. Такой текст также называется как заполнитель. Это очень удобный инструмент для моделей (макетов). Он помогает выделить визуальные элементы в документе или презентации, например текст, шрифт или разметка. 
 	<form action="task" method="GET" class="task-form">
+		{% if answer %}
 		<p class="task-answer">Ваш ответ: <span>{{answer}}</span></p>
+		{% endif %}
+		<p class="task-timer">Время до автоматического перехода на следующее задание:</p>
+		<p class="timer" id="timer"></p>
 		<p class="scores">Баллов получено: <span class="scores-value">{{points}}</span></p>
 		<br>
 		<input type="submit" name="submit" value="Перейти к следующему этапу" class="button" style="width: 250px;">
