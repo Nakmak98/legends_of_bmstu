@@ -129,12 +129,15 @@ body{
 	font-family: 'Neucha', sans-serif;
 	font-size: 60px;
 	color: #ec7370;
+	text-shadow: 1px 1px 14px black;
+
 }
 
 .task-header{
 	font-family: 'Neucha', sans-serif;
 	font-size: 36px;
 	color: whitesmoke;
+	text-shadow: 1px 1px 14px black;
 }
 
 .text{
@@ -228,12 +231,14 @@ span{
 	color: #441920;
 	position: relative;
     top: 65px;
+    text-shadow: 1px 1px 14px black;
 }
 
 .scores{
 	margin-top: 80px;
 	font-size: 20px;
 	color: whitesmoke;
+	text-shadow: 1px 1px 14px black;
 }
 
 .scores-value{
@@ -303,6 +308,7 @@ span{
 	font-family: 'Neucha', sans-serif;
 	font-size: 60px;
 	color: whitesmoke;
+	text-shadow: 1px 1px 14px black;
 }
 
 .text{
@@ -310,10 +316,12 @@ span{
 	font-size: 20px;
 	color: whitesmoke;
 	margin-bottom: 20px;
+	text-shadow: 1px 1px 14px black;
 }
 
 span{
 	color: whitesmoke;
+	text-shadow: 1px 1px 14px black;
 }
 
 .footer{

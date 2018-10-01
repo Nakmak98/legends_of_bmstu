@@ -384,13 +384,15 @@ def team_search_key(request):
 		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
 	#teamID = request.GET.get('teamID')
 	teamID = request.GET.get('teamID')
+	print(teamID)
 	if teamID is None:
 		return render(request, 'App/admin/moderator-search.html')
-	url = 'http://138.68.173.73:8080/moderator/photo/' + teamID
+	url = 'http://138.68.173.73:8080/moderator/photo/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	print(url)
 	r = requests.get(url,headers)
-	print(r)
+	print(r.status_code)
+	print(r.json())
 	return render(request, 'App/admin/moderator-search.html', r.json())
 
 def route(request):
