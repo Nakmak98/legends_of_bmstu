@@ -45,11 +45,13 @@ body {
 }
 
 .login_back{
-	background-color: rgba(255, 255, 255, 0.7);
-  	box-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
+    background-image: linear-gradient( 320deg, rgb(97,28,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 40%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 40%, rgb(156,69,52) 60%, rgb(229,165,131) 78%, rgb(229,165,133) 80%, rgb(251,218,177) 80%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
     grid-column: 2 / 4;
     grid-row: 3 / 4;
     z-index: 1;
+    opacity: .9;
+}
 }
 .login >div{
 	color: #441920;
@@ -68,10 +70,10 @@ body {
 }
 #Sign_in{
 	font-size: 20px;
-	color: #ec7370;
+	color: black;
 	width: 100px;
 	border-radius: 3px 3px 3px 3px;
-	background-color: white;
+	background-color: #fad9b0;
 	font-family: "Neucha";
 	margin:auto 45px;
 }
@@ -85,11 +87,15 @@ body {
 }
 
 #Enter{
-	color: #ec7370;
+	color: whitesmoke;
 	font-size: 45px;
 	margin-top: 30px;
 }
 
+form > div {
+	color: whitesmoke;
+	font-size: 20px;
+}
 .title-text{
 	position: absolute;
 	width: 100vw;
@@ -183,12 +189,13 @@ body {
 	cursor: pointer;
 }
 
+
 .menu-hidden{
 	position: fixed;
 	top: 0;
     left: -100%;
 	height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
+	background-image: linear-gradient( 140deg, rgb(97,43,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 20%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 58%, rgb(156,69,52) 60%, rgb(229,165,133) 60%, rgb(229,165,133) 90%, rgb(251,218,177) 80%);
 	font-family: "Neucha";
 	font-size: 20px;
 	text-align: center;

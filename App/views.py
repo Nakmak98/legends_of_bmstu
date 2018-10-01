@@ -241,21 +241,20 @@ def check_answer(request, r, answer):
 				return JsonResponse({'status': 'False', 'task_type': resp['task_type']})
 		if resp['task_type'] == 'EXTRA':
 			if resp['is_correct']:
-				return HttpResponse(resp['tooltip'])
+				return JsonResponse({'status': 'True', 'task_type': resp['task_type'], 'tooltip': resp['tooltip']})
 			else:
-				return HttpResponse('False')
+				return JsonResponse({'status': 'False', 'task_type': resp['task_type']})
 		else:
 			if resp['is_correct']:
-				return HttpResponse('True')
+				return JsonResponse({'status': 'True', 'task_type': resp['task_type']})
 			else:
-				return HttpResponse('False')
-	if r.status_code == 400:
+				return JsonResponse({'status': 'False', 'task_type': resp['task_type']})
+	if r.status_code >= 400:
+		# написать нормальные обработчики ошибок с вставкой сообщений в шаблон
+		# и инструкциями по дальнейшим действиям
 		msg = r.json()
 		msg = msg['message']
 		return HttpResponse(msg)
-	if r.status_code == 500:
-		msg = 'Произошла ошибка на сервере'
-		return HttpRespone(msg) 
 
 def send_answer(request):
 	task_id = cache.get('task_id')
@@ -289,7 +288,7 @@ def task_view(request):
 			duration = cache.get('duration')
 			started = cache.get('started')
 			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points, 'duration': duration, 'started': started })
-		if request.GET.get('submit') == 'Перейти к следующему этапу':
+		if (request.GET.get('submit') == 'Перейти к следующему этапу'):
 			r = get_next_task(request)
 			return check_task(request, r)
 		r = get_current_task(request)
@@ -305,15 +304,21 @@ def about_team(request):
 	return render(request, 'App/admin/about_team.html', r.json())
 
 def team_info(request):
-	teamID = cache.get('teamID')
+	teamID = request.COOKIES.get('team_id')
 	url = 'http://138.68.173.73:8080/player/team/' + str(teamID)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()
-	time = resp['start_time']
-	time = datetime.utcfromtimestamp(time).strftime('%Y.%m.%d %H:%M:%S')
-	resp.update({'start_time': time})
-	return render(request, 'App/player/team_page.html', resp)
+	print(resp)
+	try: 
+		time = resp['start_time']
+		time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
+		resp.update({'start_time': time})
+		return render(request, 'App/player/team_page.html', resp)
+	except KeyError: 
+		resp.update({'start_time': 'Уточняется'})
+		return render(request, 'App/player/team_page.html', resp)
+	
 
 def team_info_moderator(request):
 	teamID = cache.get('team_id')

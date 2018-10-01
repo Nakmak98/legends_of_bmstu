@@ -37,10 +37,27 @@ $('#close1').click(function(){
           		$(".popup").fadeIn(400)
           	}
           	else if (data.status == 'True' && data.task_type == 'FINAL') {
-              $('#popup_text').replaceWith("<p id='popup_text'>Ответ верный! Для продолжения нажмите ОК<br></p>");
           		$('.popup-block').replaceWith("<div class='popup-block'><p id='popup_text'>Ответ верный!<br>Для продолжения нажмите ОК</p><form method='GET' action='task' class='after-timer-form'><button id='close' name='next' value='True' class='button'>Ок</button></form></div> ");
 				      $(".popup").fadeIn(400)
           	}
+            else if (data.status == 'True' && data.task_type == 'PHOTO') {
+              $('.popup-block').replaceWith("<div class='popup-block'><p id='popup_text'>Ответ верный!<br>Для продолжения нажмите ОК</p><form method='GET' action='task' class='after-timer-form'><button id='close' name='submit' value='True' class='button'>Ок</button></form></div> ");
+              $(".popup").fadeIn(400)
+            }
+            else if (data.status == 'False' && data.task_type == 'PHOTO') {
+              $('#popup_text').replaceWith("<p id='popup_text'>Ответ неверный! Попробуйте снова<br></p>");
+              $('.after-timer-form').replaceWith("<button id='close' class='button'>OK<button");
+              $(".popup").fadeIn(400)
+            }
+             else if (data.status == 'True' && data.task_type == 'EXTRA') {
+              $('.popup-block').replaceWith("<div class='popup-block'><p id='popup_text'>Ответ верный!<br>" + data.tooltip + "</p><form method='GET' action='task' class='after-timer-form'><button id='close' name='submit' value='True' class='button'>Ок</button></form></div> ");
+              $(".popup").fadeIn(400)
+            }
+            else if (data.status == 'False' && data.task_type == 'EXTRA') {
+              $('#popup_text').replaceWith("<p id='popup_text'>Ответ неверный! Попробуйте снова<br></p>");
+              $('.after-timer-form').replaceWith("<button id='close' class='button'>OK<button");
+              $(".popup").fadeIn(400)
+            }
           	else {
 				      $('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
 				      $('#close').attr('value', data);
@@ -74,8 +91,9 @@ var timer = setInterval(function() {
   $('.timer').text(min + ':' + sec);
     if (min == 0 && sec == 0){
       clearInterval(timer);
-		$('#popup_text').replaceWith("К сожалению, время истекло. Переходите к следующему заданию");
-		$(".popup").fadeIn(400);
+    $('#block-timer').replaceWith("<div class='popup-block'><p id='popup_text'>К сожалению, время истекло<br>Для продолжения нажмите ОК</p><form method='GET' action='task' class='after-timer-form'><button id='close' name='next' value='True' class='button'>Ок</button></form></div> ");  
+		$('#popup_next').fadeIn(400);
+		$("#popup-timer").fadeIn(400);
 }
 }, 1000);
 

@@ -19,8 +19,23 @@ body{
 	left: 0;
 	height: 100vh;
 	width: 100vw;
-	background-image: url('img/bg.jpg');
+	background-color: #632B21;
 }
+
+.BG {
+  background-image: -moz-linear-gradient( 128deg, rgb(97,43,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 20%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 40%, rgb(156,69,52) 60%, rgb(229,165,133) 60%, rgb(229,165,133) 80%, rgb(251,218,177) 80%);
+  background-image: -webkit-linear-gradient( 128deg, rgb(97,43,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 20%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 40%, rgb(156,69,52) 60%, rgb(229,165,133) 60%, rgb(229,165,133) 80%, rgb(251,218,177) 80%);
+  background-image: -ms-linear-gradient( 128deg, rgb(97,43,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 20%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 40%, rgb(156,69,52) 60%, rgb(229,165,133) 60%, rgb(229,165,133) 80%, rgb(251,218,177) 80%);
+  opacity: 0.949;
+  box-shadow: 0px 3px 0px 250px rgba(0, 0, 0, 0.47),0px 3px 21.56px 0.44px rgba(0, 0, 0, 0.55);
+  position: absolute;
+  left: 1892px;
+  top: 0px;
+  width: 240px;
+  height: 568px;
+  z-index: 522;
+}
+
 
 .main{
 	position: relative;
@@ -32,7 +47,7 @@ body{
 	height: 50px;
 	width: 100vw;
 	z-index: 4;
-	background-color: rgba(255,255,255, 0.7);
+	background-color: rgba(252, 223, 194, 0.9);
 	box-shadow: 0 0 20px rgba(0,0,0,0.75);
 }
 
@@ -50,11 +65,11 @@ body{
 	margin-top: 12px;
 	font-size: 24px;
 	grid-column: 3 / 4;
-	color: #ec7370;
+	color: #612b1f;
 }
 
 .log-out{
-	margin-top: 12px;
+	margin-top: 6px;
 	grid-column-start: 4;
 }
 
@@ -80,14 +95,14 @@ body{
 	box-sizing: border-box;
 	text-align: center;
 	padding: 15px;
+	margin: 15px;
 	grid-row-start: 2;
 	grid-column-start: 1;
 	grid-column-end: 6;
-	background-color: rgba(255,255,255, 0.7);
+	background-image: linear-gradient( 34deg, rgb(97,43,31) 0%, rgb(97,43,31) 20%, rgb(105,50,38) 20%, rgb(113,57,44) 20%, rgb(113,57,44) 40%, rgb(156,69,52) 40%, rgb(156,69,52) 60%, rgb(229,165,133) 60%, rgb(229,165,133) 80%, rgb(251,218,177) 80%);
 	min-height: 650px;
 	height: 100%;
 	box-shadow: 0 0 20px rgba(0,0,0,0.75);
-	margin-bottom: -40px;
 }
 
 .col1{
@@ -281,7 +296,7 @@ span{
 .main-header{
 	font-family: 'Neucha', sans-serif;
 	font-size: 60px;
-	color: #ec7370;
+	color: whitesmoke;
 }
 
 .text{
@@ -292,7 +307,7 @@ span{
 }
 
 span{
-	color: #ec7370;
+	color: whitesmoke;
 }
 
 .footer{
@@ -342,7 +357,10 @@ span{
 	margin: 20px 0;
 }
 
-
+ol {
+	text-align: left;
+    margin-left: 30%;
+}
 .team_inf>div {
 	margin-left: 10px;
 }
@@ -387,6 +405,6 @@ tbody>tr>td:last-child {
 }
 
 thead {
-	background-color: rgba(113,103,100, 0.6);
-	color: #ec7370;
+	background-color: rgba(81,62,50, 0.9);
+	color: whitesmoke;
 }
