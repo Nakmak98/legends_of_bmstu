@@ -1,172 +1,41 @@
 {% extends "App/admin/admin-base.html" %}
-
+{% load staticfiles %}
 {% block title %}Маршрут{% endblock %}
 
 {% block content %}
-			<div class="check_knopka">
-				<div class="knopka">
+			<div class="tableButton_inTable">
+				<div class="tableButton_allTeams">
 					<label>
-                    <input class="checkbox" type="checkbox" name="checkbox-test">
-                    <span class="checkbox-custom"></span>
-                    <span class="label">Все команды</span>
-                </label>
-                </div>
-			</div>	
-			<div class="block2">
-				<div>КОМАНДА 1  "Name 1", участников: 5</div>
-				<div class="inf_block">
-					Время старта: 11:3<br>
-					Времени прошло: 11:08<br>
-					Этапов пройдено: 2/15<br>
-					Этапов провалено: 0<br>
-					Опережение графика: +3:15
-				</div>
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 1</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 2</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 3</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 4</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 5</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 6</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 7</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 8</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 9</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 10</p>
-					<p>5:35/10:00</p>
+                    	<input class="tableCheckbox checkbox2" type="checkbox">
+                    	<span class="tableCheckbox-custom checkbox2"></span>
+                    	<span class="tableCheckLabel">Все команды</span>
+                	</label>
 				</div>
 			</div>
 
-			<div class="block2">
-				<div>КОМАНДА 1  "Name 1", участников: 5</div>
-				<div class="inf_block">
-					Время старта: 11:3<br>
-					Времени прошло: 11:08<br>
-					Этапов пройдено: 2/15<br>
-					Этапов провалено: 0<br>
-					Опережение графика: +3:15
-				</div>
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 1</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-				<!-- <div class="triangle"></div> -->
+			<div class="listAllTeams">	
+				<div class="oneTeamInList">
+					<div class="headTeamInList">
+						<p>КОМАНДА 1&nbsp&nbsp&nbsp"NAME", участников: 5</p>
+					</div>
+					<div class="listAllCircleInTeam">
+						<div class = "blockWithCircle">
+							<div class="oneCircleInBlock"></div>
+							<p class="firstTextInBlock">ЭТАП 1</p>
+							<p class="secondTextInBlock"><span class="doneColorText">5:34</span>/10:00</p>
+							<div class="triangleInBlock"></div>
+						</div> 
+					</div>
 
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 2</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 3</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 4</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 5</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 6</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 7</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 8</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 9</p>
-					<p>5:35/10:00</p>
-					<div class="triangle"></div>
-				</div>
-
-				<div class="circle">
-					<div class="d1"></div>
-					<p>ЭТАП 10</p>
-					<p>5:35/10:00</p>
+					<div class="propInTeam">
+						<p> Время старта: 11:34 </p>
+						<p> Времени прошло: 11:08 </p>
+						<p> Этапов пройдено: 2/15 </p>
+						<p> Этапов провалено: 0 </p>
+						<p> Опережение графика: +3:15 </p>
+					</div>
 				</div>
 			</div>
- {% endblock %}
+		</div>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock %}

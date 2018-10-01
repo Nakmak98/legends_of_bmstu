@@ -8,7 +8,6 @@ urlpatterns = [
 	url(r'^logout$', views.logout_view, name='logout'),
 	url(r'^task$', views.task_view, name='task'), #just now
 	url(r'^score_table$', views.score_table, name='score_table'),
-	url(r'^about_team$', views.about_team, name='about_team'),
 	url(r'^route$', views.route, name='route'),
 	url(r'^team_info$', views.team_info, name='team_info'),
 	url(r'^team_info_moderator$', views.team_info_moderator, name='team_info_moderator'),

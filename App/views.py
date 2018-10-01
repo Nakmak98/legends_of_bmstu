@@ -294,14 +294,6 @@ def task_view(request):
 		r = get_current_task(request)
 		return check_task(request, r)
 	
-def about_team(request):
-	if request.user != 'MODERATOR':
-		return render('App/main/error.html', {'error_msg': 'Необходимо обладать правами модератора, чтобы просматривать эту страницу'})
-	teamID = request.GET.get('teamID')
-	url = 'http://138.68.173.73:8080/moderator/team/1' #+teamID
-	headers = {'Content-Type': 'application/json'}
-	r = requests.get(url,headers)
-	return render(request, 'App/admin/about_team.html', r.json())
 
 def team_info(request):
 	teamID = request.COOKIES.get('team_id')
@@ -405,8 +397,8 @@ def route(request):
 	if request.user != 'ADMIN':
 		return render(request, 'App/main/error.html', {'error_msg': 'Необходимо обладать правами администратора, чтобы просматривать эту страницу'})
 	if request.is_ajax():
-		full = request.GET.get('isCheckbox')
-		url = 'http://138.68.173.73:8080/moderator/team/' + full	
+		full = request.GET.get('isCheckbox2')
+		url = 'http://138.68.173.73:8080/admin/router?full=' + full	
 		headers = {'Content-Type': 'application/json'}
 		r = requests.get(url,headers)
 		print(r.json())
