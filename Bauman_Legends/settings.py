@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['138.68.173.73',
                 '127.0.0.1',
-                u'легендыбауманки.рф']
+                u'xn--80aabhfeb2arcrif5f1f.xn--p1ai']
 
 # Application definition
 
