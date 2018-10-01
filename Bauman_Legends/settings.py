@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for Bauman_Legends project.
 
@@ -9,9 +10,8 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+from __future__ import unicode_literals
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,15 +26,15 @@ SECRET_KEY = 'o=!w_2_gnx+gdwl(e$$0z1ee)mqe_a+b#p!@+!c9)ymgf_8_vy'
 DEBUG = True
 
 ALLOWED_HOSTS = ['138.68.173.73',
-                '127.0.0.1']
-
+                '127.0.0.1',
+                u'легендыбауманки.рф']
 
 # Application definition
 
 INSTALLED_APPS = [
     'App',
     #'django.contrib.admin',
-    'django.contrib.auth',
+    #'django.contrib.auth',
     'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',
@@ -49,7 +49,7 @@ MIDDLEWARE = [
     #'django.middleware.csrf.CsrfViewMiddleware',
     #'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'Bauman_Legends.urls'
@@ -83,12 +83,16 @@ DATABASES = {
     }
 }
 
+def make_key(key, key_prefix, version):
+    return key
+
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
+        'KEY_FUNCTION' : make_key
     }
 }
 

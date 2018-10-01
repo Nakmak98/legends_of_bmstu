@@ -5,6 +5,9 @@ $(document).ready(function(){
 $('#close').click(function(){
 	$(".popup").fadeOut(400);
 });
+$('html').on('click', '#close', function(){
+  $(".popup").fadeOut(400);
+});
 
 $('#prompt').click(function(){
 	$('#popup_text').replaceWith("Эта задачка не так сложна, как ты думаешь");
@@ -25,21 +28,23 @@ $('#close1').click(function(){
           url: $form.attr('action'),
           data: $form.serialize(),
           success: function(data){
-          	if (data == 'False') {
-          		$('#popup_text').replaceWith("Ответ неверный! Попробуйте снова");
-          		$('.after-timer-form').attr('method','GET');
+            console.log(typeof(data))
+            console.log(data.status)
+            console.log(data.task_type)
+          	if (data.status == 'False' && data.task_type == 'FINAL') {
+          		$('#popup_text').replaceWith("<p id='popup_text'>Ответ неверный! Попробуйте снова<br></p>");
+          		$('.after-timer-form').replaceWith("<button id='close' class='button'>OK<button");
           		$(".popup").fadeIn(400)
           	}
-          	else if (data=='True') {
-          		$('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
-				      $('#close').attr('value', data);
-				      $('#popup_text').replaceWith("Ответ верный! Для продолжения нажмите ОК");
+          	else if (data.status == 'True' && data.task_type == 'FINAL') {
+              $('#popup_text').replaceWith("<p id='popup_text'>Ответ верный! Для продолжения нажмите ОК<br></p>");
+          		$('.popup-block').replaceWith("<div class='popup-block'><p id='popup_text'>Ответ верный!<br>Для продолжения нажмите ОК</p><form method='GET' action='task' class='after-timer-form'><button id='close' name='next' value='True' class='button'>Ок</button></form></div> ");
 				      $(".popup").fadeIn(400)
           	}
           	else {
 				      $('#close').replaceWith("<button id='close' name='answer' class='button'>Ок</button>");
 				      $('#close').attr('value', data);
-				      $('#popup_text').replaceWith("Ответ верный! " + data);
+				      $('#popup_text').replaceWith(data);
 				      $(".popup").fadeIn(400)
 	        }     	
         }
@@ -47,15 +52,14 @@ $('#close1').click(function(){
     });
 
 // timer 
-started = $.cookie('started');
-duration = $.cookie('duration');
+var started = document.getElementById('started').textContent;
+var duration = document.getElementById('duration').textContent;
 timer = duration - (moment().unix() - started);  
 var duration = moment.duration(timer, 'seconds');
 var timestamp = new Date(0, 0, 0, 2, 10, 30);
 var interval = 1;
 var timer = setInterval(function() {
   timestamp = new Date(timestamp.getTime() + interval * 1000);
-
   duration = moment.duration(duration.asSeconds() - interval, 'seconds');
   var min = duration.minutes();
   var sec = duration.seconds();
@@ -70,13 +74,8 @@ var timer = setInterval(function() {
   $('.timer').text(min + ':' + sec);
     if (min == 0 && sec == 0){
       clearInterval(timer);
-		$.ajax({
-  	  url: 'task',
-  	  success: function(){
 		$('#popup_text').replaceWith("К сожалению, время истекло. Переходите к следующему заданию");
 		$(".popup").fadeIn(400);
-  	}
-  });
 }
 }, 1000);
 

@@ -20,11 +20,13 @@
 		{% if answer %}
 		<p class="task-answer">Ваш ответ: <span>{{answer}}</span></p>
 		{% endif %}
+		<div style="display: none;" id="duration">{{duration}}</div>
+		<div style="display: none;" id="started">{{started}}</div>
 		<p class="task-timer">Время до автоматического перехода на следующее задание:</p>
 		<p class="timer" id="timer"></p>
 		<p class="scores">Баллов получено: <span class="scores-value">{{points}}</span></p>
 		<br>
-		<input type="submit" name="submit" value="Перейти к следующему этапу" class="button" style="width: 250px;">
+		<input id="next_task" type="submit" name="submit" value="Перейти к следующему этапу" class="button" style="width: 250px;">
 	</form>
 	<div class="footer"><p>Легенды Бауманки 2018 <a href="https://www.livy.website"> Веб-студия LivY</a></p></div>
 </div>

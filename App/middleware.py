@@ -7,13 +7,16 @@ class CheckSessionMiddleware():
 
 	def __call__(self, request):
 		sessid = request.COOKIES.get('sessid')
-		user = request.COOKIES.get('teamType')
+		user = request.COOKIES.get('team_type')
 		session_id = cache.get('sessid')
-		if session_id is None:
+		if session_id != sessid:
 			request.session = None
 			request.user = None
 			HttpResponseRedirect('login')
-		request.user = user
+		else:
+			print('success login')
+			request.user = user
+			print(request.user)
 		return self.get_response(request)		
 		
 
