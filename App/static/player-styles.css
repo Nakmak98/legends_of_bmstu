@@ -134,7 +134,7 @@ body{
 .task-header{
 	font-family: 'Neucha', sans-serif;
 	font-size: 36px;
-	color: #ec7370;
+	color: whitesmoke;
 }
 
 .text{
@@ -184,7 +184,7 @@ span{
 }
 .button{
 	font-size: 20px;
-	color: #ec7370;
+	color: black;
 	width: 130px;
 	height: 40px;
 	border-radius: 3px 3px 3px 3px;
@@ -201,6 +201,8 @@ span{
 }
 
 .task-timer {
+	position: relative;
+    top: 56px;
 	font-size: 18px;
 }
 
@@ -224,25 +226,29 @@ span{
 .timer{
 	font-size: 36px;
 	color: #441920;
+	position: relative;
+    top: 65px;
 }
 
 .scores{
 	margin-top: 80px;
 	font-size: 20px;
-	color: #441920;
+	color: whitesmoke;
 }
 
 .scores-value{
-	color: #441920;
+	color: whitesmoke;
 }
 
 .task-answer{
 	font-size: 20px;
-	color: #441920;
+	color:  whitesmoke;
+	position: relative;
+    top: 53px;
 }
 
 .task-answer>span{
-	color: #441920;
+	color: whitesmoke;
 }
 
 .after-timer-form {
@@ -302,7 +308,7 @@ span{
 .text{
 	font-family: 'Neucha', sans-serif;
 	font-size: 20px;
-	color: #441920;
+	color: whitesmoke;
 	margin-bottom: 20px;
 }
 
