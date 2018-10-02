@@ -26,11 +26,7 @@ def logout_view(request):
 	key=request.COOKIES.get('sessid')
 	response = HttpResponseRedirect('login')
 	response.delete_cookie('sessid')
-	response.delete_cookie('team_type')
-	response.delete_cookie('team_id')
-	cache.delete('sessid')
-	cache.delete('team_type')
-	cache.delete('teamID')
+	cache.delete(key)
 	return response
 
 def login_view(request):
@@ -40,12 +36,10 @@ def login_view(request):
 		password = request.POST.get('password')
 		url = request.POST.get('continue', '/')
 		sessid = do_login(login,password)
-		if sessid['sessid'] is not None:
+		if sessid['sessid'] != None:
 			response = HttpResponseRedirect(url)
 			response.set_cookie('sessid', sessid['sessid'])
-			response.set_cookie('team_type', sessid['teamType'])
-			response.set_cookie('team_id', sessid['teamID'])
-			print('send-response')
+			print(sessid['sessid'])
 			return response
 		else: 
 			error = u'Неверный логин / пароль'
@@ -62,17 +56,19 @@ def do_login(login, password):
 	 	'password': password
 	 }
 	r = requests.post(url, json=json_text, headers=headers)
+	print(r.status_code)
 	if (r.status_code == 200):
 		sessid = get_random_string(length=32)
-		cache.set('sessid', sessid,3600*3)
 		json_response = r.json()
-		teamType = json_response['teamType']
-		teamID = json_response['teamID']
-		print(json_response['teamID'])
+		team_type = json_response['teamType']
+		team_id = json_response['teamID']
+		user_info = {'team_id': team_id, 'team_type': team_type}
+		cache.set(sessid, user_info, 3600*3)
+		print(cache.get(sessid))
 	else:
 		sessid = None
-		teamType = None
-	return {'sessid': sessid, 'teamType': teamType, 'teamID': teamID}
+		print(sessid)
+	return {'sessid': sessid}
 
 def addMembertoJson(request, registration_data):
 	first_name = 'memberFirstName'
@@ -116,7 +112,7 @@ def signup(request):
 	#Добавление новых участников команды для отправки на игровой сервер
 			addMembertoJson(request,registration_data)
 	  		r = requests.post(url, json=registration_data, headers=headers)
-	  		return HttpResponseRedirect('signup')
+	  		return render(request,'App/admin/signup.html', {'msg': 'Команда успешно зарегистрирована'})
 	  	else:
 	  		return render(request, 'App/admin/signup.html')
 	else: 
@@ -181,7 +177,7 @@ def render_task_photo_or_extra(request, resp):
 	task_id = resp['task_id']	
 	task_type = resp['task_type']
 	points = resp['points']
-	template = 'App/player/' + task_type + '/' +'task.html'
+	template = 'App/player/' + task_type + '/' +'34.html'
 	cache.set_many({'points': points,
 					'task_id': task_id,
 					'task_type': task_type})
@@ -215,19 +211,10 @@ def check_task(request, r):
 			print('print cache')
 			print(data)
 			return render(request, template, data)
-	if r.status_code == 204:
-		weekday = datetime.today().weekday()
-		if (weekday > 0) and (weekday != 5):
-			msg = 'Ждём вас в понедельник'	
-		if weekday == 5:
-			msg = 'Первый этап закончен. Подходите 12.10 в выбранное время на портал в гз'
-		#return render(request, 'App/player/no-info.html', msg)
 		return HttpResponse(msg)
 	if r.status_code >= 400:
-		# ошибка 403: сначала ответьте на текущее задание. Нужно перевести игрока на current_task
-		# с помощью подсказок либо автоматом
-		# на остальные сообщения нужно сделать шаблон с выходом в главное меню и выводом сообщения 
-		# об ошибке и дальнейшими инструкциями 
+		# по id доп экрана выдать доп экран
+		#  если не лежит то get current task()
 		return HttpResponse(resp['message'])
 
 def check_answer(request, r, answer):
@@ -287,7 +274,8 @@ def task_view(request):
 			points = cache.get('points')
 			duration = cache.get('duration')
 			started = cache.get('started')
-			return render(request, 'App/player/FINAL/next_task.html', {'answer': answer, 'points': points, 'duration': duration, 'started': started })
+			return render(request, 'App/player/FINAL/next_task.html',
+						 {'answer': answer, 'points': points, 'duration': duration, 'started': started })
 		if (request.GET.get('submit') == 'Перейти к следующему этапу'):
 			r = get_next_task(request)
 			return check_task(request, r)

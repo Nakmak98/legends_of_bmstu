@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['138.68.173.73',
 INSTALLED_APPS = [
     'App',
     #'django.contrib.admin',
-    #'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',

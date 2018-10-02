@@ -325,6 +325,14 @@ span{
 	color: #ec7370;
 }
 
+.login_error {
+	grid-column: 2 / 4;
+	grid-row: 4 / 5;
+	color: #ff002d;
+	text-align: center;
+	margin-top: 20px;
+}
+
 .footer{
 	position: absolute;
 	

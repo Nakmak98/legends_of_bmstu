@@ -338,6 +338,13 @@ label[for="memberFirstName"] {
 	cursor: pointer;
 }
 
+.popup {
+
+	grid-column: 4 / 8;
+	grid-row: 4 / 5;
+	background-color: #333;	
+}
+
 .start-finish {
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
@@ -881,3 +888,5 @@ input[name="teamID"] {
 .unfinishedStatus{
 	color: #f2d658;
 }
+
+
