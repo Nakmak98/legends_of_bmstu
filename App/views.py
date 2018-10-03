@@ -4,10 +4,12 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext, loader
 import requests, json
-from django.core.cache import cache,caches  
+from django.core.cache import cache,caches
 from django.utils.crypto import get_random_string
-from datetime import datetime, timedelta	
+from datetime import datetime, timedelta
+from time import time
 # Create your views here.
+
 
 def home(request):
 	if request.user == 'MODERATOR':
@@ -19,8 +21,10 @@ def home(request):
 	if request.user is None:
 		return HttpResponseRedirect('login')
 
+
 def test(request):
 	return HttpResponse(request.user)
+
 
 def logout_view(request):
 	key=request.COOKIES.get('sessid')
@@ -28,6 +32,7 @@ def logout_view(request):
 	response.delete_cookie('sessid')
 	cache.delete(key)
 	return response
+
 
 def login_view(request):
 	error = ''
@@ -41,9 +46,10 @@ def login_view(request):
 			response.set_cookie('sessid', sessid['sessid'])
 			print(sessid['sessid'])
 			return response
-		else: 
+		else:
 			error = u'Неверный логин / пароль'
 	return render(request, 'App/auth/login.html', {'error': error})
+
 
 def do_login(login, password):
 	from django.core.cache import cache
@@ -70,6 +76,7 @@ def do_login(login, password):
 		print(sessid)
 	return {'sessid': sessid}
 
+
 def addMembertoJson(request, registration_data):
 	first_name = 'memberFirstName'
 	second_name = 'memberSecondName'
@@ -79,8 +86,9 @@ def addMembertoJson(request, registration_data):
 		member = {
 		'first_name': request.POST.get(first_name+str(i)),
 		'second_name': request.POST.get(second_name+str(i))
-		}					
+		}
 		add_member(member,registration_data)
+
 
 def signup(request):
 	if request.user == 'MODERATOR':
@@ -101,21 +109,21 @@ def signup(request):
 		      	{
 					"first_name": request.POST.get('memberFirstName2'),
 					"second_name": request.POST.get('memberSecondName2')
-				},	  
+				},
 				{
 					"first_name": request.POST.get('memberFirstName3'),
 					"second_name": request.POST.get('memberSecondName3')
-				}	  		
+				}
 		    ]
 	  		}
-	  		
+
 	#Добавление новых участников команды для отправки на игровой сервер
 			addMembertoJson(request,registration_data)
 	  		r = requests.post(url, json=registration_data, headers=headers)
 	  		return render(request,'App/admin/signup.html', {'msg': 'Команда успешно зарегистрирована'})
 	  	else:
 	  		return render(request, 'App/admin/signup.html')
-	else: 
+	else:
 		return HttpResponse("Эта страница доступна только модераторам")
 
 
@@ -125,12 +133,14 @@ def add_member(member,registration_data):
  		else:
  			return
 
+
 def proxy_request(request):
 	full = request.GET.get('isCheckbox')
 	url='http://138.68.173.73:8080/moderator/team?full='+full
 	headers = {'Content-Type': 'application/json'}
 	r=requests.get(url,headers=headers)
 	return r.json()
+
 
 def score_table(request):
 	if request.is_ajax():
@@ -141,40 +151,35 @@ def score_table(request):
 			return render(request,'App/admin/score_table_moderator.html')
 		if request.user == 'ADMIN':
 			return render(request,'App/admin/score_table_admin.html')
-	
 
 
 def get_current_task(request):
-	print('get current task')
-	teamID = request.COOKIES.get('team_id')
-	print(teamID)
-	url = 'http://138.68.173.73:8080/player/task/' + str(teamID)
-	headers = {'Content-Type': 'application/json'}
-	r = requests.get(url,headers)
-	print(r.json())
-	return r
+	team_task = get_team_task(request)
+	print(team_task)
+	return team_task
+
 
 def get_next_task(request):
-	print('get next task')
-	task_id = cache.get('task_id')
-	team_id = request.COOKIES.get('team_id')
-	task_type = cache.get('task_type')
-	print(task_type)
-	print(team_id)
+	team_task = get_team_task(request)
+	user_task = get_user_task(request)
+
+	if team_task['task_id'] != user_task['task_id']:
+		# TODO: вернуть current_task с окошком о не акутальном задании
+		return None
+
+	if not team_task['is_answered']:
+		# TODO: вернуть current_task с окошком о том, что команда уже перешла к следующему
+		return None
+
 	url = 'http://138.68.173.73:8080/player/next'
 	headers = {'Content-Type': 'application/json'}
-	data =  {
-	   "team_id": team_id,
-	   "task_id": task_id,
-	   "task_type": task_type
-	  }
-	print(data)
-	r = requests.post(url, json=data, headers=headers)
-	print(r.json())
-	return r
+	response = requests.post(url, json=team_task, headers=headers)
+	# TODO: check code of response
+	return response
+
 
 def render_task_photo_or_extra(request, resp):
-	task_id = resp['task_id']	
+	task_id = resp['task_id']
 	task_type = resp['task_type']
 	points = resp['points']
 	template = 'App/player/' + task_type + '/' +'34.html'
@@ -182,6 +187,7 @@ def render_task_photo_or_extra(request, resp):
 					'task_id': task_id,
 					'task_type': task_type})
 	return render(request, template, resp)
+
 
 def check_task(request, r):
 	resp = r.json()
@@ -200,9 +206,9 @@ def check_task(request, r):
 		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
 			return render_task_photo_or_extra(request, resp)
 		else:
-			task_id = resp['task_id']	
+			task_id = resp['task_id']
 			task_type = resp['task_type']
-			points = resp['points']	
+			points = resp['points']
 			started = resp['start_time']
 			duration = resp['duration']
 			template = 'App/player/' + task_type + '/' +'task.html'
@@ -221,7 +227,7 @@ def check_answer(request, r, answer):
 	resp = r.json()
 	print(resp)
 	if r.status_code == 202:
-		if resp['task_type'] == 'FINAL':		
+		if resp['task_type'] == 'FINAL':
 			if resp['is_correct']:
 				return JsonResponse({'status': 'True', 'task_type': resp['task_type']})
 			else:
@@ -265,11 +271,11 @@ def send_answer(request):
 
 def task_view(request):
 	if request.is_ajax(): # answer comes from ajax-request
-		if request.method == 'POST': 
+		if request.method == 'POST':
 			print('sended answer')
-			return send_answer(request)	
+			return send_answer(request)
 	if request.method == 'GET':
-		if request.GET.get('next'):		
+		if request.GET.get('next'):
 			answer = cache.get('answer')
 			points = cache.get('points')
 			duration = cache.get('duration')
@@ -281,24 +287,24 @@ def task_view(request):
 			return check_task(request, r)
 		r = get_current_task(request)
 		return check_task(request, r)
-	
 
-def team_info(request):
-	teamID = request.COOKIES.get('team_id')
-	url = 'http://138.68.173.73:8080/player/team/' + str(teamID)
+
+def team_info_player(request):
+	team_id = get_team_id(request)
+	url = 'http://138.68.173.73:8080/player/team/' + str(team_id)
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()
 	print(resp)
-	try: 
+	try:
 		time = resp['start_time']
 		time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
 		resp.update({'start_time': time})
 		return render(request, 'App/player/team_page.html', resp)
-	except KeyError: 
+	except KeyError:
 		resp.update({'start_time': 'Уточняется'})
 		return render(request, 'App/player/team_page.html', resp)
-	
+
 
 def team_info_moderator(request):
 	teamID = cache.get('team_id')
@@ -306,13 +312,14 @@ def team_info_moderator(request):
 	headers = {'Content-Type': 'application/json'}
 	r = requests.get(url,headers)
 	resp = r.json()
-	try: 
+	try:
 		time = resp['start_time']
 		time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %H:%M:%S')
 		resp.update({'start_time': time})
 		return render(request, 'App/player/moderator_team_page.html', resp)
-	except KeyError: 
-		return HttpResponseRedirect('/') 
+	except KeyError:
+		return HttpResponseRedirect('/')
+
 
 def team_search(request):
 	if request.user != 'MODERATOR':
@@ -327,19 +334,20 @@ def team_search(request):
 		if r.status_code == 200:
 			resp = r.json()
 			print(resp)
-			try: 
+			try:
 				time = resp['start_time']
 				time = datetime.utcfromtimestamp(float(time)).strftime('%Y.%m.%d %M:%S')
 				resp.update({'start_time': str(time)})
-			except KeyError: 
-				HttpResponseRedirect('/') 
+			except KeyError:
+				HttpResponseRedirect('/')
 			except TypeError:
 				resp.update({'start_time': 'Уточняется'})
 			return render(request, 'App/admin/start-finish.html', resp)
 		if r.status_code >=400:
 			return render(request, 'App/admin/start-finish.html', {'error_msg': 'Данных о запрашиваемой команде не существует'})
-	else: 
+	else:
 		return render(request, 'App/admin/start-finish.html')
+
 
 def start(request):
 	if request.method == 'POST':
@@ -354,6 +362,7 @@ def start(request):
 			return render(request, 'App/admin/start-finish.html', {'success':'Команда стартовала'})
 		else:
 			return render(request, 'App/admin/start-finish.html', r.json())
+
 
 def finish(request):
 	if request.method == 'POST':
@@ -383,12 +392,13 @@ def team_search_key(request):
 	print(r.json())
 	return render(request, 'App/admin/moderator-search.html', r.json())
 
+
 def route(request):
 	if request.user != 'ADMIN':
 		return render(request, 'App/main/error.html', {'error_msg': 'Необходимо обладать правами администратора, чтобы просматривать эту страницу'})
 	if request.is_ajax():
 		full = request.GET.get('isCheckbox2')
-		url = 'http://138.68.173.73:8080/admin/router?full=' + full	
+		url = 'http://138.68.173.73:8080/admin/router?full=' + full
 		headers = {'Content-Type': 'application/json'}
 		r = requests.get(url,headers)
 		print(r.json())
@@ -396,3 +406,42 @@ def route(request):
 	return render(request,'App/admin/route.html')
 
 
+def get_team_id(request):
+	session_id = request.COOKIES.get('sessid')
+	user_info = cache.get(session_id)
+	return user_info['team_id']
+
+
+def get_team_task(request):
+	team_id = get_team_id(request)
+	team_task = cache.get('team_id-' + team_id)
+
+	if team_task is not None:
+		return team_task
+
+	url = 'http://138.68.173.73:8080/player/task/' + str(team_id)
+	headers = {'Content-Type': 'application/json'}
+	response = requests.get(url, headers)
+
+	body = response.json()
+	update_team_task(team_id, body)
+
+	return body
+
+
+def get_user_task(request):
+	post = request.POST
+	return {
+		'task_id': post.get('task_id'),
+		'task_type': post.get('task_type'),
+		'is_answered': post.get('is_answered')
+	}
+
+
+def update_team_task(team_id, task):
+	if task['is_finished']:
+		ttl = 15 * 60
+	else:
+		current_time = time()
+		ttl = task['duration'] - (current_time - task['start_time'])
+	cache.set('team_id-' + team_id, task, ttl)
