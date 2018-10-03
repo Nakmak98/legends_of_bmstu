@@ -164,6 +164,9 @@ def get_next_task(request):
 	user_task = get_user_task(request)
 
 	if team_task['task_id'] != user_task['task_id']:
+		team_task.update({'next_task': True})
+		template = 'App/player' + team_task['task_type'] + '/' + 'task.html'
+		return render(request, template, team_task)
 		# TODO: вернуть current_task с окошком о не акутальном задании
 		return None
 
@@ -189,39 +192,27 @@ def render_task_photo_or_extra(request, resp):
 	return render(request, template, resp)
 
 
-def check_task(request, r):
-	resp = r.json()
-	print('check task')
-	print(r.status_code)
-	print(resp)
-	if r.status_code == 200:
-		if resp['is_finished']:
-			return HttpResponse("Вы прошли все задания текущего этапа")
-		if resp['is_answered']:
-			points = cache.get('points')
-			duration = cache.get('duration')
-			started = cache.get('started')
-			print("is_answered")
-			return render(request, 'App/player/FINAL/next_task.html', {'points': points, 'duration': duration, 'started': started})
-		if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
-			return render_task_photo_or_extra(request, resp)
-		else:
-			task_id = resp['task_id']
-			task_type = resp['task_type']
-			points = resp['points']
-			started = resp['start_time']
-			duration = resp['duration']
-			template = 'App/player/' + task_type + '/' +'task.html'
-			cache.set_many({'points': points,'task_id': task_id,'task_type': task_type,'duration': duration,'started': started})
-			data=cache.get_many(['points','task_id','task_type','duration','started'])
-			print('print cache')
-			print(data)
-			return render(request, template, data)
-		return HttpResponse(msg)
-	if r.status_code >= 400:
-		# по id доп экрана выдать доп экран
-		#  если не лежит то get current task()
-		return HttpResponse(resp['message'])
+def check_task(request, resp):
+	if resp['is_finished']:
+		return HttpResponse("Вы прошли все задания текущего этапа")
+	if resp['is_answered']:
+		points = cache.get('points')
+		duration = cache.get('duration')
+		started = cache.get('started')
+		print("is_answered")
+		return render(request, 'App/player/FINAL/next_task.html', {'points': points, 'duration': duration, 'started': started})
+	if resp['task_type'] == 'PHOTO' or resp['task_type'] == 'EXTRA':
+		return render_task_photo_or_extra(request, resp)
+	else:
+		template = 'App/player/' + resp['task_type'] + '/' + 'task.html'
+		return render(request, template, resp)
+
+
+
+	# if r.status_code >= 400:
+	# 	# по id доп экрана выдать доп экран
+	# 	#  если не лежит то get current task()
+	# 	return HttpResponse(resp['message'])
 
 def check_answer(request, r, answer):
 	resp = r.json()
@@ -414,7 +405,7 @@ def get_team_id(request):
 
 def get_team_task(request):
 	team_id = get_team_id(request)
-	team_task = cache.get('team_id-' + team_id)
+	team_task = cache.get('team_id-' + str(team_id))
 
 	if team_task is not None:
 		return team_task
@@ -434,7 +425,10 @@ def get_user_task(request):
 	return {
 		'task_id': post.get('task_id'),
 		'task_type': post.get('task_type'),
-		'is_answered': post.get('is_answered')
+		'is_answered': post.get('is_answered'),
+		'points': post.get('points'),
+		'duration': post.get('duration'),
+		'started': post.get('start_time')
 	}
 
 
@@ -444,4 +438,4 @@ def update_team_task(team_id, task):
 	else:
 		current_time = time()
 		ttl = task['duration'] - (current_time - task['start_time'])
-	cache.set('team_id-' + team_id, task, ttl)
+	cache.set('team_id-' + str(team_id), task, ttl)
