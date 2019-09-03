@@ -2,7 +2,6 @@
     <div>
         <input :type="type" :name="name" :value="value" :placeholder="placeholder">
     </div>
-
 </template>
 
 <script>

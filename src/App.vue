@@ -1,13 +1,30 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Sign In</router-link> |
-      <router-link to="/sign_up">Sign Up</router-link> |
+      <router-link to="/">Home</router-link> |
       <router-link to="/account">Account</router-link> 
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'app',
+    data: function(){
+      return {
+        test: ''
+      }
+    },
+    methods: {
+      sayhi: function () {
+        this.$on('hi', function (msg) {
+          console.log(msg)
+        })
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
 #app {

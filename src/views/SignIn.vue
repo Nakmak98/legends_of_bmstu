@@ -1,18 +1,20 @@
 <template>
     <div>
-      <label for="login">Логин</label>
-      <input v-model="login" type="text" name="login" requiered>
-      <label for="password">Пароль</label>
-      <input v-model="password" type="password" name="password" requiered>
+        <BaseInput type="text" placeholder="Логин"></BaseInput>
+        <BaseInput type="password" placeholder="Пароль"></BaseInput>
     </div>
 </template>
 
 <script>
+    import BaseInput from "../components/BaseInput";
 export default {
   name: 'SignIn',
+    components: {
+      BaseInput
+    },
   data: function() {
     return {
-      login: '',
+      login: 'asd',
       password:''
     }
   },
