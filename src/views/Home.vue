@@ -21,23 +21,7 @@ export default {
       info: 'hi'
     }
   },
-  beforeCreate() {
-    Axios
-            .get('http://5.23.54.233:8080/auth/info', {
-              // mode: 'cors',
-              // crossdomain: true
-              // headers: {'Access-Control-Allow-Origin': '*'}
-            })
-            .then(response => {
-              this.$store.commit('setUserData', response.data)
-            })
-            .catch(error => {
-              if (error.response) {
-                this.$router.push("/auth")
-              }
 
-    })
-  },
 }
 
 // function checkUser(){

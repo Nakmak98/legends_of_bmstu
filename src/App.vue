@@ -9,18 +9,13 @@
 </template>
 
 <script>
+
   export default {
+
     name: 'app',
-    data: function(){
+    data: function () {
       return {
         test: ''
-      }
-    },
-    methods: {
-      sayhi: function () {
-        this.$on('hi', function (msg) {
-          console.log(msg)
-        })
       }
     }
   }

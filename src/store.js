@@ -8,8 +8,13 @@ export default new Vuex.Store({
     user: {}
   },
   mutations: {
-    serUserData(state, data){
+    setUserData(state, data){
       state.user = data;
+    }
+  },
+  getters: {
+    checkUserData: state => {
+      return "user_id" in state.user
     }
   },
   actions: {

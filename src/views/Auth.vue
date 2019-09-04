@@ -1,21 +1,15 @@
 <template>
     <div class="auth">
-        <BaseButton button-text="Войти"></BaseButton>
-        <BaseButton button-text="Зарегистрироваться"></BaseButton>
+        <button @click="$router.push('/sign_in')">Войти</button>
+        <button @click="$router.push('/sign_up')">Зарегистрироваться</button>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-    import BaseButton from "@/components/BaseButton";
     export default {
-        name: "Auth",
-        components: {
-            BaseButton
-        },
-
+        name: "Auth"
     }
-
-
 </script>
 
 <style scoped>

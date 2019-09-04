@@ -1,24 +1,27 @@
 <template>
     <div>
-        <BaseInput type="text" placeholder="Логин"></BaseInput>
-        <BaseInput type="password" placeholder="Пароль"></BaseInput>
+        <input type="text" placeholder="Логин" v-model="login">
+        <input type="password" placeholder="Пароль" v-model="password">
+        <button @click="signIn">Войти</button>
     </div>
 </template>
 
 <script>
-    import BaseInput from "../components/BaseInput";
+
+    // import Axios from 'axios';
 export default {
   name: 'SignIn',
-    components: {
-      BaseInput
-    },
   data: function() {
     return {
-      login: 'asd',
+      login: '',
       password:''
     }
   },
-  methods: {}
+  methods: {
+      signIn: function () {
+        // Axios('/auth/sign_in')
+      }
+  }
 }
 </script>
 
