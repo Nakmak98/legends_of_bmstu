@@ -28,6 +28,7 @@
                 },
 
                 confirm_password: '',
+                //TODO: имплементировать сообщение валидации в отдельный компонент
                 validationMessage: ''
             }
         },
@@ -36,7 +37,7 @@
                if(valid(this)){
                    this.validationMessage = '';
                    Axios
-                       .post('/auth/sign_up', this.request_body)
+                       .post('/user/sign_up', this.request_body)
                        .then(response => {
                            console.log(response.data)
                            console.log(response.status)
@@ -44,6 +45,7 @@
                            this.$router.push("/account")
                        })
                        .catch(error => {
+                           console.log(error)
                            this.validationMessage = "Поля заполнены неверно, пожалуйста заполните их соответсвенно подсказкам(которых пока нет)"
                        })
                }

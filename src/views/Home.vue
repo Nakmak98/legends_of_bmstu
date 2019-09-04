@@ -8,7 +8,6 @@
 <script>
 // @ is an alias to /src
 import SignIn from '@/views/SignIn.vue'
-import {api} from "../api";
 import Axios from 'axios'
 
 export default {

@@ -4,7 +4,6 @@
 </template>
 <script>
   import Axios from 'axios'
-  // import {api} from 'api'
 
   export default {
     name: "account",
@@ -20,7 +19,7 @@
     beforeCreate() {
       if (!this.$store.getters.checkUserData) {
         Axios
-                .get('/auth/info')
+                .get('/user/info')
                 .then(response => {
                   this.$store.commit('setUserData', response.data)
                 })
