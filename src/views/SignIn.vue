@@ -27,8 +27,10 @@ export default {
               Axios
                   .post('/user/sign_in', this.request_body)
                   .then(response => {
-                      console.log(response.data)
-                      console.log(response.headers['set-cookie'])
+                      console.log(response.headers)
+                      for(h in response.headers){
+                          console.log(response.headers[h])
+                      }
                       this.$store.commit('setUserData', response.data);
                       this.$router.push("/account")
                   })
