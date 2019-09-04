@@ -17,17 +17,19 @@
       }
     },
     beforeCreate() {
+      this.$router.push("/auth")
       if (!this.$store.getters.checkUserData) {
+
         Axios
                 .get('/user/info')
                 .then(response => {
                   this.$store.commit('setUserData', response.data)
                 })
-                .catch(error => {
-                  if (error.response) {
-                    this.$router.push("/auth")
-                  }
-                })
+                // .catch(error => {
+                //   if (error.response) {
+                //     this.$router.push("/auth")
+                //   }
+                // })
       }
     }
   }

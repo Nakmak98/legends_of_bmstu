@@ -28,7 +28,7 @@ export default {
                   .post('/user/sign_in', this.request_body)
                   .then(response => {
                       console.log(response.data)
-                      console.log(response.status)
+                      console.log(response.headers['set-cookie'])
                       this.$store.commit('setUserData', response.data);
                       this.$router.push("/account")
                   })
