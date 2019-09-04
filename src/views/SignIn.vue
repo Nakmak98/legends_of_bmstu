@@ -28,9 +28,7 @@ export default {
                   .post('/user/sign_in', this.request_body)
                   .then(response => {
                       console.log(response.headers)
-                      for(h in response.headers){
-                          console.log(response.headers[h])
-                      }
+                      console.log(response.data)
                       this.$store.commit('setUserData', response.data);
                       this.$router.push("/account")
                   })
