@@ -8,7 +8,7 @@
         <div><input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></div>
         <div><input type="password" placeholder="Пароль" v-model="request_body.password"></div>
         <div><input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></div>
-        <div><button  @click="signUp">Войти</button></div>
+        <div><button  @click="signUp">Зарегистрироваться</button></div>
     </div>
 </template>
 
@@ -42,7 +42,7 @@
                            console.log(response.data)
                            console.log(response.status)
                            this.$store.commit('setUserData', response.data);
-                           this.$router.push("/account")
+                           this.$router.push("/sign_in")
                        })
                        .catch(error => {
                            console.log(error)

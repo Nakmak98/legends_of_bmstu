@@ -30,10 +30,16 @@ export default {
                       console.log(response.headers)
                       console.log(response.data)
                       this.$store.commit('setUserData', response.data);
+                      console.log(this.$store.getters.checkUserData)
                       this.$router.push("/account")
                   })
                   .catch(error => {
-                      this.validationMessage = "Поля заполнены неверно, пожалуйста заполните их соответсвенно подсказкам(которых пока нет)"
+                      console.log(error.response.status)
+                      if(error.response.status === 400){
+                          this.validationMessage = "Неверный логин/пароль"
+                      } else {
+                          this.$route.push('/error')
+                      }
                   })
           }
 

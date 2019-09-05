@@ -5,6 +5,7 @@ import Auth from "./views/Auth";
 import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
+import ErrorPage from "./views/ErrorPage";
 
 Vue.use(Router)
 
@@ -36,5 +37,10 @@ export default new Router({
       path: '/sign_up',
       name: 'sign_up',
       component: SignUp
+    },
+    {
+      path: '/error',
+      name: 'error',
+      component: ErrorPage
     }]
 })

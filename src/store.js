@@ -10,11 +10,17 @@ export default new Vuex.Store({
   mutations: {
     setUserData(state, data){
       state.user = data;
+    },
+    deleteUserData(state){
+      state.user = {};
     }
   },
   getters: {
     checkUserData: state => {
       return "user_id" in state.user
+    },
+    getUserData: state => {
+      return state.user
     }
   },
   actions: {
