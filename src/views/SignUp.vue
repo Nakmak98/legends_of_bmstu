@@ -59,6 +59,23 @@
                 return false
             }
         }
+        if((/[0-9]/g.test(obj.request_body.first_name)) || (/[0-9]/g.test(obj.request_body.last_name))) {
+            obj.validationMessage = "Имя или фамилия не должны содержать цифр"
+            return false
+        }
+        var exp = /^([а-яА-Я]{1,3})(\d{1,2})(-{1})(\d{2})([мМ]?)$/g
+        if(exp.test(obj.request_body.group)) {
+            obj.validationMessage = ''
+        } else {
+            obj.validationMessage = "Неверно введена группа"
+            return false
+        }
+
+        if(/[а-я]/g.test(obj.request_body.login)) {
+            obj.validationMessage = "Логин не должен содержать кириллицу"
+            return false
+        }
+
         if (obj.request_body.password === obj.confirm_password){
             return true
         }

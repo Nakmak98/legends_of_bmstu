@@ -25,8 +25,7 @@ export default new Vuex.Store({
   },
   actions: {
     setUserData(context){
-      context.commit('setUserData', )
+      context.commit('setUserData')
     }
-
   }
 })
