@@ -48,7 +48,6 @@ export default {
 }
 
 function valid(obj) {
-    //TODO: имплементировать цикл в функциюx
     for(let field in obj.request_body){
         if (obj.request_body[field] === '') {
             obj.validationMessage = "Заполните все поля формы"
