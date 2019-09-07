@@ -1,14 +1,17 @@
 <template>
     <div class="auth">
-        <button @click="$router.push('/sign_in')">Войти</button>
-        <button @click="$router.push('/sign_up')">Зарегистрироваться</button>
+        <base-button @click="$router.push('/sign_in')" title="Войти"></base-button>
+        <base-button @click="$router.push('/sign_up')" title="Зарегистрироваться"></base-button>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Auth"
+        name: "Auth",
+        methods: {
+            // goToSignIn: function () { this.$router.push('/sign_in') }
+        }
     }
 </script>
 

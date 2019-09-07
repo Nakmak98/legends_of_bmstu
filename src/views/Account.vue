@@ -3,17 +3,16 @@
         <ul v-for="item in $store.getters.getUserData">
             <p>{{item}}</p>
         </ul>
-        <without-team-player></without-team-player>
         <div v-if="$store.getters.checkUserData">
-            <button @click="deleteAccount">Удалить аккаунт</button>
-            <button @click="logout">Выйти</button>
+            <without-team-player></without-team-player>
+            <base-button title="Удалить аккаунт" @click="deleteAccount"></base-button>
+            <base-button title="Выйти" @click="logout"></base-button>
         </div>
-
     </div>
 </template>
 <script>
     import Axios from 'axios'
-    import withoutTeamPlayer from "../components/account/withoutTeamPlayer";
+    import withoutTeamPlayer from "../components/account/WithoutTeamPlayer";
     export default {
         name: "account",
         data: function () {
@@ -22,7 +21,7 @@
             }
         },
         components:{
-            withoutTeamPlayer
+            withoutTeamPlayer,
         },
         beforeCreate() {
             if (this.$store.getters.checkUserData) {

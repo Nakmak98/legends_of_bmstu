@@ -2,7 +2,7 @@
     <div id="create-team">
         <h1>Создание команды</h1>
         <input type="text" v-model="teamName">
-        <button @click="createTeam">Создать</button>
+        <base-button title="Создать" @click="createTeam"></base-button>
     </div>
 </template>
 

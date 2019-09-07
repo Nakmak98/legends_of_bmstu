@@ -8,7 +8,7 @@
         <div><input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></div>
         <div><input type="password" placeholder="Пароль" v-model="request_body.password"></div>
         <div><input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></div>
-        <div><button  @click="signUp">Зарегистрироваться</button></div>
+        <div><base-button title="Зарегистрироваться" @click="signUp"></base-button></div>
     </div>
 </template>
 
