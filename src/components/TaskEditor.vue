@@ -31,9 +31,10 @@
                 var formData = new FormData();
                 formData.append("image", file);
                 Axios
-                    .put('/img', formData)
+                    .post('/img', formData)
                     .then(result => {
-                        Editor.insertEmbed(cursorLocation, "image", result.data.url);
+                        console.log(result.data)
+                        Editor.insertEmbed(cursorLocation, "image", "http://5.23.54.233:5051/" + result.data.url);
                         resetUploader();
                     })
                     .catch(err => {
