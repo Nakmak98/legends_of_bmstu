@@ -27,7 +27,7 @@
 
         methods: {
             handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
-                console.log(file)
+                console.log(file.name);
                 var formData = new FormData();
                 formData.append("image", file);
                 Axios
@@ -35,8 +35,7 @@
                     data: formData
                     })
                     .then(result => {
-                        let url = result.data.url;
-                        Editor.insertEmbed(cursorLocation, "image", url);
+                        Editor.insertEmbed(cursorLocation, "image", result.data.url);
                         resetUploader();
                     })
                     .catch(err => {
@@ -45,24 +44,24 @@
             },
             handleImageRemoved: function (image) {
                 console.log(image);
-            //     Axios.delete('/img', {image: image})
-            //         .then(response => {
-            //            console.log(response)
-            //         })
-            //         .catch(error => {
-            //             console.log(error);
-            //         });
+                Axios.delete('/img', {image: image.name})
+                    .then(response => {
+                       console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             },
             sendTask: function () {
                 console.log("sending")
-                // Axios.post('/task', {task: this.htmlForEditor})
-                //         .then(response => {
-                //            this.saved = true
-                //            console.log(response)
-                //         })
-                //         .catch(error => {
-                //             console.log(error);
-                //         });
+                Axios.post('/task', {task: this.htmlForEditor})
+                        .then(response => {
+                           this.saved = true
+                           console.log(response)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
 
             }
         }
