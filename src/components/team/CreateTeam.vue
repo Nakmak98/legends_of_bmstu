@@ -1,7 +1,7 @@
 <template>
     <div id="create-team">
         <h1>Создание команды</h1>
-        <input type="text" v-model="teamName">
+        <base-input type="text" placeholder="Название команды" v-model="teamName"></base-input>
         <base-button title="Создать" @click="createTeam"></base-button>
     </div>
 </template>

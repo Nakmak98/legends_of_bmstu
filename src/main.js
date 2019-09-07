@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Axios from "axios";
 import BaseButton from "./components/base/BaseButton";
+import BaseInput from "./components/base/BaseInput";
 
 //Axios global config
 Axios.defaults.baseURL = 'http://5.23.54.233:5050';
@@ -11,6 +12,7 @@ Axios.defaults.withCredentials = true;
 
 //global components registration
 Vue.component('base-button', BaseButton);
+Vue.component('base-input', BaseInput);
 
 Vue.config.productionTip = false;
 

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-if="validationMessage">{{validationMessage}}</div>
-        <div><input type="text" placeholder="Логин" v-model="request_body.login"></div>
-        <div><input type="password" placeholder="Пароль" v-model="request_body.password"></div>
-        <button @click="signIn">Войти</button>
+        <div><base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input></div>
+        <div><base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input></div>
+        <base-button title="Войти" @click="signIn"></base-button>
     </div>
 </template>
 
