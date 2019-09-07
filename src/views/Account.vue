@@ -3,21 +3,26 @@
         <ul v-for="item in $store.getters.getUserData">
             <p>{{item}}</p>
         </ul>
+        <without-team-player></without-team-player>
         <div v-if="$store.getters.checkUserData">
             <button @click="deleteAccount">Удалить аккаунт</button>
             <button @click="logout">Выйти</button>
         </div>
+
     </div>
 </template>
 <script>
     import Axios from 'axios'
-
+    import withoutTeamPlayer from "../components/account/withoutTeamPlayer";
     export default {
         name: "account",
         data: function () {
             return {
                 user: {}
             }
+        },
+        components:{
+            withoutTeamPlayer
         },
         beforeCreate() {
             if (this.$store.getters.checkUserData) {

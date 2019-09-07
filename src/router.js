@@ -6,10 +6,11 @@ import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import ErrorPage from "./views/ErrorPage";
+import CreateTeam from "./components/team/CreateTeam"
 
 Vue.use(Router)
 
-export default new Router({
+const routes = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -39,8 +40,14 @@ export default new Router({
       component: SignUp
     },
     {
+      path: '/team/create',
+      name: 'team_create',
+      component: CreateTeam,
+    },
+    {
       path: '/error',
       name: 'error',
       component: ErrorPage
     }]
 })
+export default routes
