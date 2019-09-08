@@ -9,9 +9,6 @@
 <script>
     export default {
         name: "Auth",
-        methods: {
-            // goToSignIn: function () { this.$router.push('/sign_in') }
-        }
     }
 </script>
 

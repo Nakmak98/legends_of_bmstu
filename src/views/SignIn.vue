@@ -10,6 +10,7 @@
 <script>
 
     import Axios from 'axios'
+
 export default {
   name: 'SignIn',
   data: function() {
@@ -27,19 +28,19 @@ export default {
               Axios
                   .post('/user/sign_in', this.request_body)
                   .then(response => {
-                      console.log(response.headers)
                       console.log(response.data)
                       this.$store.commit('setUserData', response.data);
-                      console.log(this.$store.getters.checkUserData)
                       this.$router.push("/account")
                   })
                   .catch(error => {
-                      console.log(error.response.status)
-                      if(error.response.status === 400){
-                          this.validationMessage = "Неверный логин/пароль"
-                      } else {
-                          this.$route.push('/error')
-                      }
+                      if(error.response){
+                          console.log(error.response.status)
+                          if(error.response.status === 400){
+                              this.validationMessage = "Неверный логин/пароль"
+                          } else {
+                              this.$route.push('/error')
+                          }
+                      } else {console.log(error)}
                   })
           }
 

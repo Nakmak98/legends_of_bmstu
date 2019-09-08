@@ -1,10 +1,12 @@
 <template>
-    <div class="about">
-        <ul v-for="item in $store.getters.getUserData">
+    <div v-if="user" class="about">
+        <h1>Личный кабинет</h1>
+        <ul v-for="item in user">
             <p>{{item}}</p>
         </ul>
-        <div v-if="$store.getters.checkUserData">
-            <without-team-player></without-team-player>
+        <div>
+            <base-error-message :message="errorMessage"></base-error-message>
+            <without-team-player v-if="!user.team_id"></without-team-player>
             <base-button title="Удалить аккаунт" @click="deleteAccount"></base-button>
             <base-button title="Выйти" @click="logout"></base-button>
         </div>
@@ -13,30 +15,30 @@
 <script>
     import Axios from 'axios'
     import withoutTeamPlayer from "../components/account/WithoutTeamPlayer";
+
     export default {
         name: "account",
-        data: function () {
-            return {
-                user: {}
-            }
-        },
-        components:{
+        components: {
             withoutTeamPlayer,
         },
-        beforeCreate() {
-            if (this.$store.getters.checkUserData) {
-                this.user = this.$store.getters.getUserData
-            } else {
-                Axios
-                    .get('/user/info')
-                    .then(response => {
-                        this.$store.commit('setUserData', response.data)
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            error.response.status === 401 ? this.$router.push("/auth") : this.$router.push("/error")
-                        }
-                    })
+        data() {
+            return {
+                errorMessage: ''
+            }
+        },
+        computed: {
+            user: function () {
+                return this.$store.state.user
+            },
+            team: function () {
+                return this.$store.state.team
+            }
+        },
+        mounted() {
+            console.log("USER: " + this.user)
+            console.log("TEAM: " + this.team)
+            if (!this.user) {
+                this.requestUserData();
             }
         },
         methods: {
@@ -44,8 +46,9 @@
                 Axios
                     .get('/user/logout')
                     .then(response => {
-                        console.log(response.status)
-                        this.$store.commit('deleteUserData')
+                        console.log(response.status);
+                        this.$store.commit('deleteUserData');
+                        this.$store.commit('deleteTeamData');
                         this.$router.push('/auth')
                     })
             },
@@ -54,6 +57,7 @@
                     .delete('/user/delete')
                     .then(response => {
                         console.log(response.status)
+                        console.log(response.data)
                         this.$store.commit('deleteUserData')
                         this.$router.push('/auth')
                     })
@@ -63,6 +67,35 @@
                             error.message
                         }
                     })
+            },
+            requestUserData: function () {
+                Axios
+                    .get('/user/info')
+                    .then(response => {
+                        console.log(response.status);
+                        console.log(response.data);
+                        this.$store.commit('setUserData', response.data);
+                        this.requestTeamData();
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            error.response.status === 401 ? this.$router.push("/auth") : this.$router.push("/error")
+                        }
+                    });
+            },
+            requestTeamData: function () {
+                Axios
+                    .get('/team/info')
+                    .then(response => {
+                        console.log(response.status);
+                        console.log(response.data);
+                        this.$store.commit('setTeamData', response.data);
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            this.errorMessage = error.message
+                        }
+                    });
             },
         }
     }

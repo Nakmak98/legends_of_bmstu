@@ -1,31 +1,45 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Axios from "axios";
 Vue.use(Vuex)
+
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: null,
+    team: null
   },
   mutations: {
     setUserData(state, data){
       state.user = data;
     },
+    setTeamData(state, data){
+      state.team = data
+    },
+
+    deleteTeamData(state){
+      state.team = null;
+    },
     deleteUserData(state){
-      state.user = {};
+      state.user = null;
     }
   },
   getters: {
-    checkUserData: state => {
-      return "user_id" in state.user
-    },
-    getUserData: state => {
-      return state.user
-    }
+    getUserData: state => state.user,
+    getTeamData: state => state.team
   },
   actions: {
-    setUserData(context){
-      context.commit('setUserData')
+    updateUserData(context){
+      Axios
+          .get('/user/info')
+          .then(response => {
+            console.log(response)
+            context.commit('setUserData', response.data)
+          }).catch(error => {
+        console.log("NOT RESPONSE: " + error)
+        console.log(error.response.status)
+        console.log(error.response.data)
+      })
+    },
     }
-  }
-})
+  })
