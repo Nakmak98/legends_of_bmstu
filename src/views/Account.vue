@@ -7,7 +7,7 @@
         <div>
             <base-error-message :message="errorMessage"></base-error-message>
             <without-team-player v-if="!user.team_id"></without-team-player>
-            <with-team-player :team="team" v-if="user.role === 'PLAYER' && user.team_id"></with-team-player>
+            <with-team-player :team="team" v-if="user.team_id"></with-team-player>
             <base-button title="Удалить аккаунт" @click="deleteAccount"></base-button>
             <base-button title="Выйти" @click="logout"></base-button>
         </div>
@@ -17,11 +17,12 @@
     import Axios from 'axios'
     import withoutTeamPlayer from "../components/account/WithoutTeamPlayer";
     import withTeamPlayer from "../components/account/withTeamPlayer";
+
     export default {
         name: "account",
         components: {
             withoutTeamPlayer,
-            withTeamPlayer
+            withTeamPlayer,
         },
         data() {
             return {
