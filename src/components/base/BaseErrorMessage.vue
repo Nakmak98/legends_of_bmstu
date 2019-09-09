@@ -1,5 +1,5 @@
 <template>
-    <div id="error-message">
+    <div @error="showMessage" id="error-message">
         <p>{{message}}</p>
     </div>
 </template>
@@ -9,6 +9,11 @@
         name: "ErrorMessage",
         props: {
             message: String
+        },
+        methods: {
+            showMessage (errorMessage){
+                this.message = errorMessage
+            }
         }
     }
 </script>

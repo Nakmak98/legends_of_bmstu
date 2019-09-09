@@ -7,7 +7,7 @@
         <div>
             <base-error-message :message="errorMessage"></base-error-message>
             <without-team-player v-if="!user.team_id"></without-team-player>
-            <with-team-player :team="team" v-if="user.team_id"></with-team-player>
+            <with-team-player v-if="user.team_id"></with-team-player>
             <base-button title="Удалить аккаунт" @click="deleteAccount"></base-button>
             <base-button title="Выйти" @click="logout"></base-button>
         </div>
@@ -42,6 +42,9 @@
             console.log("TEAM: " + this.team)
             if (!this.user) {
                 this.requestUserData();
+            }
+            if(this.user && !this.team) {
+                this.requestTeamData()
             }
         },
         methods: {

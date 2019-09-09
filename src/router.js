@@ -45,6 +45,11 @@ const routes = new Router({
       component: CreateTeam,
     },
     {
+      path: '/team/add_member',
+      name: 'add_member',
+      component: CreateTeam,
+    },
+    {
       path: '/error',
       name: 'error',
       component: ErrorPage

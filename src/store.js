@@ -1,45 +1,50 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from "axios";
+
 Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-  state: {
-    user: null,
-    team: null
-  },
-  mutations: {
-    setUserData(state, data){
-      state.user = data;
+    state: {
+        user: null,
+        team: null,
+        teamMembers: null
     },
-    setTeamData(state, data){
-      state.team = data
-    },
+    mutations: {
+        setUserData(state, data) {
+            state.user = data;
+        },
+        setTeamData(state, data) {
+            state.team = data
+        },
+        setTeamMembers(state, data) {
+            state.teamMembers = data
+        },
 
-    deleteTeamData(state){
-      state.team = null;
+        deleteTeamData(state) {
+            state.team = null;
+        },
+        deleteUserData(state) {
+            state.user = null;
+        }
     },
-    deleteUserData(state){
-      state.user = null;
-    }
-  },
-  getters: {
-    getUserData: state => state.user,
-    getTeamData: state => state.team
-  },
-  actions: {
-    updateUserData(context){
-      Axios
-          .get('/user/info')
-          .then(response => {
-            console.log(response)
-            context.commit('setUserData', response.data)
-          }).catch(error => {
-        console.log("NOT RESPONSE: " + error)
-        console.log(error.response.status)
-        console.log(error.response.data)
-      })
+    getters: {
+        getUserData: state => state.user,
+        getTeamData: state => state.team
     },
+    actions: {
+        updateUserData(context) {
+            Axios
+                .get('/user/info')
+                .then(response => {
+                    console.log(response)
+                    context.commit('setUserData', response.data)
+                }).catch(error => {
+                console.log("NOT RESPONSE: " + error)
+                console.log(error.response.status)
+                console.log(error.response.data)
+            })
+        },
     }
-  })
+})
