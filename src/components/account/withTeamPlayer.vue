@@ -1,23 +1,24 @@
 <template>
     <div>
+        <base-popup :show="showPopup" :message="popupMessage" @access="deleteMember" @cancel="showPopup=false"></base-popup>
         <h2>Команда № {{team.team_id}}</h2>
         <h2>{{team.team_name}}</h2>
+        <h2>{{team.invite_code}}</h2>
         <table>
             <tr>
                 <td>Имя</td>
                 <td>Фамилия</td>
                 <td>VK</td>
+                <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
             <tr v-for="member of teamMembers">
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="checkDeleteAction">X</td>
             </tr>
         </table>
-        <base-button
-                title="Добавить участника"
-                @click="$router.push('/team/add_member')">
-        </base-button>
+        <base-button title="Старт!"></base-button>
     </div>
 </template>
 
@@ -25,8 +26,10 @@
     import Axios from 'axios'
     export default {
         name: "withTeamPlayer",
-        props: {
-            team: Object
+        data() {
+            return {
+                showPopup: false
+            }
         },
         computed: {
             teamMembers() {
@@ -34,6 +37,9 @@
             },
             team() {
                 return this.$store.state.team
+            },
+            user() {
+                return this.$store.state.user
             }
         },
         mounted() {
@@ -58,7 +64,15 @@
                             }
                         }
                     })
+            },
+            checkDeleteAction() {
+                this.showPopup = true;
+                this.popupMessage = "Вы уверены, что хотите удалить участника команды?"
+            },
+            deleteMember() {
+            //    TODO: написать запрос
             }
+
         }
     }
 
@@ -68,5 +82,9 @@
 <style>
     table {
         margin: 0 auto;
+    }
+    .kick-btn {
+        color: red;
+        cursor: pointer;
     }
 </style>
