@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <base-popup popup="popup_options"></base-popup>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/account">Account</router-link> 
@@ -15,7 +16,22 @@
     name: 'app',
     data: function () {
       return {
-        test: ''
+        popup_options: {
+          message: '',
+          placeholder: '',
+          input_field: false,
+          show: false,
+          callback: () => {}
+        }
+      }
+    },
+    mounted (){
+      this.$on('popup', this.pass_options)
+    },
+    methods: {
+      pass_options(options){
+        console.log("asdasdas");
+        this.popup_options = options;
       }
     }
   }

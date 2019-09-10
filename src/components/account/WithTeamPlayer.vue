@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-popup :show="show_popup" :message="popup_message" @access="deleteMember" @cancel="show_popup=false"></base-popup>
+<!--        <base-popup :show="show_popup" :message="popup_message" @access="deleteMember" @cancel="show_popup=false"></base-popup>-->
         <h2>Команда № {{team.team_id}}</h2>
         <h2>{{team.team_name}}</h2>
         <h2>{{team.invite_code}}</h2>
@@ -15,7 +15,7 @@
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="checkDeleteAction(member)" >X</td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)" >X</td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
@@ -30,7 +30,7 @@
 
             return {
                 request_body:{
-                    kick_id:''
+                    user_id:''
                 },
                 show_popup: false,
                 popup_message: ''
@@ -72,25 +72,36 @@
                         }
                     })
             },
-            checkDeleteAction(member) {
-                this.show_popup = true;
-                this.popup_message = "Вы уверены, что хотите удалить "+ member.user_id + " ?";
-                console.log(member);
-                this.request_body.kick_id = member.user_id
+            check_delete_action(member) {
+                this.request_body.user_id = member.user_id;
+
+                let popup_options = {
+                    message: "Вы уверены, что хотите удалить " + member.first_name + "?",
+                    placeholder: '',
+                    input_field: false,
+                    show: true,
+                    callback: this.delete_member,
+                    args: this.request_body
+                };
+                this.$store.commit('setPopupOptions', popup_options)
             },
-            deleteMember() {
+            delete_member(request_body) {
                 Axios
-                    .delete('/team/kick',this.request_body)
+                    .delete('/team/kick', {
+                        params: request_body
+                    })
                     .then(response => {
                         console.log(response.status);
                         console.log(response.data);
-                        this.$store.commit('updateUserData');
+                        this.$store.commit('deleteTeamData');
+                        this.$store.dispatch('updateUserData');
+                        this.$store.commit('deleteTeamMembers');
                     })
                     .catch(error => {
                         console.log(error.response.status);
                         console.log(this.request_body.kick_id);
                         if (error.response.status === 401) {
-                            this.error_message = error.message
+                        //    TODO: написать запрос на новый base-error
                         }
                     })
             }

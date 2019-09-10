@@ -4,12 +4,21 @@ import Axios from "axios";
 
 Vue.use(Vuex)
 
+let popup_default_options = {
+    message: '',
+    placeholder: '',
+    input_field: false,
+    show: false,
+    callback: null,
+    args: null
+};
 
 export default new Vuex.Store({
     state: {
         user: null,
         team: null,
-        team_members: null
+        team_members: null,
+        popup: popup_default_options
     },
     mutations: {
         setUserData(state, data) {
@@ -21,6 +30,12 @@ export default new Vuex.Store({
         setTeamMembers(state, data) {
             state.team_members = data
         },
+        setPopupOptions(state, data) {
+            state.popup = data
+        },
+        setPopupInputValue(state, data) {
+            state.popup.value = data
+        },
 
         deleteTeamMembers(state) {
             state.team_members = null;
@@ -30,6 +45,9 @@ export default new Vuex.Store({
         },
         deleteUserData(state) {
             state.user = null;
+        },
+        deletePopupOptions(state) {
+            state.popup = popup_default_options
         }
     },
     getters: {

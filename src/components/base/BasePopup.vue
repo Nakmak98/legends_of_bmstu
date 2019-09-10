@@ -1,40 +1,63 @@
 <template>
-    <transition name="fade">
-    <div v-if="show">
-        <h1>Подтверждение</h1>
-        <div class="popup-message">
-            {{message}}
-        </div>
-        <base-input
-                v-if="input"
-                type="text"
-                v-model="value"
-                @input="$emit('input', value)"></base-input>
-        <base-button @click="$emit('access')" title="ОК"></base-button>
-        <base-button @click="$emit('cancel')" title="Отмена"></base-button>
+    <div class="popup-container">
+        <transition name="fade">
+            <div v-if="popup.show" class="base-popup">
+                <h1>Подтверждение</h1>
+                <div class="popup-message">
+                    {{popup.message}}
+                </div>
+                <base-input
+                        v-if="popup.input_field"
+                        type="text"
+                        v-model="value">
+                </base-input>
+                <base-button @click="handleAccess" title="ОК"></base-button>
+                <base-button @click="popup.show = false" title="Отмена"></base-button>
+            </div>
+        </transition>
     </div>
-    </transition>
 </template>
 
 <script>
     export default {
         name: "base-popup",
-        props: {
-            message: String,
-            placeholder: String,
-            input: Boolean,
-            show: Boolean,
-            callback: Function
-        },
         data() {
             return {
                 value: ''
             }
+        },
+        computed: {
+            popup() {
+                return this.$store.state.popup
+            }
+        },
+        methods: {
+            handleAccess (){
+                if(this.value !== ''){
+                    // this.$store.commit('setPopupInputValue', this.value);
+                    this.popup.callback(this.popup.args, this.value)
+                } else {
+                    this.popup.callback(this.popup.args)
+                }
+                this.$store.commit('deletePopupOptions')
+            },
         }
     }
 </script>
 
 <style scoped>
+    .popup-container {
+        display: flex;
+        justify-content: center;
+    }
+    .base-popup {
+        background-color: #888;
+        border-radius: 10px;
+        max-width: 350px;
+        box-shadow: 0 0 8px black;
+        position: fixed;
+        z-index: 100;
+    }
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }

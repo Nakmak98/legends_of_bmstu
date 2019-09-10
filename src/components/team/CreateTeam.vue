@@ -1,13 +1,13 @@
 <template>
     <div id="create-team">
-        <div v-if="createStatus">
+        <div v-if="create_status">
             <p>Команда успешно создана!</p>
             <p>Перейдите в личный кабинет, чтобы просмотерть сведения о команде.</p>
         </div>
         <div v-else>
-            <base-error-message :message="errorMessage"></base-error-message>
+            <base-error-message :message="error_message"></base-error-message>
             <h1>Создание команды</h1>
-            <base-input type="text" placeholder="Название команды" v-model="teamName"></base-input>
+            <base-input type="text" placeholder="Название команды" v-model="team_name"></base-input>
             <base-button title="Создать" @click="createTeam"></base-button>
         </div>
     </div>
@@ -21,7 +21,7 @@
         data() {
             return {
                 team_name: '',
-                createStatus: false,
+                create_status: false,
                 error_message: ''
             }
         },
@@ -44,14 +44,14 @@
                         this.$store.commit('setTeamData', response.data);
                         this.$store.dispatch('updateUserData');
                         console.log("State.user: " + this.$store.getters.getUserData)
-                        this.createStatus = true
+                        this.create_status = true
                     })
                     .catch(error => {
                         if (error.response) {
                             if (error.response.status === 401) {
                                 this.$router.push('/auth')
                             } else {
-                                this.errorMessage = error.message
+                                this.error_message = error.message
                             }
                         } else {
                             this.$router.push('/error')

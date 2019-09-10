@@ -1,15 +1,14 @@
 <template>
-    <div v-if="user" class="about">
+    <div v-if="user" class="about" @popup="this.$emit('popup')">
         <h1>Личный кабинет</h1>
-        <ul v-for="item in user">
-            <p>{{item}}</p>
+        <ul>
+            <p v-for="item in user">{{item}}</p>
         </ul>
         <div>
             <without-team-player v-if="!user.team_id"></without-team-player>
             <with-team-player v-if="user.team_id"></with-team-player>
-            <base-button title="Удалить аккаунт" @click="delete_account"></base-button>
-            <base-popup :show="show_popup" :message="popup_message" @access="leaveTeam" @cancel="show_popup=false"></base-popup>
-            <base-button v-if="user.team_id" title="Выйти из команды" @click="checkLeaveAction"></base-button>
+            <base-button title="Удалить аккаунт" @click="check_delete_account"></base-button>
+            <base-button v-if="user.team_id" title="Выйти из команды" @click="check_leave_team"></base-button>
             <base-button title="Выйти" @click="logout"></base-button>
             <base-error-message @error="show_error" :message="error_message"></base-error-message>
         </div>
@@ -29,8 +28,7 @@
         data() {
             return {
                 error_message: '',
-                show_popup:false,
-                popup_message:''
+                popup_message: ''
             }
         },
         computed: {
@@ -39,13 +37,16 @@
             },
             team: function () {
                 return this.$store.state.team
+            },
+            team_members: function () {
+                return this.$store.state.team_members
             }
         },
         mounted() {
             if (!this.user) {
                 this.request_user_data();
             }
-            if(this.user && !this.team) {
+            if (this.user && !this.team) {
                 this.request_team_data()
             }
         },
@@ -112,20 +113,37 @@
                         }
                     });
             },
-            checkLeaveAction() {
-                this.show_popup = true;
-                this.popup_message = "Вы уверены, что хотите выйти из команды?"
+            check_delete_account(){
+                let popup_options = {
+                    message: 'Вы уверены, что хотите удалить аккаунт?',
+                    placeholder: '',
+                    input_field: false,
+                    show: true,
+                    callback: this.delete_account,
+                    args: null
+                };
+                this.$store.commit('setPopupOptions', popup_options)
             },
-            leaveTeam:function(){
+            check_leave_team(){
+                let popup_options = {
+                    message: 'Вы уверены, что хотите покинуть команду?',
+                    placeholder: '',
+                    input_field: false,
+                    show: true,
+                    callback: this.leave_team,
+                    args: null
+                };
+                this.$store.commit('setPopupOptions', popup_options)
+            },
+            leave_team: function () {
                 Axios
                     .delete('/team/leave')
                     .then(response => {
                         console.log(response.status);
                         console.log(response.data);
                         this.$store.commit('deleteTeamData');
+                        this.$store.dispatch('updateUserData');
                         this.$store.commit('deleteTeamMembers');
-
-
                     })
                     .catch(error => {
                         console.log(error.response.status);
@@ -135,7 +153,7 @@
                     })
             },
             show_error(message) {
-              this.error_message = message
+                this.error_message = message
             }
         }
     }
