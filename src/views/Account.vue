@@ -8,6 +8,8 @@
             <without-team-player v-if="!user.team_id"></without-team-player>
             <with-team-player v-if="user.team_id"></with-team-player>
             <base-button title="Удалить аккаунт" @click="delete_account"></base-button>
+            <base-popup :show="show_popup" :message="popup_message" @access="leaveTeam" @cancel="show_popup=false"></base-popup>
+            <base-button v-if="user.team_id" title="Выйти из команды" @click="checkLeaveAction"></base-button>
             <base-button title="Выйти" @click="logout"></base-button>
             <base-error-message @error="show_error" :message="error_message"></base-error-message>
         </div>
@@ -26,7 +28,9 @@
         },
         data() {
             return {
-                error_message: ''
+                error_message: '',
+                show_popup:false,
+                popup_message:''
             }
         },
         computed: {
@@ -107,6 +111,28 @@
                             this.error_message = error.message
                         }
                     });
+            },
+            checkLeaveAction() {
+                this.show_popup = true;
+                this.popup_message = "Вы уверены, что хотите выйти из команды?"
+            },
+            leaveTeam:function(){
+                Axios
+                    .delete('/team/leave')
+                    .then(response => {
+                        console.log(response.status);
+                        console.log(response.data);
+                        this.$store.commit('deleteTeamData');
+                        this.$store.commit('deleteTeamMembers');
+
+
+                    })
+                    .catch(error => {
+                        console.log(error.response.status);
+                        if (error.response.status === 401) {
+                            this.error_message = error.message
+                        }
+                    })
             },
             show_error(message) {
               this.error_message = message

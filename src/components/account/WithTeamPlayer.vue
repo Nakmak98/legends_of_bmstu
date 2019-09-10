@@ -15,7 +15,7 @@
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="checkDeleteAction">X</td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="checkDeleteAction(member)" >X</td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
@@ -27,7 +27,11 @@
     export default {
         name: "WithTeamPlayer",
         data() {
+
             return {
+                request_body:{
+                    kick_id:''
+                },
                 show_popup: false,
                 popup_message: ''
             }
@@ -68,14 +72,28 @@
                         }
                     })
             },
-            checkDeleteAction() {
+            checkDeleteAction(member) {
                 this.show_popup = true;
-                this.popup_message = "Вы уверены, что хотите удалить участника команды?"
+                this.popup_message = "Вы уверены, что хотите удалить "+ member.user_id + " ?";
+                console.log(member);
+                this.request_body.kick_id = member.user_id
             },
             deleteMember() {
-            //    TODO: написать запрос
+                Axios
+                    .delete('/team/kick',this.request_body)
+                    .then(response => {
+                        console.log(response.status);
+                        console.log(response.data);
+                        this.$store.commit('updateUserData');
+                    })
+                    .catch(error => {
+                        console.log(error.response.status);
+                        console.log(this.request_body.kick_id);
+                        if (error.response.status === 401) {
+                            this.error_message = error.message
+                        }
+                    })
             }
-
         }
     }
 
