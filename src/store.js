@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
         user: null,
         team: null,
-        teamMembers: null
+        team_members: null
     },
     mutations: {
         setUserData(state, data) {
@@ -19,9 +19,12 @@ export default new Vuex.Store({
             state.team = data
         },
         setTeamMembers(state, data) {
-            state.teamMembers = data
+            state.team_members = data
         },
 
+        deleteTeamMembers(state) {
+            state.team_members = null;
+        },
         deleteTeamData(state) {
             state.team = null;
         },

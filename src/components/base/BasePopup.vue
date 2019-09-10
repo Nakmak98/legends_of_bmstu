@@ -5,7 +5,11 @@
         <div class="popup-message">
             {{message}}
         </div>
-        <base-input v-if="input" type="text" placeholder="placeholder" v-model="value"></base-input>
+        <base-input
+                v-if="input"
+                type="text"
+                v-model="value"
+                @input="$emit('input', value)"></base-input>
         <base-button @click="$emit('access')" title="ОК"></base-button>
         <base-button @click="$emit('cancel')" title="Отмена"></base-button>
     </div>
@@ -21,6 +25,11 @@
             input: Boolean,
             show: Boolean,
             callback: Function
+        },
+        data() {
+            return {
+                value: ''
+            }
         }
     }
 </script>

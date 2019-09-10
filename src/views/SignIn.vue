@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div v-if="validationMessage">{{validationMessage}}</div>
+        <div v-if="validation_message">{{validation_message}}</div>
         <div><base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input></div>
         <div><base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input></div>
-        <base-button title="Войти" @click="signIn"></base-button>
+        <base-button title="Войти" @click="sign_in"></base-button>
     </div>
 </template>
 
@@ -19,11 +19,11 @@ export default {
             login: '',
             password:''
         },
-        validationMessage: ''
+        validation_message: ''
     }
   },
   methods: {
-      signIn: function () {
+      sign_in: function () {
           if(valid(this)){
               Axios
                   .post('/user/sign_in', this.request_body)
@@ -36,7 +36,7 @@ export default {
                       if(error.response){
                           console.log(error.response.status)
                           if(error.response.status === 400){
-                              this.validationMessage = "Неверный логин/пароль"
+                              this.validation_message = "Неверный логин/пароль"
                           } else {
                               this.$route.push('/error')
                           }
@@ -51,16 +51,16 @@ export default {
 function valid(obj) {
     for(let field in obj.request_body){
         if (obj.request_body[field] === '') {
-            obj.validationMessage = "Заполните все поля формы"
+            obj.validation_message = "Заполните все поля формы"
             return false
         }
     }
 
     if(/[а-я]/g.test(obj.request_body.login)) {
-        obj.validationMessage = "Поля не должны содержать кириллицу"
+        obj.validation_message = "Поля не должны содержать кириллицу"
         return false
     }
-    obj.validationMessage = ''
+    obj.validation_message = ''
     return true
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-popup :show="showPopup" :message="popupMessage" @access="deleteMember" @cancel="showPopup=false"></base-popup>
+        <base-popup :show="show_popup" :message="popup_message" @access="deleteMember" @cancel="show_popup=false"></base-popup>
         <h2>Команда № {{team.team_id}}</h2>
         <h2>{{team.team_name}}</h2>
         <h2>{{team.invite_code}}</h2>
@@ -11,7 +11,7 @@
                 <td>VK</td>
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
-            <tr v-for="member of teamMembers">
+            <tr v-for="member of team_members">
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
@@ -25,15 +25,16 @@
 <script>
     import Axios from 'axios'
     export default {
-        name: "withTeamPlayer",
+        name: "WithTeamPlayer",
         data() {
             return {
-                showPopup: false
+                show_popup: false,
+                popup_message: ''
             }
         },
         computed: {
-            teamMembers() {
-                return this.$store.state.teamMembers
+            team_members() {
+                return this.$store.state.team_members
             },
             team() {
                 return this.$store.state.team
@@ -43,14 +44,16 @@
             }
         },
         mounted() {
-            this.requestTeamMembers();
+            if(!this.team_members){
+                this.request_team_members();
+            }
         },
         methods: {
-            requestTeamMembers() {
+            request_team_members() {
                 Axios
                     .get('/team/members')
                     .then(response => {
-                        console.log(response.data)
+                        console.log(response.data);
                         this.$store.commit('setTeamMembers', response.data);
                     })
                     .catch(error => {
@@ -66,8 +69,8 @@
                     })
             },
             checkDeleteAction() {
-                this.showPopup = true;
-                this.popupMessage = "Вы уверены, что хотите удалить участника команды?"
+                this.show_popup = true;
+                this.popup_message = "Вы уверены, что хотите удалить участника команды?"
             },
             deleteMember() {
             //    TODO: написать запрос

@@ -7,7 +7,7 @@ import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import ErrorPage from "./views/ErrorPage";
 import CreateTeam from "./components/team/CreateTeam";
-import Join from "./views/Join"
+import Join from "./views/JoinToTeam"
 Vue.use(Router)
 
 const routes = new Router({

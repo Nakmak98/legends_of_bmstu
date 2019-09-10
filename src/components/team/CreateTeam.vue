@@ -20,14 +20,14 @@
         name: "CreateTeam",
         data() {
             return {
-                teamName: '',
+                team_name: '',
                 createStatus: false,
-                errorMessage: ''
+                error_message: ''
             }
         },
         methods: {
             createTeam: function () {
-                if (this.teamName !== '') {
+                if (this.team_name !== '') {
                     this.request();
                 } else {
                     this.errorMessage = 'Поле не должно быть пустым'
@@ -36,7 +36,7 @@
             request: function () {
                 Axios
                     .post('/team/create', {
-                        team_name: this.teamName
+                        team_name: this.team_name
                     })
                     .then(response => {
                         console.log(response.data)
