@@ -14,7 +14,7 @@
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)" >X</td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)" ><span v-if="member.role === 'PLAYER'">X</span></td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
