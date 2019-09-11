@@ -7,13 +7,14 @@
 
 <script>
     export default {
-        name: "withoutTeamPlayer",
+        name: "WithoutTeamPlayer",
     }
 </script>
 
 <style lang="scss" scoped>
     .account-menu-container {
         span {
+            cursor: pointer;
             text-decoration: underline;
         }
     }

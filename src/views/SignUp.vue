@@ -1,14 +1,13 @@
 <template>
     <div>
-        <div v-if="validation_message">{{validation_message}}</div>
-        <div><base-input type="text" placeholder="Имя" v-model="request_body.first_name"></base-input></div>
-        <div><base-input type="text" placeholder="Фамилия"  v-model="request_body.last_name"></base-input></div>
-        <div><base-input type="text" placeholder="Группа" v-model="request_body.group"></base-input></div>
-        <div><base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input></div>
-        <div><base-input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></base-input></div>
-        <div><base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input></div>
-        <div><base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input></div>
-        <div><base-button title="Зарегистрироваться" @click="sign_up"></base-button></div>
+        <base-input type="text" placeholder="Имя" v-model="request_body.first_name"></base-input>
+        <base-input type="text" placeholder="Фамилия"  v-model="request_body.last_name"></base-input>
+        <base-input type="text" placeholder="Группа" v-model="request_body.group"></base-input>
+        <base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input>
+        <base-input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></base-input>
+        <base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input>
+        <base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input>
+        <base-button title="Зарегистрироваться" @click="sign_up"></base-button>
     </div>
 </template>
 
@@ -28,52 +27,63 @@
                 },
 
                 confirm_password: '',
-                validation_message: ''
+                error_header: 'Ошибка регистрации'
             }
         },
         methods: {
             sign_up: function () {
-               if(valid(this)){
-                   this.validation_message = '';
+               if(this.valid()){
                    Axios
                        .post('/user/sign_up', this.request_body)
                        .then(response => {
-                           console.log(response.data)
-                           console.log(response.status)
                            this.$store.commit('setUserData', response.data);
                            this.$router.push("/account")
                        })
                        .catch(error => {
                            console.log(error)
-                           this.validation_message = "Поля заполнены неверно, пожалуйста заполните их соответсвенно подсказкам(которых пока нет)"
+                           this.$store.commit('setErrorMessage', {
+                               header: this.error_header ,
+                               message: error.response.data.message
+                           });
                        })
                }
+            },
+            valid() {
+                for(let field in this.request_body){
+                    if (this.request_body[field] === '') {
+                        this.$store.commit('setErrorMessage', {
+                            header: this.error_header ,
+                            message: "Заполните все поля формы"
+                        });
+                        return false
+                    }
+                }
+                if((/[0-9]/g.test(this.request_body.first_name)) || (/[0-9]/g.test(this.request_body.last_name))) {
+                    this.$store.commit('setErrorMessage', {
+                        header: this.error_header ,
+                        message: "Имя или фамилия не должны содержать цифр"
+                    });
+                    return false
+                }
+
+                if(/[а-я]/g.test(this.request_body.login)) {
+                    this.$store.commit('setErrorMessage', {
+                        header: this.error_header ,
+                        message: "Логин не должен содержать кириллицу"
+                    });
+                    return false
+                }
+
+                if (this.request_body.password !== this.confirm_password){
+                    this.$store.commit('setErrorMessage', {
+                        header: this.error_header ,
+                        message: "Пароли не совпадают"
+                    });
+                    return false
+                }
+                return true
             }
         }
-    }
-
-    function valid(obj) {
-       for(let field in obj.request_body){
-            if (obj.request_body[field] === '') {
-                obj.validation_message = "Заполните все поля формы"
-                return false
-            }
-        }
-        if((/[0-9]/g.test(obj.request_body.first_name)) || (/[0-9]/g.test(obj.request_body.last_name))) {
-            obj.validation_message = "Имя или фамилия не должны содержать цифр"
-            return false
-        }
-
-        if(/[а-я]/g.test(obj.request_body.login)) {
-            obj.validation_message = "Логин не должен содержать кириллицу"
-            return false
-        }
-
-        if (obj.request_body.password === obj.confirm_password){
-            return true
-        }
-       obj.validation_message = "Пароли не совпадают!";
-        return obj.valid
     }
 </script>
 

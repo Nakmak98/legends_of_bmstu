@@ -4,9 +4,8 @@ import Home from './views/Home.vue'
 import Auth from "./views/Auth";
 import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
-import SignUp from "./views/SignUp";
-import ErrorPage from "./views/ErrorPage";
-import CreateTeam from "./components/team/CreateTeam";
+import SignUp from "./views/SignUp";;
+import CreateTeam from "./views/CreateTeam";
 import Join from "./views/JoinToTeam"
 Vue.use(Router)
 
@@ -53,11 +52,6 @@ const routes = new Router({
       path: '/team/join',
       name: 'join',
       component: Join
-    },
-    {
-      path: '/error',
-      name: 'error',
-      component: ErrorPage,
     }]
 })
 export default routes

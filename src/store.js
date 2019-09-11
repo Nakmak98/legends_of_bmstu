@@ -13,11 +13,17 @@ let popup_default_options = {
     args: null
 };
 
+let error = {
+    header: null,
+    message: null
+};
+
 export default new Vuex.Store({
     state: {
         user: null,
         team: null,
         team_members: null,
+        error: error,
         popup: popup_default_options
     },
     mutations: {
@@ -36,11 +42,13 @@ export default new Vuex.Store({
         setPopupInputValue(state, data) {
             state.popup.value = data
         },
+        setErrorMessage(state, data) {
+            state.error = data
+        },
 
         deleteTeamMembers(state) {
             state.team_members = null;
         },
-
         deleteTeamData(state) {
             state.team = null;
         },
@@ -49,6 +57,9 @@ export default new Vuex.Store({
         },
         deletePopupOptions(state) {
             state.popup = popup_default_options
+        },
+        deleteErrorMessage(state) {
+            state.error = error
         }
     },
     getters: {
@@ -60,7 +71,6 @@ export default new Vuex.Store({
             Axios
                 .get('/user/info')
                 .then(response => {
-                    console.log(response)
                     context.commit('setUserData', response.data)
                 })
         },
@@ -68,7 +78,6 @@ export default new Vuex.Store({
             Axios
                 .get('/team/members')
                 .then(response => {
-                    console.log(response.data);
                     context.commit('setTeamMembers', response.data);
                 })
         }

@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <base-popup popup="popup_options"></base-popup>
+    <base-popup></base-popup>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/account">Account</router-link> 
     </div>
     <router-view/>
+    <base-error-message></base-error-message>
   </div>
 </template>
 
@@ -26,11 +27,13 @@
       }
     },
     mounted (){
-      this.$on('popup', this.pass_options)
+      this.$on('popup', this.pass_options);
+    },
+    updated() {
+      this.$store.commit('deleteErrorMessage');
     },
     methods: {
       pass_options(options){
-        console.log("asdasdas");
         this.popup_options = options;
       }
     }

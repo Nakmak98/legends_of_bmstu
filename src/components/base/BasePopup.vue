@@ -9,7 +9,7 @@
                 <base-input
                         v-if="popup.input_field"
                         type="text"
-                        v-model="value">
+                        v-model="input_value">
                 </base-input>
                 <base-button @click="handleAccess" title="ОК"></base-button>
                 <base-button @click="popup.show = false" title="Отмена"></base-button>
@@ -20,10 +20,10 @@
 
 <script>
     export default {
-        name: "base-popup",
+        name: "BasePopup",
         data() {
             return {
-                value: ''
+                input_value: ''
             }
         },
         computed: {
@@ -33,8 +33,8 @@
         },
         methods: {
             handleAccess (){
-                if(this.value !== ''){
-                    this.popup.callback(this.popup.args, this.value)
+                if(this.input_value !== ''){
+                    this.popup.callback(this.popup.args, this.input_value)
                 } else {
                     this.popup.callback(this.popup.args)
                 }
@@ -44,7 +44,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .popup-container {
         display: flex;
         justify-content: center;

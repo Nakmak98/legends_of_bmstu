@@ -1,15 +1,12 @@
 <template>
     <div>
-        <base-error-message :message="error_message"></base-error-message>
         <h1>Поиск команды</h1>
-        <div>
-            <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
-        </div>
+        <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
         <h1>Название команды</h1>
         <select v-model="request_body.team_id" size="5">
             <option v-for="team of search_team" :value="team.team_id">{{team.team_id}} {{team.team_name}}</option>
         </select>
-        <base-button title="Вступить в команду" @click="show_popup"></base-button>
+        <base-button title="Вступить в команду" @click="check_join"></base-button>
     </div>
 </template>
 
@@ -17,7 +14,7 @@
     import Axios from 'axios'
 
     export default {
-        name: "Join",
+        name: "JoinToTeam",
         data() {
             return {
                 request_body: {
@@ -26,7 +23,6 @@
                 },
                 search_input_value: '',
                 popup_message: 'Введите пригласительный код',
-                error_message: '',
                 teams: []
             }
         },
@@ -40,7 +36,14 @@
             }
         },
         methods: {
-            show_popup() {
+            check_join() {
+                if(this.request_body.team_id === 0) {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Необходимо выбрать команду из списка"
+                    });
+                    return
+                }
                 let popup_options = {
                     message: "Введите пригласительный код",
                     placeholder: 'Пригласительный код',
@@ -49,6 +52,7 @@
                     callback: this.join_team,
                     args: this.request_body
                 };
+                this.$store.commit('deleteErrorMessage');
                 this.$store.commit('setPopupOptions', popup_options)
             },
             request_teams() {
@@ -66,29 +70,19 @@
                             return 0
                         });
                     })
-                    .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.status)
-                            console.log(error.response.data.message)
-                            if (error.response.status === 401) {
-                                this.$route.push('/auth')
-                            } else if (error.response.status === 403) {
-                                this.$emit('error', error.response.data.message)
-                            } else if (error.response.status === 404) {
-                                this.$emit('error', error.response.data.message)
-                            } else {
-                                this.$emit('error', error.response.data.message)
-                            }
-                        }
-                    })
             },
             join_team: function (request_body, invite_code) {
-                console.log(invite_code);
-                request_body.invite_code = invite_code
+                if(invite_code == '') {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Поле не должно быть пустым"
+                    });
+                    return
+                }
+                request_body.invite_code = invite_code;
                 Axios
                     .post('/team/join', request_body)
                     .then(response => {
-                        console.log(response.data)
                         this.$store.commit('setTeamData', response.data);
                         this.$store.dispatch('updateUserData');
                         this.$router.push("/account");
@@ -98,10 +92,15 @@
                             console.log(error.response.status)
                             if (error.response.status === 401) {
                                 this.$router.push('/auth')
-                            } else if (error.response.status === 400) {
-                                this.error_message = error.response.data.message
-                            } else {
-                                this.$emit('error', error.response.data.message)
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            } else if(error.response.status > 401) {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
+                                    message: error.response.data.message
+                                });
                             }
                         }
 
