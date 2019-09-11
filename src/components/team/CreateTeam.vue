@@ -20,14 +20,14 @@
         name: "CreateTeam",
         data() {
             return {
-                team_name: '',
+                search_input_value: '',
                 create_status: false,
                 error_message: ''
             }
         },
         methods: {
             createTeam: function () {
-                if (this.team_name !== '') {
+                if (this.search_input_value !== '') {
                     this.request();
                 } else {
                     this.errorMessage = 'Поле не должно быть пустым'
@@ -36,7 +36,7 @@
             request: function () {
                 Axios
                     .post('/team/create', {
-                        team_name: this.team_name
+                        search_input_value: this.search_input_value
                     })
                     .then(response => {
                         console.log(response.data)

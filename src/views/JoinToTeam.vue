@@ -3,11 +3,11 @@
         <base-error-message :message="error_message"></base-error-message>
         <h1>Поиск команды</h1>
         <div>
-            <base-input type="text" placeholder="Название команды" v-model="team_name"></base-input>
+            <base-input type="text" placeholder="Название команды" v-model="search_input_value"></base-input>
         </div>
         <h1>Название команды</h1>
         <select v-model="request_body.team_id" size="5">
-            <option v-for="team of search_team" v-bind:value="team.team_id">{{team.team_name}}</option>
+            <option v-for="team of search_team" :value="team.team_id">{{team.team_id}} {{team.team_name}}</option>
         </select>
         <base-button title="Вступить в команду" @click="show_popup"></base-button>
     </div>
@@ -24,7 +24,7 @@
                     team_id: 0,
                     invite_code: ''
                 },
-                team_name: '',
+                search_input_value: '',
                 popup_message: 'Введите пригласительный код',
                 error_message: '',
                 teams: []
@@ -35,7 +35,8 @@
         },
         computed: {
             search_team() {
-                return this.teams.filter(team => team.team_name.includes(this.team_name))
+                let regexp = new RegExp(this.search_input_value, 'i');
+                return this.teams.filter(team => team.team_name.match(regexp) || team.team_id.toString().match(regexp))
             }
         },
         methods: {
@@ -56,6 +57,11 @@
                     .then(response => {
                         console.log(response.data)
                         this.teams = response.data
+                        this.teams.sort((a,b) => {
+                            if(a.team_id > b.team_id) { return 1 }
+                            if(a.team_id < b.team_id) { return -1 }
+                            return 0
+                        });
                     })
                     .catch(error => {
                         if (error.response) {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Команда № {{team.team_id}}</h2>
-        <h2>{{team.team_name}}</h2>
+        <h2>{{team.search_input_value}}</h2>
         <h2>{{team.invite_code}}</h2>
         <table>
             <tr>
