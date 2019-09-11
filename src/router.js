@@ -50,14 +50,14 @@ const routes = new Router({
       component: CreateTeam,
     },
     {
+      path: '/team/join',
+      name: 'join',
+      component: Join
+    },
+    {
       path: '/error',
       name: 'error',
       component: ErrorPage,
-    },
-    {
-      path: '/join',
-      name: 'join',
-      component: Join
     }]
 })
 export default routes

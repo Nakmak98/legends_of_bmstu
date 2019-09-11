@@ -65,11 +65,11 @@
                     .catch(error => {
                         if (error.response) {
                             console.log(error.response.status)
-                            console.log(error.message)
+                            console.log(error.response.data.message)
                             if (error.response.status === 401) {
                                 this.$route.push('/auth')
                             } else {
-                                this.$emit('error', error.message)
+                                this.$emit('error', error.response.data.message)
                             }
                         }
                     })

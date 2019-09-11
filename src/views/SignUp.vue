@@ -41,7 +41,7 @@
                            console.log(response.data)
                            console.log(response.status)
                            this.$store.commit('setUserData', response.data);
-                           this.$router.push("/sign_in")
+                           this.$router.push("/account")
                        })
                        .catch(error => {
                            console.log(error)
@@ -61,13 +61,6 @@
         }
         if((/[0-9]/g.test(obj.request_body.first_name)) || (/[0-9]/g.test(obj.request_body.last_name))) {
             obj.validation_message = "Имя или фамилия не должны содержать цифр"
-            return false
-        }
-        var exp = /^([а-яА-Я]{1,3})(\d{1,2})(-{1})(\d{2})([мМ]?)$/g
-        if(exp.test(obj.request_body.group)) {
-            obj.validation_message = ''
-        } else {
-            obj.validation_message = "Неверно введена группа"
             return false
         }
 

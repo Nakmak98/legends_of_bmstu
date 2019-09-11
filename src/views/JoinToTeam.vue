@@ -3,7 +3,7 @@
         <base-error-message :message="error_message"></base-error-message>
         <h1>Поиск команды</h1>
         <div>
-            <base-input type="text" placeholder="Название команды" v-model="search_input_value"></base-input>
+            <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
         </div>
         <h1>Название команды</h1>
         <select v-model="request_body.team_id" size="5">
@@ -40,7 +40,7 @@
             }
         },
         methods: {
-            show_popup(){
+            show_popup() {
                 let popup_options = {
                     message: "Введите пригласительный код",
                     placeholder: 'Пригласительный код',
@@ -56,25 +56,28 @@
                     .get('/team/all')
                     .then(response => {
                         console.log(response.data)
-                        this.teams = response.data
-                        this.teams.sort((a,b) => {
-                            if(a.team_id > b.team_id) { return 1 }
-                            if(a.team_id < b.team_id) { return -1 }
+                        this.teams = response.data.sort((a, b) => {
+                            if (a.team_id > b.team_id) {
+                                return 1
+                            }
+                            if (a.team_id < b.team_id) {
+                                return -1
+                            }
                             return 0
                         });
                     })
                     .catch(error => {
                         if (error.response) {
                             console.log(error.response.status)
-                            console.log(error.message)
+                            console.log(error.response.data.message)
                             if (error.response.status === 401) {
                                 this.$route.push('/auth')
                             } else if (error.response.status === 403) {
-                                this.$emit('error', error.message)
+                                this.$emit('error', error.response.data.message)
                             } else if (error.response.status === 404) {
-                                this.$emit('error', error.message)
+                                this.$emit('error', error.response.data.message)
                             } else {
-                                this.$emit('error', error.message)
+                                this.$emit('error', error.response.data.message)
                             }
                         }
                     })
@@ -96,9 +99,9 @@
                             if (error.response.status === 401) {
                                 this.$router.push('/auth')
                             } else if (error.response.status === 400) {
-                                this.error_message = error.message
+                                this.error_message = error.response.data.message
                             } else {
-                                this.$emit('error', error.message)
+                                this.$emit('error', error.response.data.message)
                             }
                         }
 

@@ -76,7 +76,7 @@
                     .catch(error => {
                         console.log(error.response.status);
                         if (error.response.status === 401) {
-                            this.error_message = error.message
+                            this.error_message = error.response.data.message
                         }
                     })
             },
@@ -94,7 +94,7 @@
                             if (error.response.status === 401) {
                                 this.$router.push("/auth")
                             } else {
-                                this.error_message = error.message
+                                this.error_message = error.response.data.message
                             }
                         }
                     });
@@ -109,7 +109,7 @@
                     })
                     .catch(error => {
                         if (error.response) {
-                            this.error_message = error.message
+                            this.error_message = error.response.data.message
                         }
                     });
             },
@@ -148,7 +148,7 @@
                     .catch(error => {
                         console.log(error.response.status);
                         if (error.response.status === 401) {
-                            this.error_message = error.message
+                            this.error_message = error.response.data.message
                         }
                     })
             },

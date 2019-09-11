@@ -51,7 +51,7 @@
                             if (error.response.status === 401) {
                                 this.$router.push('/auth')
                             } else {
-                                this.error_message = error.message
+                                this.error_message = error.response.data.message
                             }
                         } else {
                             this.$router.push('/error')

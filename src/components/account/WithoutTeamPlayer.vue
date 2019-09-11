@@ -1,7 +1,7 @@
 <template>
     <div id="account-menu" class="account-menu-container">
         Вы ещё не состоите в команде.<span @click="$router.push('/team/create')">Создайте её</span>
-        или <span @click="$router.push('/join')">присоединитесь</span> к существующей.
+        или <span @click="$router.push('/team/join')">присоединитесь</span> к существующей.
     </div>
 </template>
 
