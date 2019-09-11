@@ -34,7 +34,6 @@
         methods: {
             handleAccess (){
                 if(this.value !== ''){
-                    // this.$store.commit('setPopupInputValue', this.value);
                     this.popup.callback(this.popup.args, this.value)
                 } else {
                     this.popup.callback(this.popup.args)

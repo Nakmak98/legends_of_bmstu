@@ -40,6 +40,7 @@ export default new Vuex.Store({
         deleteTeamMembers(state) {
             state.team_members = null;
         },
+
         deleteTeamData(state) {
             state.team = null;
         },
@@ -61,11 +62,15 @@ export default new Vuex.Store({
                 .then(response => {
                     console.log(response)
                     context.commit('setUserData', response.data)
-                }).catch(error => {
-                console.log("NOT RESPONSE: " + error)
-                console.log(error.response.status)
-                console.log(error.response.data)
-            })
+                })
         },
+        updateTeamMembers(context) {
+            Axios
+                .get('/team/members')
+                .then(response => {
+                    console.log(response.data);
+                    context.commit('setTeamMembers', response.data);
+                })
+        }
     }
 })
