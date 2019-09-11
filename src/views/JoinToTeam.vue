@@ -3,9 +3,14 @@
         <h1>Поиск команды</h1>
         <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
         <h1>Название команды</h1>
-        <select v-model="request_body.team_id" size="5">
-            <option v-for="team of search_team" :value="team.team_id">{{team.team_id}} {{team.team_name}}</option>
-        </select>
+        <div class="teams-list">
+            <option v-for="team of search_team"
+                    :value="team.team_id"
+                    @click="select"
+                    class="team-option">
+                {{team.team_id}} {{team.team_name}}
+            </option>
+        </div>
         <base-button title="Вступить в команду" @click="check_join"></base-button>
     </div>
 </template>
@@ -54,6 +59,15 @@
                 };
                 this.$store.commit('deleteErrorMessage');
                 this.$store.commit('setPopupOptions', popup_options)
+            },
+            select(event){
+                let option = event.target;
+                let options = document.getElementsByClassName('team-option');
+                for(let item of options){
+                    item.style.backgroundColor="";
+                }
+                option.style.backgroundColor="green";
+                this.request_body.team_id = option.value;
             },
             request_teams() {
                 Axios
@@ -111,6 +125,12 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.selected {
+    //Please, style it normal)))
+    background-color: cadetblue;
+    .team-option {
+        //Need to select teams. Don't remove this class in html-tag!
+    }
+}
 </style>
