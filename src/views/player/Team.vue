@@ -7,8 +7,8 @@
 </template>
 
 <script>
-    import WithoutTeamPlayer from "../components/account/WithoutTeamPlayer";
-    import WithTeamPlayer from "../components/account/WithTeamPlayer";
+    import WithoutTeamPlayer from "../../components/account/WithoutTeamPlayer";
+    import WithTeamPlayer from "../../components/account/WithTeamPlayer";
     import Axios from 'axios'
     export default {
         name: "Team",

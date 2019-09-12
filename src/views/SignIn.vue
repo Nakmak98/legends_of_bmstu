@@ -26,7 +26,7 @@
                     Axios
                         .post('/user/sign_in', this.request_body)
                         .then(response => {
-                            console.log(response.data)
+                            console.log(response.data);
                             this.$store.commit('setUserData', response.data);
                             this.$router.push("/account");
                         })

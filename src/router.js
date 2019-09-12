@@ -5,9 +5,10 @@ import Auth from "./views/Auth";
 import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
-import CreateTeam from "./views/CreateTeam";
-import Join from "./views/JoinToTeam"
-import Team from "./views/Team";
+import CreateTeam from "./views/player/CreateTeam";
+import Join from "./views/player/JoinToTeam"
+import Team from "./views/player/Team";
+import ModeratorView from "./views/moderator/ModeratorView";
 Vue.use(Router)
 
 const routes = new Router({
@@ -52,6 +53,11 @@ const routes = new Router({
       path: '/team/join',
       name: 'join',
       component: Join
+    },
+    {
+      path: '/moderator',
+      name: 'moderator',
+      component: ModeratorView
     }
     ]
 });
