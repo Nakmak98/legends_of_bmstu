@@ -4,9 +4,10 @@ import Home from './views/Home.vue'
 import Auth from "./views/Auth";
 import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
-import SignUp from "./views/SignUp";;
+import SignUp from "./views/SignUp";
 import CreateTeam from "./views/CreateTeam";
 import Join from "./views/JoinToTeam"
+import Team from "./views/Team";
 Vue.use(Router)
 
 const routes = new Router({
@@ -39,19 +40,19 @@ const routes = new Router({
       component: SignUp
     },
     {
-      path: '/team/create',
-      name: 'team_create',
-      component: CreateTeam,
+      path: '/team',
+      component: Team,
     },
     {
-      path: '/team/add_member',
-      name: 'add_member',
+      path: '/team/create',
+      name: 'team_create',
       component: CreateTeam,
     },
     {
       path: '/team/join',
       name: 'join',
       component: Join
-    }]
-})
+    }
+    ]
+});
 export default routes

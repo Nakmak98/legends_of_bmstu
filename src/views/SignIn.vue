@@ -1,7 +1,7 @@
 <template>
     <div>
-        <base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input>
-        <base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input>
+        <base-input type="text" placeholder="Логин" v-model.trim="request_body.login"></base-input>
+        <base-input type="password" placeholder="Пароль" v-model.trim="request_body.password"></base-input>
         <base-button title="Войти" @click="sign_in"></base-button>
     </div>
 </template>

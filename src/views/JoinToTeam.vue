@@ -2,7 +2,7 @@
     <div>
         <h1>Поиск команды</h1>
         <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
-        <h1>Название команды</h1>
+        <h1>Выберите команду</h1>
         <div class="teams-list">
             <option v-for="team of search_team"
                     :value="team.team_id"
@@ -108,6 +108,12 @@
                                 this.$router.push('/auth')
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            }
+                            else if(error.response.status == 400) {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
                                     message: error.response.data.message
                                 });
                             } else if(error.response.status > 401) {

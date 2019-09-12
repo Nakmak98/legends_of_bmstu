@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="user.team_id">
         <h2>Команда № {{team.team_id}}</h2>
         <h2>{{team.search_input_value}}</h2>
-        <h2>Пригласительный код: <br>{{team.invite_code}}</h2>
+        <h2 v-if="team.invite_code">Пригласительный код: <br>{{team.invite_code}}</h2>
         <table>
             <tr>
                 <td>Имя</td>
@@ -18,6 +18,7 @@
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
+        <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
     </div>
 </template>
 
@@ -46,12 +47,18 @@
                 return this.$store.state.user
             }
         },
-        mounted() {
-            if(!this.team_members){
-                this.request_team_members();
-            }
-        },
         methods: {
+            check_leave_team() {
+                let popup_options = {
+                    message: 'Вы уверены, что хотите покинуть команду?',
+                    placeholder: '',
+                    input_field: false,
+                    show: true,
+                    callback: this.leave_team,
+                    args: null
+                };
+                this.$store.commit('setPopupOptions', popup_options)
+            },
             check_delete_action(member) {
                 this.request_body.user_id = member.user_id;
 
@@ -89,31 +96,30 @@
                         }
                     })
             },
-            request_team_members() {
+            leave_team: function () {
                 Axios
-                    .get('/team/members')
-                    .then(response => {
-                        this.$store.commit('setTeamMembers', response.data);
+                    .delete('/team/leave')
+                    .then(response => {;
+                        this.$store.commit('deleteTeamData');
+                        this.$store.dispatch('updateUserData');
+                        this.$store.commit('deleteTeamMembers');
                     })
                     .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.status);
-                            console.log(error.response.data.message);
-                            if (error.response.status === 401) {
-                                this.$route.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                        console.log(error.response.status);
+                        if (error.response.status === 401) {
+                            this.$router.push('/auth');
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка авторизации",
+                                message: error.response.data.message
+                            });
+                        } else {
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка",
+                                message: error.response.data.message
+                            });
                         }
                     })
-            }
+            },
         }
     }
 </script>

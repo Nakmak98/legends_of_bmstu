@@ -19,13 +19,13 @@
         name: "CreateTeam",
         data() {
             return {
-                search_input_value: '',
+                team_name: '',
                 create_status: false,
             }
         },
         methods: {
             check_create_team: function () {
-                if (this.search_input_value !== '') {
+                if (this.team_name !== '') {
                     this.create_team();
                 } else {
                     this.$store.commit('setErrorMessage', {
@@ -37,7 +37,7 @@
             create_team: function () {
                 Axios
                     .post('/team/create', {
-                        search_input_value: this.search_input_value
+                        team_name: this.team_name
                     })
                     .then(response => {
                         this.$store.commit('setTeamData', response.data);
