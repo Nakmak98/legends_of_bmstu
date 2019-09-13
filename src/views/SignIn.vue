@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <div class="basic-block auth">
+        <img src="../assets/orn_top.png" id="ornament-top">
+        <h1>Авторизация</h1> 
         <base-input type="text" placeholder="Логин" v-model.trim="request_body.login"></base-input>
         <base-input type="password" placeholder="Пароль" v-model.trim="request_body.password"></base-input>
         <base-button title="Войти" @click="sign_in"></base-button>
+        <img src="../assets/orn_bot.png" id="ornament-bottom">
     </div>
 </template>
 

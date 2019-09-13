@@ -1,5 +1,5 @@
 <template>
-    <div id="create-team">
+    <div id="create-team" class="basic-block">
         <div v-if="create_status">
             <p>Команда успешно создана!</p>
             <p>Перейдите в личный кабинет, чтобы просмотерть сведения о команде.</p>

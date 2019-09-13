@@ -21,5 +21,14 @@
 </script>
 
 <style scoped>
-
+.error-message-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #d66363;
+    border-radius: 20px;
+    border: 10px solid #ef8f8f; 
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    color: white;
+}
 </style>

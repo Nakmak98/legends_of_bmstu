@@ -1,18 +1,20 @@
 <template>
     <div class="popup-container">
         <transition name="fade">
-            <div v-if="popup.show" class="base-popup">
-                <h1>Подтверждение</h1>
-                <div class="popup-message">
-                    {{popup.message}}
+            <div v-if="popup.show" class="popup-bg">
+                <div class="base-popup basic-block">
+                    <h1>Подтверждение</h1>
+                    <div class="popup-message">
+                        {{popup.message}}
+                    </div>
+                    <base-input
+                            v-if="popup.input_field"
+                            type="text"
+                            v-model="input_value">
+                    </base-input>
+                    <base-button @click="handleAccess" title="ОК"></base-button>
+                    <base-button @click="popup.show = false" title="Отмена"></base-button>
                 </div>
-                <base-input
-                        v-if="popup.input_field"
-                        type="text"
-                        v-model="input_value">
-                </base-input>
-                <base-button @click="handleAccess" title="ОК"></base-button>
-                <base-button @click="popup.show = false" title="Отмена"></base-button>
             </div>
         </transition>
     </div>
@@ -46,11 +48,23 @@
 
 <style>
     .popup-container {
+        position: relative;
         display: flex;
         justify-content: center;
     }
+    .popup-bg {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.3);
+    }
     .base-popup {
-        background-color: #888;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
         border-radius: 10px;
         max-width: 350px;
         box-shadow: 0 0 8px black;
