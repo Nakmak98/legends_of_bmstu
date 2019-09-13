@@ -1,0 +1,103 @@
+<template>
+    <div>
+        <h3>Основные задания:</h3>
+        <div class="task-container">
+            <div class="task-card" v-for="task in main_tasks"
+                 @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+                <h2>{{task.task_id}}</h2>
+                <p>{{task.task_name}}</p>
+            </div>
+        </div>
+        <h3>Фотоквесты:</h3>
+        <div class="task-container">
+            <div class="task-card" v-for="task in photo_tasks"
+                 @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+                <h2>{{task.task_id}}</h2>
+                <p>{{task.task_name}}</p>
+            </div>
+        </div>
+        <h3>Логика:</h3>
+        <div class="task-card" v-for="task in logic_tasks"
+             @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+            <h2>{{task.task_id}}</h2>
+            <p>{{task.task_name}}</p>
+        </div>
+        <h3>Черновик:</h3>
+        <div class="task-card" v-for="task in draft_tasks"
+             @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+            <h2>{{task.task_id}}</h2>
+            <p>{{task.task_name}}</p>
+        </div>
+    </div>
+</template>
+
+<script>
+    import Axios from 'axios'
+    export default {
+        name: "AllTasks",
+        data() {
+            return {
+                tasks: []
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user
+            },
+            photo_tasks() {
+                return this.tasks.filter(task => task.task_type === "PHOTO")
+            },
+            main_tasks() {
+                return this.tasks.filter(task => task.task_type === "MAIN")
+            },
+            draft_tasks() {
+                return this.tasks.filter(task => task.task_type === "DRAFT")
+            },
+            logic_tasks() {
+                return this.tasks.filter(task => task.task_type === "LOGIC")
+            }
+        },
+        mounted() {
+            this.request_all_tasks()
+        },
+        methods: {
+            request_all_tasks() {
+                Axios
+                    .get('/task/all')
+                    .then(response => {
+                        this.tasks = response.data
+                    })
+                    .catch(async error => {
+                        // setErrorMessage выполнялся раньше push,
+                        // что приводило к некорректной работе при уведомлении сообщений
+                        // помог async/await
+                        if (error.response) {
+                            if (error.response.status === 401) {
+                                await this.$router.push('auth');
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации" ,
+                                    message: error.response.data.message
+                                });
+                            } else {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка" ,
+                                    message: error.response.data.message
+                                });
+                            }
+                        }
+                    })
+            },
+        }
+    }
+</script>
+
+<style scoped>
+    .task-container {
+        display: flex;
+    }
+    .task-card {
+        cursor: pointer;
+        width: 150px;
+        border: 1px solid;
+    }
+</style>

@@ -13,29 +13,15 @@
 <script>
 
   export default {
-
     name: 'app',
     data: function () {
       return {
-        popup_options: {
-          message: '',
-          placeholder: '',
-          input_field: false,
-          show: false,
-          callback: () => {}
-        }
       }
-    },
-    mounted (){
-      this.$on('popup', this.pass_options);
     },
     updated() {
       this.$store.commit('deleteErrorMessage');
     },
     methods: {
-      pass_options(options){
-        this.popup_options = options;
-      }
     }
   }
 </script>

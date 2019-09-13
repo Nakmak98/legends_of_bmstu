@@ -9,6 +9,7 @@ import CreateTeam from "./views/player/CreateTeam";
 import Join from "./views/player/JoinToTeam"
 import Team from "./views/player/Team";
 import ModeratorView from "./views/moderator/ModeratorView";
+import TaskEditor from "./components/moderator/TaskEditor";
 Vue.use(Router)
 
 const routes = new Router({
@@ -58,6 +59,16 @@ const routes = new Router({
       path: '/moderator',
       name: 'moderator',
       component: ModeratorView
+    },
+    {
+      path: '/moderator/create_task',
+      name: 'create_task',
+      component: TaskEditor
+    },
+    {
+      path: '/moderator/edit_task/:task_id',
+      name: 'edit_task',
+      component: TaskEditor
     }
     ]
 });

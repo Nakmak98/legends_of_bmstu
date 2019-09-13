@@ -28,7 +28,7 @@
                         .then(response => {
                             console.log(response.data);
                             this.$store.commit('setUserData', response.data);
-                            this.$router.push("/account");
+                            this.redirect(response.data.role);
                         })
                         .catch(error => {
                             if (error.response) {
@@ -62,6 +62,14 @@
                     return false
                 }
                 return true
+            },
+            redirect(user_role) {
+                this.$router.push("/account")
+                if(user_role === 'PLAYER' || user_role === 'CAPTAIN' || user_role === 'TESTER' ) {
+                }
+                if(user_role === 'MODERATOR') {
+                    this.$router.push("/moderator")
+                }
             }
         }
     }
