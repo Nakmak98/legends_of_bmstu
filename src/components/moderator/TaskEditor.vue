@@ -17,7 +17,7 @@
         <div>
             <input type="number" id="points" v-model.number="request_body.points">
         </div>
-        <label for="duration">Длительность</label>
+        <label for="duration">Длительность (в минутах)</label>
         <div>
             <input type="number" id="duration" v-model.number="request_body.duration">
         </div>
@@ -35,6 +35,7 @@
             <span class="clear-answers" @click="request_body.answers = []; answer = ''">Очистить ответы</span>
         </div>
         <vue-editor id="editor"
+                    :editorToolbar="customToolbar"
                     useCustomImageHandler
                     @image-added="handleImageAdded"
                     v-model="request_body.html">
@@ -42,7 +43,7 @@
         <button v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
         <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
         <button v-else @click="send_task">Сохранить</button>
-        <div id="succes_update"></div>
+        <div class="preview" v-html="request_body.html"></div>
     </div>
 </template>
 
@@ -62,7 +63,7 @@
                     task_name: "",
                     task_type: '',
                     points: 1,
-                    duration: 1,
+                    duration: null,
                     capacity: 1,
                     html: "",
                     answers: [],
@@ -74,7 +75,13 @@
                     MAIN: "MAIN",
                     DRAFT: "DRAFT",
                 },
-                saved: false,
+                customToolbar: [[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                ["bold", "italic", "underline", "strike"],
+                                ["blockquote"],
+                                [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+                                [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+                                [{ color: ["black", "white", "green", "blue", "purple", "yellow"] },],
+                                ["image", "code-block"],  ],
                 answer: ""
             };
         },
@@ -139,7 +146,6 @@
                 Axios
                     .post('/task/image', formData)
                     .then(result => {
-                        console.log(result.data)
                         this.request_body.img_path = Axios.defaults.baseURL + result.data;
                         Editor.insertEmbed(cursorLocation, "image", this.request_body.img_path);
                         resetUploader();
@@ -156,7 +162,7 @@
                         }
                     })
                     .then(response => {
-                        this.request_body = response.data
+                        this.request_body = response.data;
                     })
                     .catch(async error => {
                         // setErrorMessage выполнялся раньше push,
@@ -164,7 +170,7 @@
                         // помог async/await
                         if (error.response) {
                             if (error.response.status === 401) {
-                                await this.$router.push('auth');
+                                await this.$router.push('/auth');
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message
@@ -194,7 +200,7 @@
                         .catch(error => {
                             if (error.response) {
                                 if (error.response.status === 401) {
-                                    this.$router.push('auth');
+                                    this.$router.push('/auth');
                                     this.$store.commit('setErrorMessage', {
                                         header: "Ошибка авторизации",
                                         message: error.response.data.message
@@ -212,14 +218,13 @@
             },
             update_task() {
                 Axios.put('/task', this.request_body)
-                    .then(response => {
-                        this.saved = true
-                        console.log(response)
+                    .then(() => {
+                        this.$store.commit('deleteErrorMessage')
                     })
                     .catch(error => {
                         if (error.response) {
                             if (error.response.status === 401) {
-                                this.$router.push('auth');
+                                this.$router.push('/auth');
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message

@@ -77,7 +77,7 @@
                         // помог async/await
                         if (error.response) {
                             if (error.response.status === 401) {
-                                await this.$router.push('auth');
+                                await this.$router.push('/auth');
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка авторизации" ,
                                     message: error.response.data.message
