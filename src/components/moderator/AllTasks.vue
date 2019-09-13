@@ -45,16 +45,20 @@
                 return this.$store.state.user
             },
             photo_tasks() {
-                return this.tasks.filter(task => task.task_type === "PHOTO")
+                let photo = this.tasks.filter(task => task.task_type === "PHOTO")
+                return photo.sort(compare)
             },
             main_tasks() {
-                return this.tasks.filter(task => task.task_type === "MAIN")
+               let main = this.tasks.filter(task => task.task_type === "MAIN")
+                return main.sort(compare)
             },
             draft_tasks() {
-                return this.tasks.filter(task => task.task_type === "DRAFT")
+                let draft = this.tasks.filter(task => task.task_type === "DRAFT")
+                return draft.sort(compare)
             },
             logic_tasks() {
-                return this.tasks.filter(task => task.task_type === "LOGIC")
+                let logic = this.tasks.filter(task => task.task_type === "LOGIC")
+                return logic.sort(compare)
             }
         },
         mounted() {
@@ -88,6 +92,15 @@
                     })
             },
         }
+    }
+    function compare(a, b) {
+        if (a.task_id > b.task_id) {
+            return 1;
+        }
+        if (a.task_id < b.task_id) {
+            return -1;
+        }
+        return 0;
     }
 </script>
 

@@ -28,7 +28,7 @@
         <label for="answers">Ответы</label>
         <div>
             <div>
-                <input required type="text" id="answers" v-model="answer">
+                <input required type="text" id="answers" v-model.trim="answer">
                 <span class="push-answer" @click="push_answer">+</span>
             </div>
             <div><span v-for="answer of request_body.answers">{{answer}}, </span></div>
