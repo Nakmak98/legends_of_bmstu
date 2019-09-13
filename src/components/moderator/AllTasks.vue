@@ -17,22 +17,27 @@
             </div>
         </div>
         <h3>Логика:</h3>
-        <div class="task-card" v-for="task in logic_tasks"
-             @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
-            <h2>{{task.task_id}}</h2>
-            <p>{{task.task_name}}</p>
+        <div class="task-container">
+            <div class="task-card" v-for="task in logic_tasks"
+                 @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+                <h2>{{task.task_id}}</h2>
+                <p>{{task.task_name}}</p>
+            </div>
         </div>
         <h3>Черновик:</h3>
-        <div class="task-card" v-for="task in draft_tasks"
-             @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
-            <h2>{{task.task_id}}</h2>
-            <p>{{task.task_name}}</p>
+        <div class="task-container">
+            <div class="task-card" v-for="task in draft_tasks"
+                 @click="$router.push({name: 'edit_task', params:{task_id: task.task_id}})">
+                <h2>{{task.task_id}}</h2>
+                <p>{{task.task_name}}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import Axios from 'axios'
+
     export default {
         name: "AllTasks",
         data() {
@@ -49,7 +54,7 @@
                 return photo.sort(compare)
             },
             main_tasks() {
-               let main = this.tasks.filter(task => task.task_type === "MAIN")
+                let main = this.tasks.filter(task => task.task_type === "MAIN")
                 return main.sort(compare)
             },
             draft_tasks() {
@@ -79,12 +84,12 @@
                             if (error.response.status === 401) {
                                 await this.$router.push('/auth');
                                 this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации" ,
+                                    header: "Ошибка авторизации",
                                     message: error.response.data.message
                                 });
                             } else {
                                 this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка" ,
+                                    header: "Ошибка",
                                     message: error.response.data.message
                                 });
                             }
@@ -93,6 +98,7 @@
             },
         }
     }
+
     function compare(a, b) {
         if (a.task_id > b.task_id) {
             return 1;
@@ -108,6 +114,7 @@
     .task-container {
         display: flex;
     }
+
     .task-card {
         cursor: pointer;
         width: 150px;

@@ -30,7 +30,7 @@
                 } else {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Поле не должно быть пустым"
+                        message: "Поле не должно быть пустым."
                     });
                 }
             },

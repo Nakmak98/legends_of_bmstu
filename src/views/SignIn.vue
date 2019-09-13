@@ -36,7 +36,7 @@
                                 if (error.response.status === 400) {
                                     this.$store.commit('setErrorMessage', {
                                         header: this.error_header ,
-                                        message: "Неверный логин / пароль"
+                                        message: "Неверный логин / пароль."
                                     });
                                 }
                             }
@@ -48,7 +48,7 @@
                     if (obj.request_body[field] === '') {
                         this.$store.commit('setErrorMessage', {
                             header: this.error_header ,
-                            message: "Заполните все поля формы"
+                            message: "Заполните все поля формы."
                         });
                         return false
                     }
@@ -57,7 +57,7 @@
                 if (/[а-я]/g.test(obj.request_body.login)) {
                     this.$store.commit('setErrorMessage', {
                         header: this.error_header ,
-                        message: "Поля не должны содержать кириллицу"
+                        message: "Поля не должны содержать кириллицу."
                     });
                     return false
                 }

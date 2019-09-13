@@ -43,7 +43,12 @@
         <button v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
         <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
         <button v-else @click="send_task">Сохранить</button>
-        <div class="preview" v-html="request_body.html"></div>
+        <div>
+            <button  @click="show_preview = !show_preview">Просмотреть</button>
+            <div v-if="show_preview" class="preview" v-html="request_body.html"></div>
+        </div>
+
+
     </div>
 </template>
 
@@ -75,14 +80,15 @@
                     MAIN: "MAIN",
                     DRAFT: "DRAFT",
                 },
-                customToolbar: [[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                ["bold", "italic", "underline", "strike"],
-                                ["blockquote"],
-                                [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-                                [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-                                [{ color: ["black", "white", "green", "blue", "purple", "yellow"] },],
-                                ["image", "code-block"],  ],
-                answer: ""
+                customToolbar: [[{'header': [1, 2, 3, 4, 5, 6, false]}],
+                    ["bold", "italic", "underline", "strike"],
+                    ["blockquote"],
+                    [{align: ''}, {align: 'center'}, {align: 'right'}, {align: 'justify'}],
+                    [{list: "ordered"}, {list: "bullet"}, {list: "check"}],
+                    [{color: ["black", "white", "green", "blue", "purple", "yellow"]},],
+                    ["image", "code-block"],],
+                answer: "",
+                show_preview: false
             };
         },
         mounted() {
@@ -185,6 +191,12 @@
                     })
             },
             push_answer() {
+                if (this.answer === '') {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Нельзя ввести пустой ответ."
+                    });
+                }
                 this.request_body.answers.push(this.answer);
                 this.answer = ""
             },
@@ -193,8 +205,10 @@
                     Axios
                         .post('/task', this.request_body)
                         .then(() => {
-                            this.$router.push({name: 'edit_task', params:{
-                                task_id: this.request_body.task_id}
+                            this.$router.push({
+                                name: 'edit_task', params: {
+                                    task_id: this.request_body.task_id
+                                }
                             })
                         })
                         .catch(error => {
@@ -217,33 +231,56 @@
                 }
             },
             update_task() {
-                Axios.put('/task', this.request_body)
-                    .then(() => {
-                        this.$store.commit('deleteErrorMessage')
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            if (error.response.status === 401) {
-                                this.$router.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                if (this.valid()) {
+                    Axios.put('/task', this.request_body)
+                        .then(() => {
+                            this.$store.commit('deleteErrorMessage')
+                        })
+                        .catch(error => {
+                            if (error.response) {
+                                if (error.response.status === 401) {
+                                    this.$router.push('/auth');
+                                    this.$store.commit('setErrorMessage', {
+                                        header: "Ошибка авторизации",
+                                        message: error.response.data.message
+                                    });
+                                } else {
+                                    this.$store.commit('setErrorMessage', {
+                                        header: "Ошибка",
+                                        message: error.response.data.message
+                                    });
+                                }
 
-                        }
-                    });
+                            }
+                        });
+                }
             },
             valid() {
-                if(this.request_body.task_type === ''){
+                if (this.request_body.task_type === '') {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Определите тип задания"
+                        message: "Определите тип задания."
+                    });
+                    return false
+                }
+                if ((this.request_body.duration > 1000)) {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Значение числа в поле Продолжительность слишком большое."
+                    });
+                    return false
+                }
+                if ((this.request_body.points > 1000)) {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Значение числа в поле Количество очков слишком большое."
+                    });
+                    return false
+                }
+                if ((this.request_body.capacity > 1000)) {
+                    this.$store.commit('setErrorMessage', {
+                        header: "Ошибка",
+                        message: "Значение числа в поле Пропускная способность слишком большое."
                     });
                     return false
                 }

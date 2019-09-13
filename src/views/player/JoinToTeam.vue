@@ -45,7 +45,7 @@
                 if(this.request_body.team_id === 0) {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Необходимо выбрать команду из списка"
+                        message: "Необходимо выбрать команду из списка."
                     });
                     return
                 }
@@ -89,7 +89,7 @@
                 if(invite_code == '') {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Поле не должно быть пустым"
+                        message: "Поле не должно быть пустым."
                     });
                     return
                 }

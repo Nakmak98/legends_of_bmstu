@@ -53,7 +53,7 @@
                     if (this.request_body[field] === '') {
                         this.$store.commit('setErrorMessage', {
                             header: this.error_header ,
-                            message: "Заполните все поля формы"
+                            message: "Заполните все поля формы."
                         });
                         return false
                     }
@@ -61,7 +61,7 @@
                 if((/[0-9]/g.test(this.request_body.first_name)) || (/[0-9]/g.test(this.request_body.last_name))) {
                     this.$store.commit('setErrorMessage', {
                         header: this.error_header ,
-                        message: "Имя или фамилия не должны содержать цифр"
+                        message: "Имя или фамилия не должны содержать цифр."
                     });
                     return false
                 }
@@ -69,7 +69,7 @@
                 if(/[а-я]/g.test(this.request_body.login)) {
                     this.$store.commit('setErrorMessage', {
                         header: this.error_header ,
-                        message: "Логин не должен содержать кириллицу"
+                        message: "Логин не должен содержать кириллицу."
                     });
                     return false
                 }
@@ -77,7 +77,7 @@
                 if (this.request_body.password !== this.confirm_password){
                     this.$store.commit('setErrorMessage', {
                         header: this.error_header ,
-                        message: "Пароли не совпадают"
+                        message: "Пароли не совпадают."
                     });
                     return false
                 }
