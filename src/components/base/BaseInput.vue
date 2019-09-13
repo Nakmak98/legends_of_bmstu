@@ -20,5 +20,11 @@
 </script>
 
 <style scoped>
-
+input[type="text"], input[type="password"] {
+  border: none;
+  height: 30px;
+  width: 200px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
 </style>

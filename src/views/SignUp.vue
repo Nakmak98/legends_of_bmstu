@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div class="basic-block auth">
+        <img src="../assets/orn_top.png" id="ornament-top">
+        <h1>Регистрация</h1>
         <base-input type="text" placeholder="Имя" v-model="request_body.first_name"></base-input>
         <base-input type="text" placeholder="Фамилия"  v-model="request_body.last_name"></base-input>
         <base-input type="text" placeholder="Группа" v-model="request_body.group"></base-input>
@@ -8,6 +10,7 @@
         <base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input>
         <base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input>
         <base-button title="Зарегистрироваться" @click="sign_up"></base-button>
+        <img src="../assets/orn_bot.png" id="ornament-bottom">
     </div>
 </template>
 

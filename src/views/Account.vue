@@ -1,5 +1,5 @@
 <template>
-    <div v-if="user" class="about">
+    <div v-if="user" class="about basic-block">
         <h1>Личный кабинет</h1>
         <h2>{{user.first_name}} {{user.last_name}}</h2>
         <h2>{{user.login}}</h2>

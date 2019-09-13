@@ -21,6 +21,7 @@
         background: #fff;
         border: none;
         width: 200px;
-        box-shadow: 0 0 3px black;
+        margin-bottom: 5px;
+        font-size: 20px;
     }
 </style>

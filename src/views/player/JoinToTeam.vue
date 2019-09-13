@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="basic-block">
         <h1>Поиск команды</h1>
         <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
         <h1>Выберите команду</h1>

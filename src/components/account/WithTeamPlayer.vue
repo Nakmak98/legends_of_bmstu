@@ -10,7 +10,7 @@
                 <td>VK</td>
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
-            <tr v-for="member of team_members">
+            <tr v-for="member of team_members" class="table-cont">
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
@@ -125,9 +125,7 @@
 </script>
 
 <style>
-    table {
-        margin: 0 auto;
-    }
+
     .kick-btn {
         color: red;
         cursor: pointer;
