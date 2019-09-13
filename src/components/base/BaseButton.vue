@@ -22,5 +22,6 @@
         border: none;
         width: 200px;
         margin-bottom: 5px;
+        font-size: 20px;
     }
 </style>

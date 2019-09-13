@@ -41,6 +41,21 @@
 </script>
 
 <style lang="scss">
+* {
+  font-family: 'Neucha', cursive;
+  font-weight: 300;
+  font-size: 18px;
+}
+h1 {
+  font-family: BemountLine;
+  font-weight: 500;
+  margin-top: 5px;
+  font-size: 48px;
+}
+@font-face {
+  font-family: BemountLine;
+  src: url("assets/Bemount-Line.woff") format("woff"), url("assets/Bemount-Line.otf") format("truetype");
+}
 body {
   height: 100%;
   margin: 0;

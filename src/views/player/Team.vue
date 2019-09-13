@@ -1,6 +1,6 @@
 <template>
     <div class="basic-block">
-        <h2>Моя команда</h2>
+        <h1>Моя команда</h1>
         <with-team-player></with-team-player>
         <without-team-player v-if="!user.team_id"></without-team-player>
     </div>
