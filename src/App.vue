@@ -2,8 +2,20 @@
   <div id="app">
     <base-popup></base-popup>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/account">Account</router-link> 
+      <div class="burger">
+        <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
+      </div>
+      <div v-if="show_menu" class="menu" @click="show_menu = !show_menu">
+        <div class="menu-content">
+          <img src="@/assets/logo1.png">
+          <router-link to="/task"><div>Задание</div></router-link>
+          <router-link to="/account"><div>Личный кабинет</div></router-link>
+          <router-link to="/team"><div>Кабинет команды</div></router-link>
+          <router-link to="/rules"><div>Правила</div></router-link>
+          <router-link to="/metoda"><div>Методичка</div></router-link>
+        </div>
+        
+      </div>
     </div>
     <router-view/>
     <base-error-message></base-error-message>
@@ -16,6 +28,7 @@
     name: 'app',
     data: function () {
       return {
+        show_menu: false
       }
     },
     updated() {
@@ -67,11 +80,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 0 10px;
 }
 #nav {
   background-color: #f8e0be;
   height: 50px;
   padding: 10px;
+  margin: 0 -10px;
   margin-bottom: 20px;
   box-shadow: 0 3px 5px rgba(0,0,0,0.3);
   box-sizing: border-box;
@@ -113,5 +128,46 @@ table {
 .table-cont {
   background-color: #ffedd4;
 
+}
+.burger {
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: left;
+  font-size: 24px;
+}
+.menu {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+.menu-content {
+    width: 200px;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    background-color: #f8e0be;
+}
+.menu-content>img {
+  width: 100%;
+}
+.menu-content>a {
+  padding-top: 8px;
+  font-style: none;
+  box-sizing: border-box;
+  text-decoration: none;
+  display: block;
+  color: black;
+  height: 40px;
+  border-top: 2px solid #e1bf92;
+}
+.router-link-exact-active {
+  color: black !important;
+  background-color: #ffedd4;
+}
+p>img {
+  max-width: 100%;
 }
 </style>

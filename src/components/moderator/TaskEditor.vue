@@ -1,51 +1,54 @@
 <template>
-    <div id="app">
-        <label for="task_name">Название задания</label>
-        <div>
-            <input required type="text" id="task_name" v-model="request_body.task_name">
-        </div>
-        <div>
-            <select required v-model="request_body.task_type">
-                <option disabled value="">Тип задания</option>
-                <option :value="type_enum.MAIN">Главное</option>
-                <option :value="type_enum.PHOTO">Фотозадание</option>
-                <option :value="type_enum.LOGIC">Логика</option>
-                <option :value="type_enum.DRAFT">Черновик</option>
-            </select>
-        </div>
-        <label for="points">Количество очков</label>
-        <div>
-            <input type="number" id="points" v-model.number="request_body.points">
-        </div>
-        <label for="duration">Длительность (в минутах)</label>
-        <div>
-            <input type="number" id="duration" v-model.number="request_body.duration">
-        </div>
-        <label for="capacity">Пропускная способность</label>
-        <div>
-            <input type="number" id="capacity" v-model.number="request_body.capacity">
-        </div>
-        <label for="answers">Ответы</label>
-        <div>
+    <div>
+        <div v-if="!show_preview" class="basic-block moderator-block">
+            <label for="task_name">Название задания</label>
             <div>
-                <input required type="text" id="answers" v-model.trim="answer">
-                <span class="push-answer" @click="push_answer">+</span>
+                <input required type="text" id="task_name" v-model="request_body.task_name">
             </div>
-            <div><span v-for="answer of request_body.answers">{{answer}}, </span></div>
-            <span class="clear-answers" @click="request_body.answers = []; answer = ''">Очистить ответы</span>
+            <div>
+                <select required v-model="request_body.task_type">
+                    <option disabled value="">Тип задания</option>
+                    <option :value="type_enum.MAIN">Главное</option>
+                    <option :value="type_enum.PHOTO">Фотозадание</option>
+                    <option :value="type_enum.LOGIC">Логика</option>
+                    <option :value="type_enum.DRAFT">Черновик</option>
+                </select>
+            </div>
+            <label for="points">Количество очков</label>
+            <div>
+                <input type="number" id="points" v-model.number="request_body.points">
+            </div>
+            <label for="duration">Длительность (в минутах)</label>
+            <div>
+                <input type="number" id="duration" v-model.number="request_body.duration">
+            </div>
+            <label for="capacity">Пропускная способность</label>
+            <div>
+                <input type="number" id="capacity" v-model.number="request_body.capacity">
+            </div>
+            <label for="answers">Ответы</label>
+            <div>
+                <div>
+                    <input required type="text" id="answers" v-model.trim="answer">
+                    <span class="push-answer" @click="push_answer">+</span>
+                </div>
+                <div><span v-for="answer of request_body.answers" class="answer">{{answer}}, </span></div>
+                <span class="clear-answers" @click="request_body.answers = []; answer = ''">Очистить ответы</span>
+            </div>
+            <vue-editor id="editor"
+                        :editorToolbar="customToolbar"
+                        useCustomImageHandler
+                        @image-added="handleImageAdded"
+                        v-model="request_body.html">
+            </vue-editor>
+            <button v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
+            <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
+            <button v-else @click="send_task">Сохранить</button>
+            <button  @click="show_preview = !show_preview">Предпросмотр</button>
         </div>
-        <vue-editor id="editor"
-                    :editorToolbar="customToolbar"
-                    useCustomImageHandler
-                    @image-added="handleImageAdded"
-                    v-model="request_body.html">
-        </vue-editor>
-        <button v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
-        <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
-        <button v-else @click="send_task">Сохранить</button>
-        <div>
-            <button  @click="show_preview = !show_preview">Просмотреть</button>
-            <div v-if="show_preview" class="preview" v-html="request_body.html"></div>
+        <div  v-if="show_preview" >
+            <button  @click="show_preview = !show_preview">Редактировать</button>
+            <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1><div v-html="request_body.html"></div></div>
         </div>
 
 
@@ -298,10 +301,16 @@
 
     .push-answer {
         font-size: 25px;
-        color: green;
+        color: limegreen;
     }
 
     .clear-answers {
         color: red;
+    }
+    .quillWrapper {
+        background-color: white;
+    }
+    .answer {
+        color: black;
     }
 </style>

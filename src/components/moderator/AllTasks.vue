@@ -118,6 +118,9 @@
     .task-card {
         cursor: pointer;
         width: 150px;
-        border: 1px solid;
+        margin: 5px;
+        background-color: #fff2e0;
+        border-radius: 10px;
     }
+
 </style>

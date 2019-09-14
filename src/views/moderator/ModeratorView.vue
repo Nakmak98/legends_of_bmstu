@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h2>Главная страница модератора</h2>
+    <div class="basic-block moderator-block">
+        <h1>Главная страница модератора</h1>
         <base-button title="Создать задание"
                      @click="$router.push('/moderator/create_task')">
         </base-button>
