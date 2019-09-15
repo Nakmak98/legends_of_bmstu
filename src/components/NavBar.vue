@@ -1,5 +1,5 @@
 <template>
-    <div id="nav">
+    <div id="nav" v-touch:swipe.right="handle_swipe_2">
         <div class="burger">
             <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
         </div>
@@ -35,8 +35,12 @@
         methods: {
             handle_swipe() {
                 if(this.show_menu) {
-                    console.log("asd");
                     this.show_menu = false;
+                }
+            },
+            handle_swipe_2() {
+                if(!this.show_menu) {
+                    this.show_menu = true;
                 }
             },
             is(expected_role) {
