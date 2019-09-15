@@ -1,22 +1,7 @@
 <template>
   <div id="app">
     <base-popup></base-popup>
-    <div id="nav">
-      <div class="burger">
-        <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
-      </div>
-      <div v-if="show_menu" class="menu" @click="show_menu = !show_menu">
-        <div class="menu-content">
-          <img src="@/assets/logo1.png">
-          <router-link to="/task"><div>Задание</div></router-link>
-          <router-link to="/account"><div>Личный кабинет</div></router-link>
-          <router-link to="/team"><div>Кабинет команды</div></router-link>
-          <router-link to="/rules"><div>Правила</div></router-link>
-          <router-link to="/metoda"><div>Методичка</div></router-link>
-        </div>
-        
-      </div>
-    </div>
+    <nav-bar></nav-bar>
     <router-view/>
     <base-error-message></base-error-message>
   </div>
@@ -24,8 +9,10 @@
 
 <script>
 
+  import NavBar from "./components/NavBar";
   export default {
     name: 'app',
+    components: {NavBar},
     data: function () {
       return {
         show_menu: false
@@ -35,6 +22,12 @@
       this.$store.commit('deleteErrorMessage');
     },
     methods: {
+      handle_swipe() {
+         if(this.show_menu) {
+           console.log("asd");
+           this.show_menu = false;
+         }
+      }
     }
   }
 </script>

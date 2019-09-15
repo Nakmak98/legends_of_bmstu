@@ -30,10 +30,10 @@
             <div>
                 <div>
                     <input required type="text" id="answers" v-model.trim="answer">
-                    <span class="push-answer" @click="push_answer">+</span>
                 </div>
                 <div><span v-for="answer of request_body.answers" class="answer">{{answer}}, </span></div>
-                <span class="clear-answers" @click="request_body.answers = []; answer = ''">Очистить ответы</span>
+                <button @click="request_body.answers = []; answer = ''">Очистить ответы</button>
+                <button @click="push_answer">Добавить ответ</button>
             </div>
             <vue-editor id="editor"
                         :editorToolbar="customToolbar"
@@ -45,10 +45,11 @@
             <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
             <button v-else @click="send_task">Сохранить</button>
             <button  @click="show_preview = !show_preview">Предпросмотр</button>
+            <button  @click="$router.push('/moderator')">Назад</button>
         </div>
         <div  v-if="show_preview" >
-            <button  @click="show_preview = !show_preview">Редактировать</button>
             <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1><div v-html="request_body.html"></div></div>
+            <button  @click="show_preview = !show_preview">Редактировать</button>
         </div>
 
 
@@ -295,12 +296,11 @@
 </script>
 
 <style>
-    span {
-        cursor: pointer;
+    button {
+        margin: 10px;
     }
 
     .push-answer {
-        font-size: 25px;
         color: limegreen;
     }
 

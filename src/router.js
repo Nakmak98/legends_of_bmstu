@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import Auth from "./views/Auth";
 import Account from "./views/Account.vue";
 import SignIn from "./views/SignIn";
@@ -18,8 +17,7 @@ const routes = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      redirect: Account
     },
     {
       path: '/account',
