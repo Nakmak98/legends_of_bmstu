@@ -1,22 +1,7 @@
 <template>
   <div id="app">
     <base-popup></base-popup>
-    <div id="nav">
-      <div class="burger">
-        <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
-      </div>
-      <div v-if="show_menu" class="menu" @click="show_menu = !show_menu">
-        <div class="menu-content">
-          <img src="@/assets/logo1.png">
-          <router-link to="/task"><div>Задание</div></router-link>
-          <router-link to="/account"><div>Личный кабинет</div></router-link>
-          <router-link to="/team"><div>Кабинет команды</div></router-link>
-          <router-link to="/rules"><div>Правила</div></router-link>
-          <router-link to="/metoda"><div>Методичка</div></router-link>
-        </div>
-        
-      </div>
-    </div>
+    <nav-bar></nav-bar>
     <router-view/>
     <base-error-message></base-error-message>
   </div>
@@ -24,8 +9,10 @@
 
 <script>
 
+  import NavBar from "./components/NavBar";
   export default {
     name: 'app',
+    components: {NavBar},
     data: function () {
       return {
         show_menu: false
@@ -35,6 +22,12 @@
       this.$store.commit('deleteErrorMessage');
     },
     methods: {
+      handle_swipe() {
+         if(this.show_menu) {
+           console.log("asd");
+           this.show_menu = false;
+         }
+      }
     }
   }
 </script>
@@ -56,12 +49,11 @@ h1 {
   src: url("assets/Bemount-Line.woff") format("woff"), url("assets/Bemount-Line.otf") format("truetype");
 }
 body {
-  height: 100%;
+  height: 100vh;
   margin: 0;
-  background: url("assets/bg.png");
-  background-size: cover;
-
+  background-color: #fdf8ed;
 }
+
 
 .basic-block {
   padding: 10px;
@@ -81,6 +73,8 @@ body {
   text-align: center;
   color: #2c3e50;
   padding: 0 10px;
+    background: url("assets/bg1.png") no-repeat;
+  background-size: cover;
 }
 #nav {
   background-color: #f8e0be;
@@ -120,6 +114,15 @@ body {
   max-width: 400px;
   padding: 20px 10px;
 }
+button {
+    height: 40px;
+    border-radius: 10px;
+    background: #fff;
+    border: none;
+    width: 200px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
 table {
   margin: 0 auto;
   background-color: #9b7c55;
@@ -132,8 +135,13 @@ table {
 .burger {
   margin: 0 auto;
   max-width: 800px;
-  text-align: left;
-  font-size: 24px;
+  padding-left: 10px;
+  text-align: left; 
+}
+.burger>span>i {
+  cursor: pointer;
+  font-size: 30px;
+  color: black;
 }
 .menu {
   position: fixed;

@@ -113,11 +113,26 @@
 <style scoped>
     .task-container {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        /* You can set flex-wrap and
+          flex-direction individually */
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* Or do it all in one line
+         with flex flow */
+        flex-flow: row wrap;
+        /* tweak where items line
+          up on the row
+          valid values are: flex-start,
+          flex-end, space-between,
+          space-around, stretch */
+        align-content: flex-end;
     }
 
     .task-card {
         cursor: pointer;
-        width: 150px;
+        min-width: 100px;
         margin: 5px;
         background-color: #fff2e0;
         border-radius: 10px;

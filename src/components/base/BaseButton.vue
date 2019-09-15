@@ -15,13 +15,5 @@
 </script>
 
 <style scoped>
-    button {
-        height: 40px;
-        border-radius: 10px;
-        background: #fff;
-        border: none;
-        width: 200px;
-        margin-bottom: 5px;
-        font-size: 20px;
-    }
+
 </style>

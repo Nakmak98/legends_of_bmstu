@@ -65,8 +65,10 @@
                 let options = document.getElementsByClassName('team-option');
                 for(let item of options){
                     item.style.backgroundColor="";
+                    item.style.border="none";
                 }
-                option.style.backgroundColor="green";
+                option.style.backgroundColor="#ffedd4";
+                option.style.border="1px solid black";
                 this.request_body.team_id = option.value;
             },
             request_teams() {
@@ -132,9 +134,16 @@
 </script>
 
 <style lang="scss" scoped>
+option {
+    height: 30px;
+}
+.teams-list {
+    max-height: 300px;
+    overflow-y: scroll;
+}
 .selected {
     //Please, style it normal)))
-    background-color: cadetblue;
+    background-color: #ffedd4;
     .team-option {
         //Need to select teams. Don't remove this class in html-tag!
     }
