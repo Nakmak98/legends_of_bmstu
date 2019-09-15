@@ -5,7 +5,6 @@
         <h2>{{user.login}}</h2>
         <h2>id: {{user.user_id}}</h2>
         <div>
-            <base-button title="Кабинет команды" @click="$router.push('/team')"></base-button>
             <base-button title="Удалить аккаунт" @click="check_delete_account"></base-button>
             <base-button title="Выйти" @click="check_logout"></base-button>
         </div>

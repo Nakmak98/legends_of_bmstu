@@ -50,8 +50,8 @@
                 if(expected_role === 'PLAYER') {
                     return this.user.role === 'PLAYER' || this.user.role === 'TESTER' || this.user.role === 'CAPTAIN'
                 }
-                if(this.user.role !== expected_role){
-                    return false
+                if(this.user.role === expected_role){
+                    return true
                 }
             },
         }
