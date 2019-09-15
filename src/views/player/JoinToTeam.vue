@@ -137,6 +137,10 @@
 option {
     height: 30px;
 }
+.teams-list {
+    max-height: 300px;
+    overflow-y: scroll;
+}
 .selected {
     //Please, style it normal)))
     background-color: #ffedd4;

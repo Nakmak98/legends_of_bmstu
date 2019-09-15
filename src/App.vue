@@ -49,12 +49,11 @@ h1 {
   src: url("assets/Bemount-Line.woff") format("woff"), url("assets/Bemount-Line.otf") format("truetype");
 }
 body {
-  height: 100%;
+  height: 100vh;
   margin: 0;
-  background: url("assets/bg.png");
-  background-size: cover;
-
+  background-color: #fdf8ed;
 }
+
 
 .basic-block {
   padding: 10px;
@@ -74,6 +73,8 @@ body {
   text-align: center;
   color: #2c3e50;
   padding: 0 10px;
+    background: url("assets/bg1.png") no-repeat;
+  background-size: cover;
 }
 #nav {
   background-color: #f8e0be;
@@ -134,10 +135,13 @@ table {
 .burger {
   margin: 0 auto;
   max-width: 800px;
+  padding-left: 10px;
   text-align: left; 
 }
 .burger>span>i {
+  cursor: pointer;
   font-size: 30px;
+  color: black;
 }
 .menu {
   position: fixed;
