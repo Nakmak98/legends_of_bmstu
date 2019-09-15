@@ -113,6 +113,15 @@ body {
   max-width: 400px;
   padding: 20px 10px;
 }
+button {
+    height: 40px;
+    border-radius: 10px;
+    background: #fff;
+    border: none;
+    width: 200px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
 table {
   margin: 0 auto;
   background-color: #9b7c55;
@@ -125,8 +134,10 @@ table {
 .burger {
   margin: 0 auto;
   max-width: 800px;
-  text-align: left;
-  font-size: 24px;
+  text-align: left; 
+}
+.burger>span>i {
+  font-size: 30px;
 }
 .menu {
   position: fixed;
