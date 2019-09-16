@@ -11,10 +11,10 @@
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
             <tr v-for="member of team_members" class="table-cont">
-                <td><div class="table-block"><img src="@/assets/captain.png" v-if="user.role === 'CAPTAIN'">{{member.first_name}}</div></td>
+                <td><div class="table-block">{{member.first_name}}</div></td>
                 <td><div class="table-block">{{member.last_name}}</div></td>
                 <td class="link"><div class="table-block"><a :href="'https://'+member.vk_ref">{{member.vk_ref}}</a></div></td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)"><div class="table-block"><span v-if="member.role === 'PLAYER'">X</span></div></td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)"><img src="@/assets/captain.png" v-if="user.role === 'CAPTAIN'"><div class="table-block"><span v-if="member.role === 'PLAYER'">X</span></div></td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
