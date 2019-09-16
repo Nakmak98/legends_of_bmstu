@@ -42,7 +42,7 @@
         },
         methods: {
             check_join() {
-                if(this.request_body.team_id === 0) {
+                if (!this.request_body.team_id) {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
                         message: "Необходимо выбрать команду из списка."
@@ -60,22 +60,21 @@
                 this.$store.commit('deleteErrorMessage');
                 this.$store.commit('setPopupOptions', popup_options)
             },
-            select(event){
+            select(event) {
                 let option = event.target;
                 let options = document.getElementsByClassName('team-option');
-                for(let item of options){
-                    item.style.backgroundColor="";
-                    item.style.border="none";
+                for (let item of options) {
+                    item.style.backgroundColor = "";
+                    item.style.border = "none";
                 }
-                option.style.backgroundColor="#ffedd4";
-                option.style.border="1px solid black";
+                option.style.backgroundColor = "#ffedd4";
+                option.style.border = "1px solid black";
                 this.request_body.team_id = option.value;
             },
             request_teams() {
                 Axios
                     .get('/team/all')
                     .then(response => {
-                        console.log(response.data)
                         this.teams = response.data.sort((a, b) => {
                             if (a.team_id > b.team_id) {
                                 return 1
@@ -88,7 +87,7 @@
                     })
             },
             join_team: function (request_body, invite_code) {
-                if(invite_code == '') {
+                if (invite_code === '') {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
                         message: "Поле не должно быть пустым."
@@ -101,29 +100,20 @@
                     .then(response => {
                         this.$store.commit('setTeamData', response.data);
                         this.$store.dispatch('updateUserData');
-                        this.$router.push("/account");
+                        this.$router.push("/team");
                     })
                     .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.status)
-                            if (error.response.status === 401) {
-                                this.$router.push('/auth')
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            }
-                            else if(error.response.status == 400) {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            } else if(error.response.status > 401) {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                        if (error.response.status === 401) {
+                            this.$router.push('/auth');
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка авторизации",
+                                message: error.response.data.message
+                            });
+                        } else if (error.response.status > 400) {
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка",
+                                message: error.response.data.message
+                            });
                         }
 
                     })
@@ -134,18 +124,16 @@
 </script>
 
 <style lang="scss" scoped>
-option {
-    height: 30px;
-}
-.teams-list {
-    max-height: 300px;
-    overflow-y: scroll;
-}
-.selected {
-    //Please, style it normal)))
-    background-color: #ffedd4;
-    .team-option {
-        //Need to select teams. Don't remove this class in html-tag!
+    option {
+        height: 30px;
     }
-}
+
+    .teams-list {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .selected {
+        background-color: #ffedd4;
+    }
 </style>

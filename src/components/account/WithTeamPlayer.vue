@@ -1,6 +1,7 @@
 <template>
-    <div v-if="user.team_id">
+    <div>
         <h2>Команда № {{team.team_id}}</h2>
+        <h2>{{team.team_name}}</h2>
         <h2>{{team.search_input_value}}</h2>
         <h2 v-if="team.invite_code">Пригласительный код: <br>{{team.invite_code}}</h2>
         <table>
@@ -14,7 +15,9 @@
                 <td>{{member.first_name}}</td>
                 <td>{{member.last_name}}</td>
                 <td>{{member.vk_ref}}</td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)" ><span v-if="member.role === 'PLAYER'">X</span></td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" >
+                    <span @click="check_delete_action(member)" v-if="member.role === 'PLAYER'">X</span>
+                </td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
@@ -33,7 +36,7 @@
                     user_id:''
                 },
                 check_join: false,
-                popup_message: ''
+                popup_message: '',
             }
         },
         computed: {
@@ -45,6 +48,17 @@
             },
             user() {
                 return this.$store.state.user
+            }
+        },
+        mounted() {
+            if(!this.team_members){
+                this.request_team_members();
+            }
+            if(!this.team){
+                this.request_team_data();
+            }
+            if(!this.user){
+                this.request_user_data();
             }
         },
         methods: {
@@ -120,12 +134,82 @@
                         }
                     })
             },
+            request_team_members: function (){
+                Axios
+                    .get('/team/members')
+                    .then(response => {
+                        this.$store.commit('setTeamMembers', response.data);
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            console.log(error.response.status);
+                            console.log(error.response.data.message);
+                            if (error.response.status === 401) {
+                                this.$route.push('/auth');
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            } else if(error.response.status === 404){
+                            } else {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
+                                    message: error.response.data.message
+                                });
+                            }
+                        }
+                    })
+            },
+            request_team_data: function(){
+                Axios
+                    .get('/team/info')
+                    .then(response => {
+                        this.$store.commit('setTeamData', response.data);
+                        if (!this.user.team_id)
+                            this.$store.dispatch('updateUserData');
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 401) {
+                                this.$router.push('/auth');
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            } else if(error.response.status === 404){
+                                return
+                            } else {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
+                                    message: error.response.data.message
+                                });
+                            }
+                        }
+                    })
+            },
+            request_user_data: function () {
+                Axios
+                    .get('/user/info')
+                    .then(response => {
+                        this.$store.commit('setUserData', response.data);
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 401) {
+                                this.$router.push("/auth");
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            }
+                        }
+                    });
+            },
         }
     }
 </script>
 
 <style>
-
     .kick-btn {
         color: red;
         cursor: pointer;

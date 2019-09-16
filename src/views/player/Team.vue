@@ -1,7 +1,7 @@
 <template>
     <div class="basic-block">
         <h1>Моя команда</h1>
-        <with-team-player></with-team-player>
+        <with-team-player v-if="user.team_id"></with-team-player>
         <without-team-player v-if="!user.team_id"></without-team-player>
     </div>
 </template>
@@ -10,6 +10,7 @@
     import WithoutTeamPlayer from "../../components/account/WithoutTeamPlayer";
     import WithTeamPlayer from "../../components/account/WithTeamPlayer";
     import Axios from 'axios'
+
     export default {
         name: "Team",
         components: {
@@ -19,16 +20,22 @@
         computed: {
             user() {
                 return this.$store.state.user
-            }
+            },
+            team() {
+                return this.$store.state.user
+            },
+            team_members() {
+                return this.$store.state.user
+            },
         },
         mounted() {
-            if(!this.team_members){
+            if (!this.team_members) {
                 this.request_team_members();
             }
-            if(!this.team){
+            if (!this.team) {
                 this.request_team_data();
             }
-            if(!this.user){
+            if (!this.user) {
                 this.request_user_data();
             }
         },
@@ -51,7 +58,7 @@
                         }
                     });
             },
-            request_team_members() {
+            request_team_members: function () {
                 Axios
                     .get('/team/members')
                     .then(response => {
@@ -67,7 +74,7 @@
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message
                                 });
-                            } else if(error.response.status === 404){
+                            } else if (error.response.status === 404) {
                             } else {
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка",
@@ -77,12 +84,13 @@
                         }
                     })
             },
-            request_team_data(){
+            request_team_data: function () {
                 Axios
                     .get('/team/info')
                     .then(response => {
                         this.$store.commit('setTeamData', response.data);
-                        this.$store.dispatch('updateUserData');
+                        if (!this.user.team_id)
+                            this.$store.dispatch('updateUserData');
                     })
                     .catch(error => {
                         if (error.response) {
@@ -92,8 +100,6 @@
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message
                                 });
-                            } else if(error.response.status === 404){
-                                return
                             } else {
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка",
@@ -106,7 +112,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

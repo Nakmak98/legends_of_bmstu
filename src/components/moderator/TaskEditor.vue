@@ -32,8 +32,8 @@
                     <input required type="text" id="answers" v-model.trim="answer">
                 </div>
                 <div><span v-for="answer of request_body.answers" class="answer">{{answer}}, </span></div>
-                <button @click="request_body.answers = []; answer = ''">Очистить ответы</button>
-                <button @click="push_answer">Добавить ответ</button>
+                <button class="moderator_btn" @click="request_body.answers = []; answer = ''">Очистить ответы</button>
+                <button class="moderator_btn" @click="push_answer">Добавить ответ</button>
             </div>
             <vue-editor id="editor"
                         :editorToolbar="customToolbar"
@@ -41,15 +41,17 @@
                         @image-added="handleImageAdded"
                         v-model="request_body.html">
             </vue-editor>
-            <button v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
-            <button v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
-            <button v-else @click="send_task">Сохранить</button>
-            <button  @click="show_preview = !show_preview">Предпросмотр</button>
-            <button  @click="$router.push('/moderator')">Назад</button>
+            <button class="moderator_btn" v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
+            <button class="moderator_btn" v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
+            <button class="moderator_btn" v-else @click="send_task">Сохранить</button>
+            <button class="moderator_btn" @click="show_preview = !show_preview">Предпросмотр</button>
+            <button class="moderator_btn" @click="$router.push('/moderator')">Назад</button>
         </div>
-        <div  v-if="show_preview" >
-            <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1><div v-html="request_body.html"></div></div>
-            <button  @click="show_preview = !show_preview">Редактировать</button>
+        <div v-if="show_preview">
+            <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1>
+                <div v-html="request_body.html"></div>
+            </div>
+            <button @click="show_preview = !show_preview">Редактировать</button>
         </div>
 
 
@@ -114,20 +116,17 @@
                         this.$router.push('/moderator')
                     })
                     .catch(error => {
-                        if (error.response) {
-                            if (error.response.status === 401) {
-                                this.$router.push('auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
-
+                        if (error.response.status === 401) {
+                            this.$router.push('auth');
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка авторизации",
+                                message: error.response.data.message
+                            });
+                        } else {
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка",
+                                message: error.response.data.message
+                            });
                         }
                     });
             },
@@ -145,7 +144,6 @@
                             }
                             return 0;
                         });
-                        console.log(tasks[0].task_id);
                         this.request_body.task_id = tasks[0].task_id + 1
                     });
             },
@@ -200,6 +198,7 @@
                         header: "Ошибка",
                         message: "Нельзя ввести пустой ответ."
                     });
+                    return
                 }
                 this.request_body.answers.push(this.answer);
                 this.answer = ""
@@ -216,20 +215,17 @@
                             })
                         })
                         .catch(error => {
-                            if (error.response) {
-                                if (error.response.status === 401) {
-                                    this.$router.push('/auth');
-                                    this.$store.commit('setErrorMessage', {
-                                        header: "Ошибка авторизации",
-                                        message: error.response.data.message
-                                    });
-                                } else {
-                                    this.$store.commit('setErrorMessage', {
-                                        header: "Ошибка",
-                                        message: error.response.data.message
-                                    });
-                                }
-
+                            if (error.response.status === 401) {
+                                this.$router.push('/auth');
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            } else {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
+                                    message: error.response.data.message
+                                });
                             }
                         });
                 }
@@ -241,20 +237,17 @@
                             this.$store.commit('deleteErrorMessage')
                         })
                         .catch(error => {
-                            if (error.response) {
-                                if (error.response.status === 401) {
-                                    this.$router.push('/auth');
-                                    this.$store.commit('setErrorMessage', {
-                                        header: "Ошибка авторизации",
-                                        message: error.response.data.message
-                                    });
-                                } else {
-                                    this.$store.commit('setErrorMessage', {
-                                        header: "Ошибка",
-                                        message: error.response.data.message
-                                    });
-                                }
-
+                            if (error.response.status === 401) {
+                                this.$router.push('/auth');
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            } else {
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка",
+                                    message: error.response.data.message
+                                });
                             }
                         });
                 }
@@ -296,20 +289,16 @@
 </script>
 
 <style>
-    button {
+    .moderator_btn {
         margin: 10px;
     }
 
-    .push-answer {
-        color: limegreen;
-    }
 
-    .clear-answers {
-        color: red;
-    }
+
     .quillWrapper {
         background-color: white;
     }
+
     .answer {
         color: black;
     }
