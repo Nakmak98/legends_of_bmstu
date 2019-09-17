@@ -1,5 +1,5 @@
 <template>
-    <transition>
+    <transition name="fade">
         <div v-if="error.message" class="error-message-container">
             <div class="error-content">
                 <h3>{{error.header}}</h3>
@@ -30,5 +30,11 @@
     border: 10px solid #ef8f8f; 
     box-shadow: 0 3px 5px rgba(0,0,0,0.3);
     color: white;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
 }
 </style>
