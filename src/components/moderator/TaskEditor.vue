@@ -102,6 +102,10 @@
                 this.get_task_id()
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             delete_task() {
                 Axios

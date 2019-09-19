@@ -33,6 +33,10 @@
                 error_header: 'Ошибка регистрации'
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             sign_up: function () {
                if(this.valid()){

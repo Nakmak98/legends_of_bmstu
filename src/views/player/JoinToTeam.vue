@@ -31,22 +31,27 @@
                 teams: []
             }
         },
-        mounted() {
-            this.request_teams();
-        },
         computed: {
             search_team() {
                 let regexp = new RegExp(this.search_input_value, 'i');
                 return this.teams.filter(team => team.team_name.match(regexp) || team.team_id.toString().match(regexp))
             }
         },
+        mounted() {
+            this.request_teams();
+        },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             check_join() {
                 if(this.request_body.team_id === 0) {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Необходимо выбрать команду из списка."
+                        message: "Необходимо выбрать команду из списка.",
                     });
+                    console.log('join');
                     return
                 }
                 let popup_options = {
@@ -88,7 +93,7 @@
                     })
             },
             join_team: function (request_body, invite_code) {
-                if(invite_code == '') {
+                if(invite_code === '') {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
                         message: "Поле не должно быть пустым."
@@ -129,7 +134,6 @@
                     })
             },
         }
-
     }
 </script>
 

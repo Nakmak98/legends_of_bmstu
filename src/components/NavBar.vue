@@ -20,6 +20,7 @@
 </template>
 
 <script>
+    import Axios from 'axios'
     export default {
         name: "NavBar",
         data: function () {
@@ -31,6 +32,15 @@
             user(){
                 return this.$store.state.user;
             }
+        },
+        mounted(){
+            if (!this.user) {
+                this.request_user_data();
+            }
+        },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
         },
         methods: {
             handle_swipe() {
@@ -53,6 +63,24 @@
                 if(this.user.role === expected_role){
                     return true
                 }
+            },
+            request_user_data: function () {
+                Axios
+                    .get('/user/info')
+                    .then(response => {
+                        this.$store.commit('setUserData', response.data);
+                    })
+                    .catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 401) {
+                                this.$router.push("/auth");
+                                this.$store.commit('setErrorMessage', {
+                                    header: "Ошибка авторизации",
+                                    message: error.response.data.message
+                                });
+                            }
+                        }
+                    });
             },
         }
     }

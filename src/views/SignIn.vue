@@ -23,6 +23,10 @@
                 error_header: "Ошибка авторизации"
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             sign_in() {
                 if (this.valid(this)) {
@@ -75,6 +79,7 @@
                 }
             }
         }
+
     }
 </script>
 <style scoped lang="scss"></style>

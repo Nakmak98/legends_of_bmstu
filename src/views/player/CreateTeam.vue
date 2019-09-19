@@ -23,6 +23,10 @@
                 create_status: false,
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             check_create_team: function () {
                 if (this.team_name !== '') {

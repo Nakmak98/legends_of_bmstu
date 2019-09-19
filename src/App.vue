@@ -3,6 +3,8 @@
     <base-popup></base-popup>
     <nav-bar></nav-bar>
     <router-view/>
+    <a id="error-anchor" href="#error-message"></a>
+    <a name="error-message"></a>
     <base-error-message></base-error-message>
   </div>
 </template>
@@ -18,16 +20,24 @@
         show_menu: false
       }
     },
+    computed: {
+    //   error() {
+    //     return this.$store.state.error
+    //   }
+    },
     updated() {
-      this.$store.commit('deleteErrorMessage');
+      // console.log("deleteError");
+      // if(this.error.message !== null)
+      // this.$store.dispatch('hide_error_message');
+      // let caller = document.getElementById("error-anchor");
+      // caller.click()
     },
     methods: {
       handle_swipe() {
          if(this.show_menu) {
-           console.log("asd");
            this.show_menu = false;
          }
-      }
+      },
     }
   }
 </script>

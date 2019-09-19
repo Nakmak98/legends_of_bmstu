@@ -32,6 +32,10 @@
                 this.request_user_data();
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             request_user_data: function () {
                 Axios
