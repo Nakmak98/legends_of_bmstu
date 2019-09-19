@@ -11,10 +11,10 @@
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
             <tr v-for="member of team_members" class="table-cont">
-                <td>{{member.first_name}}</td>
-                <td>{{member.last_name}}</td>
-                <td>{{member.vk_ref}}</td>
-                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)" ><span v-if="member.role === 'PLAYER'">X</span></td>
+                <td><div class="table-block">{{member.first_name}}</div></td>
+                <td><div class="table-block">{{member.last_name}}</div></td>
+                <td class="link"><div class="table-block"><a :href="'https://'+member.vk_ref">{{member.vk_ref}}</a></div></td>
+                <td v-if="user.role === 'CAPTAIN'" class="kick-btn" @click="check_delete_action(member)"><img src="@/assets/captain.png" v-if="user.role === 'CAPTAIN'"><div class="table-block"><span v-if="member.role === 'PLAYER'">X</span></div></td>
             </tr>
         </table>
         <base-button title="Старт!"></base-button>
@@ -125,8 +125,20 @@
 </script>
 
 <style>
-
+    td {
+        font-size: 16px;
+        max-width: 18vw;
+        overflow-x: hidden;
+    }
+    .table-block {
+        word-wrap: break-word;
+        font-size: 16px;
+    }
+    .table-block > a {
+        font-size: 16px;
+    }
     .kick-btn {
+        width: 20px;
         color: red;
         cursor: pointer;
     }
