@@ -23,8 +23,7 @@
 <style scoped>
 .error-message-container {
     max-width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
     background-color: #d66363;
     border-radius: 20px;
     border: 10px solid #ef8f8f; 

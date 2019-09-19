@@ -59,12 +59,10 @@
         background-color: rgba(0,0,0,0.3);
     }
     .base-popup {margin: 0;
-        position: absolute;
         top: 50%;
         left: 50%;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
-        
         border-radius: 10px;
         max-width: 350px;
         box-shadow: 0 0 8px black;
