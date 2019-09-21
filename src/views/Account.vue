@@ -4,7 +4,7 @@
         <h2>{{user.first_name}} {{user.last_name}}</h2>
         <h2>{{user.login}}</h2>
         <h2>id: {{user.user_id}}</h2>
-        <base-button title="Удалить аккаунт" @click="check_delete_account"></base-button>
+        <base-button title="Удалить аккаунт" @click="check_delete_account" class="red-button-parent"></base-button>
         <base-button title="Выйти" @click="check_logout"></base-button>
     </div>
 </template>

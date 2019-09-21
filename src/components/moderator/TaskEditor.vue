@@ -42,7 +42,7 @@
                         v-model="request_body.html">
             </vue-editor>
             <button class="moderator_btn" v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
-            <button class="moderator_btn" v-if="this.$route.params.task_id" @click="check_delete_task">Удалить задание</button>
+            <button class="moderator_btn red-button" v-if="this.$route.params.task_id" @click="check_delete_task">Удалить задание</button>
             <button class="moderator_btn" v-else @click="send_task">Сохранить</button>
             <button class="moderator_btn" @click="show_preview = !show_preview">Предпросмотр</button>
             <button class="moderator_btn" @click="$router.push('/moderator')">Назад</button>

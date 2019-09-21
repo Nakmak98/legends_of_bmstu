@@ -130,6 +130,9 @@
     .menu-content>img {
         width: 100%;
     }
+    .menu-content>img + a {
+        border-top: 2px solid #e1bf92;
+    }
     .menu-content>a {
         padding-top: 8px;
         font-style: none;
@@ -138,8 +141,9 @@
         display: block;
         color: black;
         height: 40px;
-        border-top: 2px solid #e1bf92;
+        border-bottom: 2px solid #e1bf92;
     }
+
     .router-link-exact-active {
         color: black !important;
         background-color: #ffedd4;
