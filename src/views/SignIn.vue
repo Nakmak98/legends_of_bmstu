@@ -23,6 +23,10 @@
                 error_header: "Ошибка авторизации"
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             sign_in() {
                 if (this.valid()) {
@@ -64,12 +68,13 @@
             },
             redirect(user_role) {
                 if (user_role === 'PLAYER' || user_role === 'CAPTAIN' || user_role === 'TESTER') {
-                    this.$router.push("/account")
+                    this.$router.push("/team")
                 }
                 if (user_role === 'MODERATOR') {
                     this.$router.push("/moderator")
                 }
             }
         }
+
     }
 </script>

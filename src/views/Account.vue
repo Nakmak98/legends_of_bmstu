@@ -23,6 +23,10 @@
                 this.request_user_data();
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             check_delete_account() {
                 this.$store.commit('setPopupOptions', {

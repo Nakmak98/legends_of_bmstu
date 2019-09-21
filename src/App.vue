@@ -8,28 +8,10 @@
 </template>
 
 <script>
-
     import NavBar from "./components/NavBar";
-
     export default {
         name: 'app',
         components: {NavBar},
-        data: function () {
-            return {
-                show_menu: false
-            }
-        },
-        updated() {
-            this.$store.commit('deleteErrorMessage');
-        },
-        methods: {
-            close_by_swipe() {
-                if (this.show_menu) {
-                    console.log("asd");
-                    this.show_menu = false;
-                }
-            }
-        }
     }
 </script>
 
@@ -99,8 +81,7 @@
         box-sizing: border-box;
         width: 300px;
         min-height: 300px;
-        margin: 0 auto;
-        margin-top: 50px;
+        margin: 100px auto 0;
         position: relative;
         max-width: 400px;
         padding: 20px 10px;
@@ -117,9 +98,9 @@
     }
 
     table {
-        margin: 0 auto;
+        min-width: 195px;
         background-color: #9b7c55;
-        margin-bottom: 20px;
+        margin: 0 auto 19px;
     }
 
     .table-cont {

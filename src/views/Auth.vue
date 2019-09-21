@@ -11,15 +11,16 @@
 <script>
     export default {
         name: "Auth",
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
     }
+
 </script>
 
 <style scoped>
 .centred {
-position: absolute;
-  top: 50%;
-  left: 50%;
-
-  margin: -150px 0 0 -150px;
+  margin-top: 100px;
 }
 </style>

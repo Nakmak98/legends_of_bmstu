@@ -7,7 +7,7 @@
         <base-input type="text" placeholder="Группа" v-model="request_body.group"></base-input>
         <base-input type="text" placeholder="Логин" v-model="request_body.login"></base-input>
         <base-input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></base-input>
-        <base-input type="password" placeholder="Пароль" v-model="request_body.password"></base-input>
+        <base-input type="password" placeholder="Пароль (более 3 символов)" v-model="request_body.password"></base-input>
         <base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input>
         <base-button title="Зарегистрироваться" @click="sign_up"></base-button>
         <img src="../assets/orn_bot.png" id="ornament-bottom">
@@ -34,6 +34,10 @@
                 error_header: 'Ошибка регистрации'
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             sign_up() {
                 if (this.valid()) {
@@ -41,7 +45,7 @@
                         .post('/user/sign_up', this.request_body)
                         .then(response => {
                             this.$store.commit('setUserData', response.data);
-                            this.$router.push("/account")
+                            this.$router.push("/team")
                         })
                         .catch(error => {
                             this.$store.commit('setErrorMessage', {

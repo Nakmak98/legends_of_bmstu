@@ -8,8 +8,10 @@ import BaseButton from "./components/base/BaseButton";
 import BaseInput from "./components/base/BaseInput";
 import BaseErrorMessage from "./components/base/BaseErrorMessage";
 import BasePopup from "./components/base/BasePopup";
+
+const test_backend = 'http://5.23.54.233:5050';
 //Axios global config
-Axios.defaults.baseURL = 'http://5.23.54.233:5050';
+Axios.defaults.baseURL = test_backend;
 Axios.defaults.withCredentials = true;
 
 //global components registration
@@ -19,6 +21,7 @@ Vue.component('base-error-message', BaseErrorMessage);
 Vue.component('base-popup', BasePopup);
 
 Vue.config.productionTip = false;
+Vue.config.silent = true;
 
 Vue.use(Vue2TouchEvents, {
   touchClass: '',

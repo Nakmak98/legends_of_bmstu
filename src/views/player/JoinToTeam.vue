@@ -31,21 +31,25 @@
                 teams: []
             }
         },
-        mounted() {
-            this.request_teams();
-        },
         computed: {
             search_team() {
                 let regexp = new RegExp(this.search_input_value, 'i');
                 return this.teams.filter(team => team.team_name.match(regexp) || team.team_id.toString().match(regexp))
             }
         },
+        mounted() {
+            this.request_teams();
+        },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             check_join() {
                 if (!this.request_body.team_id) {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
-                        message: "Необходимо выбрать команду из списка."
+                        message: "Необходимо выбрать команду из списка.",
                     });
                     return
                 }
@@ -65,10 +69,10 @@
                 let options = document.getElementsByClassName('team-option');
                 for (let item of options) {
                     item.style.backgroundColor = "";
-                    item.style.border = "none";
+                    item.style.border = "1px solid #e1bf92";
                 }
                 option.style.backgroundColor = "#ffedd4";
-                option.style.border = "1px solid black";
+                option.style.border = "1px solid #e1bf92";
                 this.request_body.team_id = option.value;
             },
             request_teams() {
@@ -87,7 +91,7 @@
                     })
             },
             join_team: function (request_body, invite_code) {
-                if (invite_code === '') {
+                if (!invite_code) {
                     this.$store.commit('setErrorMessage', {
                         header: "Ошибка",
                         message: "Поле не должно быть пустым."
@@ -109,7 +113,7 @@
                                 header: "Ошибка авторизации",
                                 message: error.response.data.message
                             });
-                        } else if (error.response.status > 400) {
+                        } else if (error.response.status >= 400) {
                             this.$store.commit('setErrorMessage', {
                                 header: "Ошибка",
                                 message: error.response.data.message
@@ -119,18 +123,19 @@
                     })
             },
         }
-
     }
 </script>
 
 <style lang="scss" scoped>
-    option {
-        height: 30px;
-    }
-
     .teams-list {
         max-height: 300px;
         overflow-y: scroll;
+        margin-bottom: 15px;
+        option {
+            height: 30px;
+            border: 1px solid #e1bf92;
+            padding-top: 10px;
+        }
     }
 
     .selected {

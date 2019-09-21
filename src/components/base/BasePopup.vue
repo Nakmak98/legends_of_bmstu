@@ -4,13 +4,15 @@
             <div v-if="popup.show" class="popup-bg">
                 <div class="base-popup basic-block">
                     <h1>Подтверждение</h1>
-                    <div class="popup-message">
+                    <p class="popup-message">
                         {{popup.message}}
-                    </div>
+                    </p>
                     <base-input
                             v-if="popup.input_field"
                             type="text"
-                            v-model="input_value">
+                            v-model="input_value"
+                            autocapitalize="off"
+                            text_align="center">
                     </base-input>
                     <base-button @click="handleAccess" title="ОК"></base-button>
                     <base-button @click="popup.show = false" title="Отмена"></base-button>

@@ -69,6 +69,10 @@
         mounted() {
             this.request_all_tasks()
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             request_all_tasks() {
                 Axios

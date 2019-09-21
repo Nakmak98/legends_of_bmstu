@@ -12,16 +12,23 @@
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
             <tr v-for="member of team_members" class="table-cont">
-                <td><div class="table-block">{{member.first_name}}</div></td>
-                <td><div class="table-block">{{member.last_name}}</div></td>
-                <td class="link"><div class="table-block"><a :href="'https://'+member.vk_ref">{{member.vk_ref}}</a></div></td>
+                <td>
+                    <div class="table-block">{{member.first_name}}</div>
+                </td>
+                <td>
+                    <div class="table-block">{{member.last_name}}</div>
+                </td>
+                <td class="link">
+                    <div class="table-block"><a :href="'https://'+member.vk_ref">{{member.vk_ref}}</a></div>
+                </td>
                 <td v-if="user.role === 'CAPTAIN'" class="kick-btn">
                     <img src="@/assets/captain.png" v-if="member.role === 'CAPTAIN'">
-                    <div class="table-block"><span @click="check_delete_action(member)" v-if="member.role === 'PLAYER'">X</span></div>
+                    <div class="table-block"><span @click="check_delete_action(member)" v-if="member.role === 'PLAYER'">X</span>
+                    </div>
                 </td>
             </tr>
         </table>
-        <base-button title="Старт!"></base-button>
+<!--        <base-button title="Старт!"></base-button>-->
         <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
     </div>
 </template>
@@ -33,8 +40,8 @@
         name: "WithTeamPlayer",
         data() {
             return {
-                request_body:{
-                    user_id:''
+                request_body: {
+                    user_id: ''
                 },
                 check_join: false,
                 popup_message: '',
@@ -52,15 +59,19 @@
             }
         },
         mounted() {
-            if(!this.team_members){
+            if (!this.team_members) {
                 this.request_team_members();
             }
-            if(!this.team){
+            if (!this.team) {
                 this.request_team_data();
             }
-            if(!this.user){
+            if (!this.user) {
                 this.request_user_data();
             }
+        },
+        beforeDestroy() {
+            if (this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
         },
         methods: {
             check_leave_team() {
@@ -96,7 +107,6 @@
                         this.$store.dispatch('updateTeamMembers')
                     })
                     .catch(error => {
-                        console.log(error.response.status);
                         if (error.response.status === 401) {
                             this.$router.push('/auth');
                             this.$store.commit('setErrorMessage', {
@@ -114,13 +124,13 @@
             leave_team: function () {
                 Axios
                     .delete('/team/leave')
-                    .then(response => {;
+                    .then(() => {
                         this.$store.commit('deleteTeamData');
                         this.$store.dispatch('updateUserData');
                         this.$store.commit('deleteTeamMembers');
                     })
                     .catch(error => {
-                        console.log(error.response.status);
+
                         if (error.response.status === 401) {
                             this.$router.push('/auth');
                             this.$store.commit('setErrorMessage', {
@@ -135,23 +145,21 @@
                         }
                     })
             },
-            request_team_members: function (){
+            request_team_members: function () {
                 Axios
                     .get('/team/members')
                     .then(response => {
                         this.$store.commit('setTeamMembers', response.data);
                     })
                     .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.status);
-                            console.log(error.response.data.message);
+                        if (error.response) {;
                             if (error.response.status === 401) {
                                 this.$route.push('/auth');
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message
                                 });
-                            } else if(error.response.status === 404){
+                            } else if (error.response.status === 404) {
                             } else {
                                 this.$store.commit('setErrorMessage', {
                                     header: "Ошибка",
@@ -161,7 +169,7 @@
                         }
                     })
             },
-            request_team_data: function(){
+            request_team_data: function () {
                 Axios
                     .get('/team/info')
                     .then(response => {
@@ -177,7 +185,7 @@
                                     header: "Ошибка авторизации",
                                     message: error.response.data.message
                                 });
-                            } else if(error.response.status === 404){
+                            } else if (error.response.status === 404) {
                                 return
                             } else {
                                 this.$store.commit('setErrorMessage', {
@@ -216,13 +224,16 @@
         max-width: 18vw;
         overflow-x: hidden;
     }
+
     .table-block {
         word-wrap: break-word;
         font-size: 16px;
     }
+
     .table-block > a {
         font-size: 16px;
     }
+
     .kick-btn {
         width: 20px;
         color: red;

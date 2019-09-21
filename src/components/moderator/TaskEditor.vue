@@ -42,7 +42,7 @@
                         v-model="request_body.html">
             </vue-editor>
             <button class="moderator_btn" v-if="this.$route.params.task_id" @click="update_task">Обновить</button>
-            <button class="moderator_btn" v-if="this.$route.params.task_id" @click="delete_task">Удалить задание</button>
+            <button class="moderator_btn" v-if="this.$route.params.task_id" @click="check_delete_task">Удалить задание</button>
             <button class="moderator_btn" v-else @click="send_task">Сохранить</button>
             <button class="moderator_btn" @click="show_preview = !show_preview">Предпросмотр</button>
             <button class="moderator_btn" @click="$router.push('/moderator')">Назад</button>
@@ -104,12 +104,26 @@
                 this.get_task_id()
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
-            delete_task() {
+            check_delete_task(){
+                let popup_options = {
+                    message: 'Вы действительно хотите удалить задание?',
+                    show: true,
+                    callback: this.delete_task,
+                    args: this.$route.params.task_id
+                };
+                this.$store.commit('deleteErrorMessage');
+                this.$store.commit('setPopupOptions', popup_options)
+            },
+            delete_task(task_id) {
                 Axios
                     .delete('task', {
                         params: {
-                            task_id: this.$route.params.task_id
+                            task_id: task_id
                         }
                     })
                     .then(() => {
@@ -148,7 +162,6 @@
                     });
             },
             handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
-                console.log(file.name);
                 var formData = new FormData();
                 formData.append("image", file);
                 Axios
@@ -158,9 +171,6 @@
                         Editor.insertEmbed(cursorLocation, "image", this.request_body.img_path);
                         resetUploader();
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
             },
             request_task_info() {
                 Axios
