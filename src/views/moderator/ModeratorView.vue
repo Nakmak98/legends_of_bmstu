@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block moderator-block">
+    <div v-if="user.role === 'MODERATOR'" class="basic-block moderator-block">
         <h1>Конструктор заданий</h1>
         <base-button title="Создать задание"
                      @click="$router.push('/moderator/create_task')">
@@ -14,6 +14,11 @@
         name: "ModeratorView",
         components: {
             AllTasks
+        },
+        computed: {
+            user() {
+                return this.$store.state.user
+            }
         }
     }
 </script>

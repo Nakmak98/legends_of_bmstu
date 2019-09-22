@@ -16,7 +16,7 @@
 
 <script>
     import Axios from 'axios'
-
+    import {ErrorHandler} from "../ErrorHandler";
     export default {
         name: "signUp",
         data: function () {
@@ -48,10 +48,11 @@
                             this.$router.push("/team")
                         })
                         .catch(error => {
-                            this.$store.commit('setErrorMessage', {
-                                header: this.error_header,
-                                message: error.response.data.message
-                            });
+                            if(error.response){
+                                new ErrorHandler(error.response, this)
+                            } else {
+                                this.$router.push("/connection_error");
+                            }
                         })
                 }
             },

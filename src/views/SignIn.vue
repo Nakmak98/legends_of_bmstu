@@ -12,7 +12,6 @@
 
 <script>
     import Axios from 'axios'
-
     export default {
         name: 'SignIn',
         data() {
@@ -38,11 +37,21 @@
                             this.redirect(response.data.role);
                         })
                         .catch(error => {
-                            if (error.response.status === 400) {
-                                this.$store.commit('setErrorMessage', {
-                                    header: this.error_header,
-                                    message: "Неверный логин / пароль."
-                                });
+                            if (error.response){
+                                if (error.response.status === 400) {
+                                    this.$store.commit('setErrorMessage', {
+                                        header: this.error_header,
+                                        message: "Неверный логин / пароль."
+                                    });
+                                }
+                                if(error.response.status >= 500) {
+                                    this.$store.commit('setErrorMessage', {
+                                        header: "Ошибка",
+                                        message: "Что-то пошло не так"
+                                    });
+                                }
+                            } else {
+                                this.$router.push("/connection_error");
                             }
                         })
                 }

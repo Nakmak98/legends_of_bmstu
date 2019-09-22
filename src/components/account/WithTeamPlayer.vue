@@ -35,6 +35,7 @@
 
 <script>
     import Axios from 'axios'
+    import {ErrorHandler} from "../../ErrorHandler";
 
     export default {
         name: "WithTeamPlayer",
@@ -107,17 +108,10 @@
                         this.$store.dispatch('updateTeamMembers')
                     })
                     .catch(error => {
-                        if (error.response.status === 401) {
-                            this.$router.push('/auth');
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
                         } else {
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка",
-                                message: error.response.data.message
-                            });
+                            this.$router.push('/connection_error')
                         }
                     })
             },
@@ -130,18 +124,10 @@
                         this.$store.commit('deleteTeamMembers');
                     })
                     .catch(error => {
-
-                        if (error.response.status === 401) {
-                            this.$router.push('/auth');
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
                         } else {
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка",
-                                message: error.response.data.message
-                            });
+                            this.$router.push('/connection_error')
                         }
                     })
             },
@@ -152,20 +138,10 @@
                         this.$store.commit('setTeamMembers', response.data);
                     })
                     .catch(error => {
-                        if (error.response) {;
-                            if (error.response.status === 401) {
-                                this.$route.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else if (error.response.status === 404) {
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('/connection_error')
                         }
                     })
             },
@@ -178,21 +154,10 @@
                             this.$store.dispatch('updateUserData');
                     })
                     .catch(error => {
-                        if (error.response) {
-                            if (error.response.status === 401) {
-                                this.$router.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else if (error.response.status === 404) {
-                                return
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('/connection_error')
                         }
                     })
             },
@@ -203,14 +168,10 @@
                         this.$store.commit('setUserData', response.data);
                     })
                     .catch(error => {
-                        if (error.response) {
-                            if (error.response.status === 401) {
-                                this.$router.push("/auth");
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            }
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('/connection_error')
                         }
                     });
             },

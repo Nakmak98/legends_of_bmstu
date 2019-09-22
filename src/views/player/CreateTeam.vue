@@ -8,6 +8,7 @@
 
 <script>
     import Axios from 'axios'
+    import {ErrorHandler} from "../../ErrorHandler";
 
     export default {
         name: "CreateTeam",
@@ -42,17 +43,10 @@
                         this.$router.push('/team');
                     })
                     .catch(error => {
-                        if (error.response.status === 401) {
-                            this.$router.push('/auth');
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
-                        } else {
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка",
-                                message: error.response.data.message
-                            });
+                        if(error.response) {
+                           new ErrorHandler(error.response, this)
+                       } else {
+                            this.$router.push("/connection_error");
                         }
                     })
             }

@@ -1,22 +1,29 @@
 <template>
     <div class="basic-block">
-        <h1>Поиск команды</h1>
-        <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
-        <h1>Выберите команду</h1>
-        <div class="teams-list">
-            <option v-for="team of search_team"
-                    :value="team.team_id"
-                    @click="select"
-                    class="team-option">
-                {{team.team_id}} {{team.team_name}}
-            </option>
+        <div v-if="teams.length">
+            <h1>Поиск команды</h1>
+            <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
+            <h1>Выберите команду</h1>
+            <div class="teams-list">
+                <option v-for="team of search_team"
+                        :value="team.team_id"
+                        @click="select"
+                        class="team-option">
+                    {{team.team_id}} {{team.team_name}}
+                </option>
+            </div>
+            <base-button title="Вступить в команду" @click="check_join"></base-button>
         </div>
-        <base-button title="Вступить в команду" @click="check_join"></base-button>
+        <div v-else>
+            <p>Ни одной команды ещё ни создано.</p>
+            <base-button title="Создать команду" @click="$router.push('/team/create')"></base-button>
+        </div>
     </div>
 </template>
 
 <script>
     import Axios from 'axios'
+    import {ErrorHandler} from "../../ErrorHandler";
 
     export default {
         name: "JoinToTeam",
@@ -41,7 +48,7 @@
             this.request_teams();
         },
         beforeDestroy() {
-            if(this.$store.state.error.message !== null)
+            if (this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
@@ -88,7 +95,13 @@
                             }
                             return 0
                         });
+
                     })
+                    .catch(error => {
+                        if (!error.response) {
+                            this.$router.push("/connection_error");
+                        }
+                    });
             },
             join_team: function (request_body, invite_code) {
                 if (!invite_code) {
@@ -107,19 +120,11 @@
                         this.$router.push("/team");
                     })
                     .catch(error => {
-                        if (error.response.status === 401) {
-                            this.$router.push('/auth');
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
-                        } else if (error.response.status >= 400) {
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка",
-                                message: error.response.data.message
-                            });
+                        if (error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
                         }
-
                     })
             },
         }
@@ -131,6 +136,7 @@
         max-height: 300px;
         overflow-y: scroll;
         margin-bottom: 15px;
+
         option {
             height: 30px;
             border: 1px solid #e1bf92;

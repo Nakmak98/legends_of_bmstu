@@ -9,7 +9,9 @@ import BaseInput from "./components/base/BaseInput";
 import BaseErrorMessage from "./components/base/BaseErrorMessage";
 import BasePopup from "./components/base/BasePopup";
 
-const test_backend = 'http://5.23.54.233:5050';
+const prod_backend = 'http://legends.bmstu.ru:5050';
+const test_backend = 'http://testing.legends.bmstu.ru:5050';
+
 //Axios global config
 Axios.defaults.baseURL = test_backend;
 Axios.defaults.withCredentials = true;

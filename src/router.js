@@ -9,6 +9,7 @@ import Join from "./views/player/JoinToTeam"
 import Team from "./views/player/Team";
 import ModeratorView from "./views/moderator/ModeratorView";
 import TaskEditor from "./components/moderator/TaskEditor";
+import Error from "./views/Error";
 Vue.use(Router)
 
 const routes = new Router({
@@ -67,7 +68,12 @@ const routes = new Router({
       path: '/moderator/edit_task/:task_id',
       name: 'edit_task',
       component: TaskEditor
-    }
+    },
+      {
+          path: '/connection_error',
+          name: 'error',
+          component: Error
+      }
     ]
 });
 export default routes

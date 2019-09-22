@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="user.role === 'MODERATOR'">
         <div v-if="!show_preview" class="basic-block moderator-block">
             <label for="task_name">Название задания</label>
             <div>
@@ -53,14 +53,13 @@
             </div>
             <button @click="show_preview = !show_preview">Редактировать</button>
         </div>
-
-
     </div>
 </template>
 
 <script>
-    import {VueEditor} from "vue2-editor";
     import Axios from "axios";
+    import {VueEditor} from "vue2-editor";
+    import {ErrorHandler} from "../../ErrorHandler";
 
     export default {
         name: 'TaskEditor',
@@ -104,6 +103,11 @@
                 this.get_task_id()
             }
         },
+        computed: {
+            user() {
+                return this.$store.state.user
+            }
+        },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
@@ -130,17 +134,10 @@
                         this.$router.push('/moderator')
                     })
                     .catch(error => {
-                        if (error.response.status === 401) {
-                            this.$router.push('auth');
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
                         } else {
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка",
-                                message: error.response.data.message
-                            });
+                            this.$router.push('connection_error')
                         }
                     });
             },
@@ -149,6 +146,9 @@
                     .get('/task/all')
                     .then(response => {
                         let tasks = response.data;
+                        if (tasks.length === 0){
+                            this.request_body.task_id = 1;
+                        }
                         tasks.sort(function (a, b) {
                             if (a.task_id > b.task_id) {
                                 return -1;
@@ -159,7 +159,7 @@
                             return 0;
                         });
                         this.request_body.task_id = tasks[0].task_id + 1
-                    });
+                    })
             },
             handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
                 var formData = new FormData();
@@ -171,6 +171,13 @@
                         Editor.insertEmbed(cursorLocation, "image", this.request_body.img_path);
                         resetUploader();
                     })
+                    .catch(error => {
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('connection_error')
+                        }
+                    });
             },
             request_task_info() {
                 Axios
@@ -182,25 +189,13 @@
                     .then(response => {
                         this.request_body = response.data;
                     })
-                    .catch(async error => {
-                        // setErrorMessage выполнялся раньше push,
-                        // что приводило к некорректной работе при уведомлении сообщений
-                        // помог async/await
-                        if (error.response) {
-                            if (error.response.status === 401) {
-                                await this.$router.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
-                            }
+                    .catch(error => {
+                        if(error.response) {
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('connection_error')
                         }
-                    })
+                    });
             },
             push_answer() {
                 if (this.answer === '') {
@@ -225,17 +220,10 @@
                             })
                         })
                         .catch(error => {
-                            if (error.response.status === 401) {
-                                this.$router.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
+                            if(error.response) {
+                                new ErrorHandler(error.response, this)
                             } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
+                                this.$router.push('connection_error')
                             }
                         });
                 }
@@ -247,17 +235,10 @@
                             this.$store.commit('deleteErrorMessage')
                         })
                         .catch(error => {
-                            if (error.response.status === 401) {
-                                this.$router.push('/auth');
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
+                            if(error.response) {
+                                new ErrorHandler(error.response, this)
                             } else {
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка",
-                                    message: error.response.data.message
-                                });
+                                this.$router.push('connection_error')
                             }
                         });
                 }
@@ -291,7 +272,7 @@
                     });
                     return false
                 }
-                this.$store.commit('deleteErrorMessage')
+                this.$store.commit('deleteErrorMessage');
                 return true
             }
         }
@@ -302,8 +283,6 @@
     .moderator_btn {
         margin: 10px;
     }
-
-
 
     .quillWrapper {
         background-color: white;

@@ -10,7 +10,7 @@
 </template>
 <script>
     import Axios from 'axios'
-
+    import {ErrorHandler} from "../ErrorHandler";
     export default {
         name: "account",
         computed: {
@@ -58,10 +58,11 @@
                         this.$store.commit('deleteTeamMembers');
                         this.$router.push('/auth')
                     }).catch(error => {
-                    this.$store.commit('setErrorMessage', {
-                        header: "Ошибка",
-                        message: error.response.data.message
-                    });
+                    if(error.response){
+                        new ErrorHandler(error.response, this)
+                    } else {
+                        this.$router.push("/connection_error");
+                    }
                 })
             },
             logout() {
@@ -72,7 +73,13 @@
                         this.$store.commit('deleteTeamData');
                         this.$store.commit('deleteTeamMembers');
                         this.$router.push('/auth')
-                    })
+                    }).catch(error => {
+                    if (error.response) {
+                        new ErrorHandler(error.response, this)
+                    } else {
+                        this.$router.push("/connection_error");
+                    }
+                })
             },
             request_user_data() {
                 Axios
@@ -81,13 +88,25 @@
                         this.$store.commit('setUserData', response.data);
                     })
                     .catch(error => {
-                        if (error.response.status === 401) {
-                            this.$router.push("/auth");
-                            this.$store.commit('setErrorMessage', {
-                                header: "Ошибка авторизации",
-                                message: error.response.data.message
-                            });
+                        if(error.response){
+                            new ErrorHandler(error.response, this)
                         }
+                        //     if (error.response.status === 401) {
+                        //         this.$router.push("/auth");
+                        //         this.$store.commit('setErrorMessage', {
+                        //             header: "Ошибка авторизации",
+                        //             message: error.response.data.message
+                        //         });
+                        //     }
+                        //     if(error.response.status >= 500) {
+                        //         this.$store.commit('setErrorMessage', {
+                        //             header: "Ошибка",
+                        //             message: "Что-то пошло не так"
+                        //         });
+                        //     }
+                        // } else {
+                        //     this.$router.push("/connection_error");
+                        // }
                     });
             },
         }

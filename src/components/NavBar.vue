@@ -21,6 +21,8 @@
 
 <script>
     import Axios from 'axios'
+    import {ErrorHandler} from "../ErrorHandler";
+
     export default {
         name: "NavBar",
         data: function () {
@@ -72,16 +74,12 @@
                     })
                     .catch(error => {
                         if (error.response) {
-                            if (error.response.status === 401) {
-                                this.$router.push("/auth");
-                                this.$store.commit('setErrorMessage', {
-                                    header: "Ошибка авторизации",
-                                    message: error.response.data.message
-                                });
-                            }
+                           new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
                         }
                     });
-            },
+            }
         }
     }
 </script>
