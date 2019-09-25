@@ -9,6 +9,7 @@
         <base-input type="text" placeholder="vk.сom/id" v-model="request_body.vk_ref"></base-input>
         <base-input type="password" placeholder="Пароль (более 3 символов)" v-model="request_body.password"></base-input>
         <base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input>
+        <br>
         <base-button title="Зарегистрироваться" @click="sign_up"></base-button>
         <img src="../assets/orn_bot.png" id="ornament-bottom">
     </div>

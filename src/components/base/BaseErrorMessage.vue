@@ -36,6 +36,7 @@
 .error-message-container {
     max-width: 800px;
     margin: 20px auto 0;
+    margin-bottom: 30px;
     padding: 0 5px;
     background-color: #d66363;
     border-radius: 20px;

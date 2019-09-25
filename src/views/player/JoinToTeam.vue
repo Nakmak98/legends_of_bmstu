@@ -78,7 +78,7 @@
                     item.style.backgroundColor = "";
                     item.style.border = "1px solid #e1bf92";
                 }
-                option.style.backgroundColor = "#ffedd4";
+                option.style.backgroundColor = "#FFF5E7";
                 option.style.border = "1px solid #e1bf92";
                 this.request_body.team_id = option.value;
             },
@@ -145,6 +145,6 @@
     }
 
     .selected {
-        background-color: #ffedd4;
+        background-color: #E8D8C1;
     }
 </style>
