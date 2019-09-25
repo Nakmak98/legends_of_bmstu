@@ -111,8 +111,4 @@
     p > img {
         max-width: 100%;
     }
-    .red-button, .red-button-parent >button{
-        background-color: #d66363;
-        color: white;
-    }
 </style>

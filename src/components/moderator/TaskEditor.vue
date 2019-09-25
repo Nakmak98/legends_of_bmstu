@@ -51,7 +51,7 @@
             <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1>
                 <div v-html="request_body.html"></div>
             </div>
-            <button @click="show_preview = !show_preview">Редактировать</button>
+            <button class="edit_btn" @click="show_preview = !show_preview">Редактировать</button>
         </div>
     </div>
 </template>
@@ -284,6 +284,10 @@
         margin: 10px;
     }
 
+    .edit_btn {
+        margin: 15px;
+        background-color: #e1bf92;
+    }
     .quillWrapper {
         background-color: white;
     }
