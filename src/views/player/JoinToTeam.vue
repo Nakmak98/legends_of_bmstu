@@ -14,7 +14,10 @@
             </div>
             <base-button title="Вступить в команду" @click="check_join"></base-button>
         </div>
-        <div v-else>
+        <div v-if="teams == 1">
+            Загрузка...
+        </div>
+        <div v-if="teams == 0">
             <p>Ни одной команды ещё ни создано.</p>
             <base-button title="Создать команду" @click="$router.push('/team/create')"></base-button>
         </div>
@@ -34,12 +37,12 @@
                     invite_code: ''
                 },
                 search_input_value: '',
-                popup_message: 'Введите пригласительный код',
-                teams: []
+                teams: 1
             }
         },
         computed: {
             search_team() {
+                this.request_body.team_id = 0; // if team was selected, discard
                 let regexp = new RegExp(this.search_input_value, 'i');
                 return this.teams.filter(team => team.team_name.match(regexp) || team.team_id.toString().match(regexp))
             }
@@ -60,8 +63,9 @@
                     });
                     return
                 }
+                let selected_team = this.teams.find(item => item.team_id == this.request_body.team_id);
                 let popup_options = {
-                    message: "Введите пригласительный код",
+                    message: "Введите пригласительный код для команды " + selected_team.team_name,
                     placeholder: 'Пригласительный код',
                     input_field: true,
                     show: true,
@@ -82,10 +86,14 @@
                 option.style.border = "1px solid #e1bf92";
                 this.request_body.team_id = option.value;
             },
-            request_teams() {
-                Axios
+             request_teams() {
+               Axios
                     .get('/team/all')
                     .then(response => {
+                        if(response.data.length === 0){
+                            this.teams = 0;
+                            return;
+                        }
                         this.teams = response.data.sort((a, b) => {
                             if (a.team_id > b.team_id) {
                                 return 1

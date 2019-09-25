@@ -7,8 +7,8 @@
 </template>
 
 <script>
-    import WithoutTeamPlayer from "../../components/account/WithoutTeamPlayer";
-    import WithTeamPlayer from "../../components/account/WithTeamPlayer";
+    import WithoutTeamPlayer from "../../components/player/WithoutTeamPlayer";
+    import WithTeamPlayer from "../../components/player/WithTeamPlayer";
     import Axios from 'axios'
     import {ErrorHandler} from "../../ErrorHandler";
 
@@ -16,7 +16,7 @@
         name: "Team",
         components: {
             WithTeamPlayer,
-            WithoutTeamPlayer
+            WithoutTeamPlayer,
         },
         computed: {
             user() {
