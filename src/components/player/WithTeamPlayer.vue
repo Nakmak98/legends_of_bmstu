@@ -6,20 +6,12 @@
         <h2 v-if="team.invite_code">Пригласительный код: <br>{{team.invite_code}}</h2>
         <table>
             <tr>
-                <td>Имя</td>
-                <td>Фамилия</td>
-                <td>VK</td>
+                <td>Участник</td>
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
             <tr v-for="member of team_members" class="table-cont">
                 <td>
-                    <div class="table-block">{{member.first_name}}</div>
-                </td>
-                <td>
-                    <div class="table-block">{{member.last_name}}</div>
-                </td>
-                <td class="link">
-                    <div class="table-block"><a :href="'https://'+member.vk_ref">{{member.vk_ref}}</a></div>
+                    <div class="table-block"><a :href="'https://'+member.vk_ref">{{member.first_name}} {{member.last_name}}</a></div>
                 </td>
                 <td v-if="user.role === 'CAPTAIN'" class="kick-btn">
                     <img src="@/assets/captain.png" v-if="member.role === 'CAPTAIN'">
