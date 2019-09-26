@@ -109,6 +109,8 @@
         cursor: pointer;
         font-size: 30px;
         color: black;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        outline: none;
     }
     .menu {
         position: fixed;

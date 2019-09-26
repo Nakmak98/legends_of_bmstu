@@ -3,7 +3,9 @@
         <h2>Команда № {{team.team_id}}</h2>
         <h2>{{team.team_name}}</h2>
         <h2>{{team.search_input_value}}</h2>
-        <h2 v-if="team.invite_code">Пригласительный код: <br>{{team.invite_code}}</h2>
+        <div v-if="team.invite_code">Пригласительный код:
+            <p class="cursive-text">(сообщите его членам своей команды)</p>
+            <p class="bold-text">{{team.invite_code}}</p></div>
         <table>
             <tr>
                 <td>Участник</td>
@@ -191,5 +193,15 @@
         width: 20px;
         color: red;
         cursor: pointer;
+    }
+
+    .cursive-text {
+        font-style: italic;
+        font-size: 17px;
+        margin: 7px 0;
+    }
+
+    .bold-text {
+        font-weight: bold;
     }
 </style>
