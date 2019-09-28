@@ -13,7 +13,7 @@
             </tr>
             <tr v-for="member of team_members" class="table-cont">
                 <td>
-                    <div class="table-block"><a :href="'https://'+member.vk_ref">{{member.first_name}} {{member.last_name}}</a></div>
+                    <div class="table-block"><a :href="'https://'+member.vk_ref" target="_blank">{{member.first_name}} {{member.last_name}}</a></div>
                 </td>
                 <td v-if="user.role === 'CAPTAIN'" class="kick-btn">
                     <img src="@/assets/captain.png" v-if="member.role === 'CAPTAIN'">

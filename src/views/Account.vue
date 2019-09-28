@@ -4,9 +4,12 @@
         <h2>{{user.first_name}} {{user.last_name}}</h2>
         <h2>{{user.login}}</h2>
         <h2>id: {{user.user_id}}</h2>
-        <base-button @click="$router.push('/team')" title="Кабинет Команды"></base-button>
-        <base-button title="Удалить аккаунт" @click="check_delete_account" class="red-button-parent"></base-button>
+        <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
+                     @click="$router.push('/team')"
+                     title="Кабинет команды">
+        </base-button>
         <base-button title="Выйти" @click="check_logout"></base-button>
+        <base-button title="Удалить аккаунт" @click="check_delete_account" class="red-button-parent"></base-button>
     </div>
 </template>
 <script>

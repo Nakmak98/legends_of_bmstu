@@ -12,7 +12,7 @@
                 <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
                 <router-link to="/account"><div>Личный кабинет</div></router-link>
-                <!--                <router-link to="/rules"><div>Правила</div></router-link>-->
+                <router-link v-if="is('PLAYER')" to="/rules"><div>Правила</div></router-link>
 <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
             </div>
         </div>
@@ -60,7 +60,7 @@
                     return false
                 }
                 if(expected_role === 'PLAYER') {
-                    return this.user.role === 'PLAYER' || this.user.role === 'TESTER' || this.user.role === 'CAPTAIN'
+                    return this.user.role === 'PLAYER' || this.user.role === 'CAPTAIN'
                 }
                 if(this.user.role === expected_role){
                     return true
