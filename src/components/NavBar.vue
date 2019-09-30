@@ -74,6 +74,8 @@
                     })
                     .catch(error => {
                         if (error.response) {
+                            if(this.$router.currentRoute.fullPath === '/info' && error.response.status === 401)
+                                return
                            new ErrorHandler(error.response, this)
                         } else {
                             this.$router.push("/connection_error");
