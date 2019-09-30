@@ -1,8 +1,8 @@
 <template>
     <div v-if="team">
-        <h2>Команда № {{team.team_id}}</h2>
-        <h2>{{team.team_name}}</h2>
-        <h2>{{team.search_input_value}}</h2>
+        <p>Команда № {{team.team_id}}</p>
+        <p>{{team.team_name}}</p>
+        <p>{{team.search_input_value}}</p>
         <div v-if="team.invite_code">Пригласительный код:
             <p class="cursive-text">(сообщите его членам своей команды)</p>
             <p class="bold-text">{{team.invite_code}}</p></div>

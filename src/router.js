@@ -10,6 +10,7 @@ import Team from "./views/player/Team";
 import ModeratorView from "./views/moderator/ModeratorView";
 import TaskEditor from "./components/moderator/TaskEditor";
 import Error from "./views/Error";
+import StaticText from "./views/StaticText";
 Vue.use(Router)
 
 const routes = new Router({
@@ -24,6 +25,11 @@ const routes = new Router({
       path: '/account',
       name: 'account',
       component: Account
+    },
+    {
+      path: '/info',
+      name: 'info',
+      component: StaticText
     },
     {
       path: '/auth',

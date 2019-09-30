@@ -18,7 +18,6 @@
 <style lang="scss">
     * {
         font-family: 'Neucha', cursive;
-        font-weight: 300;
         font-size: 18px;
     }
 

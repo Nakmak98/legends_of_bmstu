@@ -1,9 +1,9 @@
 <template>
     <div v-if="user" class="about basic-block">
         <h1>Личный кабинет</h1>
-        <h2>{{user.first_name}} {{user.last_name}}</h2>
-        <h2>{{user.login}}</h2>
-        <h2>id: {{user.user_id}}</h2>
+        <p>{{user.first_name}} {{user.last_name}}</p>
+        <p>{{user.login}}</p>
+        <p>id: {{user.user_id}}</p>
         <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
                      @click="$router.push('/team')"
                      title="Кабинет команды">

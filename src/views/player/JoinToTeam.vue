@@ -65,7 +65,7 @@
                 }
                 let selected_team = this.teams.find(item => item.team_id == this.request_body.team_id);
                 let popup_options = {
-                    message: "Введите пригласительный код для команды " + selected_team.team_name,
+                    message: "Введите пригласительный код для команды " + "\"" + selected_team.team_name + "\"",
                     placeholder: 'Пригласительный код',
                     input_field: true,
                     show: true,

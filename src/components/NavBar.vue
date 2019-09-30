@@ -12,7 +12,7 @@
                 <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
                 <router-link to="/account"><div>Личный кабинет</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/rules"><div>Правила</div></router-link>
+                <router-link to="/info"><div>Что такое Легенды?</div></router-link>
 <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
             </div>
         </div>
