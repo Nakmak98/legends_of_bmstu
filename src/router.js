@@ -12,6 +12,7 @@ import TaskEditor from "./components/moderator/TaskEditor";
 import Error from "./views/Error";
 import StaticText from "./views/StaticText";
 import Game from "./views/Game";
+import AdminPanel from "./views/AdminPanel";
 Vue.use(Router)
 
 const routes = new Router({
@@ -26,6 +27,11 @@ const routes = new Router({
       path: '/account',
       name: 'account',
       component: Account
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminPanel
     },
     {
       path: '/info',

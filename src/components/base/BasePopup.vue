@@ -3,7 +3,7 @@
         <transition name="fade">
             <div v-if="popup.show" class="popup-bg">
                 <div class="base-popup basic-block">
-                    <h1>Подтверждение</h1>
+                    <h1 v-if="popup.header">Подтверждение</h1>
                     <p class="popup-message">
                         {{popup.message}}
                     </p>
@@ -14,8 +14,13 @@
                             autocapitalize="off"
                             text_align="center">
                     </base-input>
-                    <base-button @click="handleAccess" title="ОК"></base-button>
-                    <base-button @click="popup.show = false" title="Отмена"></base-button>
+                    <div v-if="popup.callback">
+                        <base-button @click="handleAccess" title="ОК"></base-button>
+                        <base-button @click="popup.show = false" title="Отмена"></base-button>
+                    </div>
+                    <div v-else>
+                        <base-button @click="popup.show = false" title="ОК"></base-button>
+                    </div>
                 </div>
             </div>
         </transition>

@@ -1,7 +1,11 @@
 <template>
     <div id="nav" v-touch:swipe.right="open_by_swipe">
         <div class="burger">
-            <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
+            <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
+            <i v-if="$route.fullPath === '/game'"
+               class="fas fa-sync"
+               @click="$store.dispatch('updateTaskStatus')">
+            </i>
         </div>
         <div v-if="show_menu" class="menu"
              @click="show_menu = !show_menu"
@@ -86,7 +90,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     #nav {
         background-color: #f8e0be;
         height: 50px;
@@ -95,13 +99,11 @@
         margin-bottom: 20px;
         box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         box-sizing: border-box;
-
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-    }
     }
     .burger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin: 0 auto;
         max-width: 800px;
         padding-left: 10px;
@@ -113,6 +115,9 @@
         color: black;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         outline: none;
+    }
+    .fa-sync {
+        font-size: 25px;
     }
     .menu {
         position: fixed;

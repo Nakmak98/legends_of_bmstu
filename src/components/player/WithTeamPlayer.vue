@@ -22,7 +22,7 @@
                 </td>
             </tr>
         </table>
-<!--        <base-button title="Старт!"></base-button>-->
+        <base-button title="Старт!" @click="$router.push('/game')"></base-button>
         <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
     </div>
 </template>

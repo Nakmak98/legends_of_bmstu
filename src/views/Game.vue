@@ -1,8 +1,17 @@
 <template>
     <div class="basic-block">
-        <play-state :game="game"></play-state>
-        <pause-state :game="game"></pause-state>
-        <stop-state :game="game"></stop-state>
+        <play-state v-if="game.status === 'PLAY'"
+                    :game="game"
+                    :status="status">
+        </play-state>
+        <pause-state v-if="game.status === 'PAUSE'"
+                     :game="game"
+                     :status="status">
+        </pause-state>
+        <stop-state v-if="game.status === 'STOP'"
+                    :game="game"
+                    :status="status">
+        </stop-state>
     </div>
 </template>
 
@@ -21,18 +30,23 @@
         },
         data() {
           return {
-              game: null
+              status: null
           }
         },
+        computed: {
+          game() { return this.$store.state.game }
+        },
         mounted() {
-            this.request_task_status();
+            this.request_game_status();
+            this.$store.dispatch('updateTaskStatus')
         },
         methods: {
-            request_task_status() {
+            request_game_status() {
                 Axios
-                    .get('/game/info')
+                    .get('/game/status')
                     .then(response => {
-                        this.game = response.data;
+                        this.$store.commit('deleteErrorMessage');
+                        this.status = response.data;
                     })
                     .catch(error => {
                         if(error.response){
@@ -41,11 +55,10 @@
                             this.$router.push("/connection_error");
                         }
                     })
-            }
+            },
         }
     }
 </script>
 
 <style scoped>
-
 </style>

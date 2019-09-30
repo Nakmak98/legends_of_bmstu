@@ -1,5 +1,5 @@
 <template>
-    <p>{{timer}}</p>
+    <p>{{tick_tack}}</p>
 </template>
 
 <script>
@@ -15,18 +15,25 @@
                 timer: null
             }
         },
+        computed: {
+            tick_tack() {
+                let x = moment.unix(this.timer);
+                return x.format('mm:ss')
+            }
+        },
         mounted() {
             this.start_timer()
         },
         methods: {
             start_timer() {
-                if(this.start_time){
-                    this.timer = this.duration - (moment([]).unix - this.start_time);
-                    setTimeout(function () {
-                        if(this.timer <= 0) this.timer = 'Время истекло';
-                        this.timer--;
+                    var time = this.duration - (moment([]).unix() - this.start_time);
+                    let x = setInterval(() => {
+                        if(time <= 0) {
+                            clearInterval(x);
+                            this.$store.dispatch('updateTaskStatus')
+                        }
+                        this.timer =  time--;
                     }, 1000)
-                }
             }
         }
     }
