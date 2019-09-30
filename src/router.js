@@ -11,6 +11,7 @@ import ModeratorView from "./views/moderator/ModeratorView";
 import TaskEditor from "./components/moderator/TaskEditor";
 import Error from "./views/Error";
 import StaticText from "./views/StaticText";
+import Game from "./views/Game";
 Vue.use(Router)
 
 const routes = new Router({
@@ -49,6 +50,10 @@ const routes = new Router({
     {
       path: '/team',
       component: Team,
+    },
+    {
+      path: '/game',
+      component: Game,
     },
     {
       path: '/team/create',
