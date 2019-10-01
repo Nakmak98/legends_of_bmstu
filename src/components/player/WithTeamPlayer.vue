@@ -23,6 +23,7 @@
             </tr>
         </table>
 <!--        <base-button title="Старт!"></base-button>-->
+        <base-button title="Изменить название" @click="check_change_team_name"></base-button>
         <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
     </div>
 </template>
@@ -69,6 +70,35 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            check_change_team_name() {
+                let popup_options = {
+                    message: 'Введите новое название команды',
+                    placeholder: '',
+                    input_field: true,
+                    input_value: this.team.team_name,
+                    show: true,
+                    callback: this.change_team_name,
+                    args: null
+                };
+                this.$store.commit('setPopupOptions', popup_options)
+            },
+            change_team_name(args, data) {
+                Axios
+                    .post('/team/update', {
+                        team_name: data
+                    })
+                    .then(response => {
+                        this.$store.commit('setTeamData', response.data)
+                    })
+                    .catch(error => {
+                    if(error.response) {
+                        new ErrorHandler(error.response, this)
+                    } else {
+                        this.$router.push('/connection_error')
+                    }
+                })
+
+            },
             check_leave_team() {
                 let popup_options = {
                     message: 'Вы уверены, что хотите покинуть команду?',
