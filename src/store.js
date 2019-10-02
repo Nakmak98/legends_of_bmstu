@@ -8,6 +8,7 @@ let popup_default_options = {
     message: '',
     placeholder: '',
     input_field: false,
+    input_value: null,
     show: false,
     callback: null,
     args: null

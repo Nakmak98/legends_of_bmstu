@@ -35,6 +35,12 @@
                 return this.$store.state.popup
             }
         },
+        updated() {
+          if(this.popup.input_value !== null){
+              this.input_value = this.popup.input_value;
+              this.popup.input_value = null;
+          }
+        },
         methods: {
             handleAccess (){
                 if(this.input_value !== ''){
