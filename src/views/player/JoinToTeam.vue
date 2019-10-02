@@ -5,12 +5,13 @@
             <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
             <h1>Выберите команду</h1>
             <div class="teams-list">
-                <option v-for="team of search_team"
-                        :value="team.team_id"
+                <div v-for="team of search_team"
+                        :id="team.team_id"
+                        v-bind:key="team.team_id"
                         @click="select"
                         class="team-option">
                     {{team.team_id}} {{team.team_name}}
-                </option>
+                </div>
             </div>
             <base-button title="Вступить в команду" @click="check_join"></base-button>
         </div>
@@ -84,7 +85,7 @@
                 }
                 option.style.backgroundColor = "#FFF5E7";
                 option.style.border = "1px solid #e1bf92";
-                this.request_body.team_id = option.value;
+                this.request_body.team_id = option.id;
             },
              request_teams() {
                Axios
@@ -145,7 +146,7 @@
         overflow-y: scroll;
         margin-bottom: 15px;
 
-        option {
+        div {
             height: 30px;
             border: 1px solid #e1bf92;
             padding-top: 10px;
