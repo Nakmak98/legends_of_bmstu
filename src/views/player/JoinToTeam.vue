@@ -1,9 +1,14 @@
 <template>
     <div class="basic-block">
         <div v-if="teams.length">
-            <h1>Поиск команды</h1>
-            <base-input type="text" placeholder="Название / номер команды" v-model="search_input_value"></base-input>
             <h1>Выберите команду</h1>
+            <base-input id="team-search"
+                        type="text"
+                        :placeholder="placeholder"
+                        v-model="search_input_value"
+                        @focusin="placeholder = 'Введите название команды'"
+                        @focusout="placeholder = 'Найти команду...'">
+            </base-input>
             <div class="teams-list">
                 <div v-for="team of search_team"
                         :id="team.team_id"
@@ -13,7 +18,7 @@
                     {{team.team_id}} {{team.team_name}}
                 </div>
             </div>
-            <base-button title="Вступить в команду" @click="check_join"></base-button>
+            <base-button title="Выбрать команду" @click="check_join"></base-button>
         </div>
         <div v-if="teams == 1">
             Загрузка...
@@ -38,7 +43,8 @@
                     invite_code: ''
                 },
                 search_input_value: '',
-                teams: 1
+                teams: 1,
+                placeholder: 'Найти команду...'
             }
         },
         computed: {
@@ -142,9 +148,10 @@
 
 <style lang="scss" scoped>
     .teams-list {
-        max-height: 300px;
+        max-height: 190px;
         overflow-y: scroll;
         margin-bottom: 15px;
+        border: 1px solid #e1bf92;
 
         div {
             height: 30px;
