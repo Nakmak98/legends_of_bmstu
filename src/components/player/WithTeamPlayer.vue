@@ -23,7 +23,7 @@
             </tr>
         </table>
 <!--        <base-button title="Старт!"></base-button>-->
-        <base-button title="Изменить название" @click="check_change_team_name"></base-button>
+        <base-button v-if="user.role === 'CAPTAIN'" title="Изменить название" @click="check_change_team_name"></base-button>
         <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
     </div>
 </template>
