@@ -5,6 +5,9 @@
                :placeholder="placeholder"
                :text_align="text_align"
                @input="$emit('input', $event.target.value)"
+               @focusin="$emit('focusin', $event.target.value)"
+               @focusout="$emit('focusout', $event.target.value)"
+               @focus="$emit('focus', $event.target.value)"
         >
     </div>
 </template>
