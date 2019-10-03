@@ -51,6 +51,9 @@ export default new Vuex.Store({
            state.game = data
         },
 
+        deleteTaskStatus(state) {
+            state.game = null;
+        },
         deleteTeamMembers(state) {
             state.team_members = null;
         },
@@ -80,6 +83,7 @@ export default new Vuex.Store({
                 })
         },
         updateTaskStatus(context, data) {
+            context.commit('deleteTaskStatus');
             if(data !== undefined) {
                 context.commit('setTaskStatus', data);
                 return;

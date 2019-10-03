@@ -1,17 +1,22 @@
 <template>
     <div class="basic-block">
-        <play-state v-if="game.status === 'PLAY'"
-                    :game="game"
-                    :status="status">
-        </play-state>
-        <pause-state v-if="game.status === 'PAUSE'"
-                     :game="game"
-                     :status="status">
-        </pause-state>
-        <stop-state v-if="game.status === 'STOP'"
-                    :game="game"
-                    :status="status">
-        </stop-state>
+        <div v-if="game">
+            <play-state v-if="game.status === 'PLAY'"
+                        :game="game"
+                        :status="status">
+            </play-state>
+            <pause-state v-if="game.status === 'PAUSE'"
+                         :game="game"
+                         :status="status">
+            </pause-state>
+            <stop-state v-if="game.status === 'STOP'"
+                        :game="game"
+                        :status="status">
+            </stop-state>
+        </div>
+        <div v-else>
+            Загружаем задание...
+        </div>
     </div>
 </template>
 
