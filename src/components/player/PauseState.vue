@@ -4,9 +4,9 @@
             <div v-if="game.task.task_status === 'SUCCESS'">
                 <h1>Успешно пройдено</h1>
                 <div class="ql-editor" v-html="game.task.html"></div>
-                <p>Баллов получено: {{game.task.points}}</p>
+                <p>Баллов получено: <strong>{{game.task.points}}</strong></p>
                 <p v-if="wasted_time">Времени потрачено: {{wasted_time}}</p>
-                <p>Засчитанный ответ: {{game.task.answer}}</p>
+                <p>Засчитанный ответ: <strong>{{game.task.answer}}</strong></p>
             </div>
             <div v-if="game.task.task_status === 'FAIL'">
                 <h1>Задание провалено</h1>

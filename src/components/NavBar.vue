@@ -12,9 +12,9 @@
              v-touch:swipe.left="close_by_swipe">
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
-                <router-link v-if="is('MODERATOR')" to="/moderator"><div>Конструктор заданий</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
+                <router-link v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'" to="/moderator"><div>Конструктор заданий</div></router-link>
+                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link to="/account"><div>Личный кабинет</div></router-link>
                 <router-link to="/info"><div>Что такое Легенды?</div></router-link>
 <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
@@ -66,6 +66,7 @@
                 if(expected_role === 'PLAYER') {
                     return this.user.role === 'PLAYER' || this.user.role === 'CAPTAIN'
                 }
+
                 if(this.user.role === expected_role){
                     return true
                 }
@@ -117,6 +118,7 @@
         outline: none;
     }
     .fa-sync {
+        color: black;
         font-size: 25px;
     }
     .menu {
