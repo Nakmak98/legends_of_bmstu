@@ -1,5 +1,5 @@
 <template>
-    <div v-if="user.role === 'MODERATOR'">
+    <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'">
         <div v-if="!show_preview" class="basic-block moderator-block">
             <label for="task_name">Название задания</label>
             <div>

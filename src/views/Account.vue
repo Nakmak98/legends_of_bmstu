@@ -94,23 +94,9 @@
                     .catch(error => {
                         if(error.response){
                             new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
                         }
-                        //     if (error.response.status === 401) {
-                        //         this.$router.push("/auth");
-                        //         this.$store.commit('setErrorMessage', {
-                        //             header: "Ошибка авторизации",
-                        //             message: error.response.data.message
-                        //         });
-                        //     }
-                        //     if(error.response.status >= 500) {
-                        //         this.$store.commit('setErrorMessage', {
-                        //             header: "Ошибка",
-                        //             message: "Что-то пошло не так"
-                        //         });
-                        //     }
-                        // } else {
-                        //     this.$router.push("/connection_error");
-                        // }
                     });
             },
         }

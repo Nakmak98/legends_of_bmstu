@@ -1,16 +1,21 @@
 <template>
     <div id="nav" v-touch:swipe.right="open_by_swipe">
         <div class="burger">
-            <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
+            <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
+            <i v-if="$route.fullPath === '/game'"
+               class="fas fa-sync"
+               @click="$store.dispatch('updateTaskStatus')">
+            </i>
         </div>
         <div v-if="show_menu" class="menu"
              @click="show_menu = !show_menu"
              v-touch:swipe.left="close_by_swipe">
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
-                <router-link v-if="is('MODERATOR')" to="/moderator"><div>Конструктор заданий</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
+                <router-link v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'" to="/moderator"><div>Конструктор заданий</div></router-link>
+                <router-link v-if="is('PLAYER')" to="/game"><div>Задания</div></router-link>
+                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link to="/account"><div>Личный кабинет</div></router-link>
                 <router-link to="/info"><div>Что такое Легенды?</div></router-link>
 <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
@@ -62,6 +67,7 @@
                 if(expected_role === 'PLAYER') {
                     return this.user.role === 'PLAYER' || this.user.role === 'CAPTAIN'
                 }
+
                 if(this.user.role === expected_role){
                     return true
                 }
@@ -86,7 +92,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     #nav {
         background-color: #f8e0be;
         height: 50px;
@@ -95,13 +101,11 @@
         margin-bottom: 20px;
         box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         box-sizing: border-box;
-
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-    }
     }
     .burger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin: 0 auto;
         max-width: 800px;
         padding-left: 10px;
@@ -113,6 +117,10 @@
         color: black;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         outline: none;
+    }
+    .fa-sync {
+        color: black;
+        font-size: 25px;
     }
     .menu {
         position: fixed;

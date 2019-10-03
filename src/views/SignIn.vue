@@ -83,6 +83,9 @@
                 if (user_role === 'MODERATOR') {
                     this.$router.push("/moderator")
                 }
+                if (user_role === 'ADMIN') {
+                    this.$router.push("/admin")
+                }
             }
         }
 
