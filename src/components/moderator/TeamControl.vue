@@ -1,15 +1,16 @@
 <template>
     <div v-if="user.role === 'MODERATOR'">
+
         <h1>Статус команд</h1>
         <input type="checkbox" id="checkbox" v-model="finished">
         <label for="checkbox">Показать завершенные</label>
 
         <div v-for="team of request_body.teams" class="about basic-block">
-            <div v-if="(team.finish_time !==NULL && this.finished === true) || this.finished === false">
+            <div v-if="(team.finish_time !==NULL && finished === true) || finished === false">
                 <p>{{team.team_name}}</p>
-                <div v-for="task in team.tasks">
-                    <task></task>
-                    <p>{{task.task_id}}{{task.task_name}}</p>
+                <div  v-for="task in team.tasks">
+                    <base-task></base-task>
+                    <p>{{task.task_id}}.{{task.task_name}}</p>
                 </div>
             </div>
         </div>
@@ -19,7 +20,7 @@
             <div v-if="this.finished === false" class="about basic-block">
                 <p>Имя команды</p>
                 <div>
-                    <task></task><!--TODO Подключить компонент -->
+                    <base-task></base-task><!--TODO Подключить компонент -->
                     <p>ID таска. Имя таска</p>
                 </div>
             </div>
@@ -32,25 +33,73 @@
     import Axios from "axios";
     import {VueEditor} from "vue2-editor";
     import {ErrorHandler} from "../../ErrorHandler";
-    import Task from "./Task";
+
 
     export default {
-        name: 'TaskEditor',
+        name: 'TaskControl',
         components: {
-            Task,
             VueEditor
         },
         data() {
             return {
                 request_body: {
-                    teams:[]
+                    teams:[
+                        {
+                            team_name:"VOLVOGA",
+                            finish_time:"1",
+                            tasks: [
+                                {
+                                    task_id: 50,
+                                    duration: 50,
+                                    start_time: 1568889832,
+                                    task_status: "RUNNING",
+                                },
+                                {
+                                    task_id: 10,
+                                    duration: 30,
+                                    start_time: 1568889832,
+                                    task_status: "STOP"
+                                },
+                                {
+                                    task_id: 22,
+                                    duration: 10,
+                                    start_time: 1568889832,
+                                    task_status: "PAUSE"
+                                }
+                            ]
+                        },
+                        {
+                            team_name:"VOLVOGA",
+                            tasks: [
+                                {
+                                    task_id: 50,
+                                    duration: 50,
+                                    start_time: 1568889832,
+                                    task_status: "RUNNING"
+                                },
+                                {
+                                    task_id: 10,
+                                    duration: 30,
+                                    start_time: 1568889832,
+                                    task_status: "STOP"
+                                },
+                                {
+                                    task_id: 22,
+                                    duration: 10,
+                                    start_time: 1568889832,
+                                    task_status: "PAUSE"
+                                }
+                            ]
+                        }
+                        ]
                 },
+
                 finished:false
             };
-        },
+        },/*,
         mounted() {
             this.request_teams()
-        },
+        },*/
         computed: {
             user() {
                 return this.$store.state.user

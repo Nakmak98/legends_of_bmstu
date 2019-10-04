@@ -22,7 +22,7 @@ Vue.component('base-button', BaseButton);
 Vue.component('base-input', BaseInput);
 Vue.component('base-error-message', BaseErrorMessage);
 Vue.component('base-popup', BasePopup);
-Vue.component('task', Task);
+Vue.component('base-task', Task);
 
 Vue.config.productionTip = false;
 Vue.config.silent = true;
