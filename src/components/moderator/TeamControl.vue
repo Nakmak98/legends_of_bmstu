@@ -1,15 +1,15 @@
 <template>
-    <div v-if="user.role === 'MODERATOR'">
+    <div v-if="user.role === 'MODERATOR'" class="basic-block">
 
         <h1>Статус команд</h1>
         <input type="checkbox" id="checkbox" v-model="finished">
         <label for="checkbox">Показать завершенные</label>
 
         <div v-for="team of request_body.teams" class="about basic-block">
-            <div v-if="(team.finish_time !==NULL && finished === true) || finished === false">
+            <div v-if="(team.finish_time !== null && finished === true) || finished === false">
                 <p>{{team.team_name}}</p>
                 <div  v-for="task in team.tasks">
-                    <base-task></base-task>
+                    <task></task>
                     <p>{{task.task_id}}.{{task.task_name}}</p>
                 </div>
             </div>
@@ -20,7 +20,7 @@
             <div v-if="this.finished === false" class="about basic-block">
                 <p>Имя команды</p>
                 <div>
-                    <base-task></base-task><!--TODO Подключить компонент -->
+                    <task></task>
                     <p>ID таска. Имя таска</p>
                 </div>
             </div>
@@ -31,14 +31,13 @@
 
 <script>
     import Axios from "axios";
-    import {VueEditor} from "vue2-editor";
     import {ErrorHandler} from "../../ErrorHandler";
-
+    import Task from "./Task";
 
     export default {
         name: 'TaskControl',
         components: {
-            VueEditor
+            Task
         },
         data() {
             return {
