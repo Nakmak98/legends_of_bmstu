@@ -12,14 +12,26 @@
              v-touch:swipe.left="close_by_swipe">
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
-                <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
-                <router-link v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'" to="/moderator"><div>Конструктор заданий</div></router-link>
-                <router-link v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'" to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/game"><div>Задания</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
-                <router-link to="/account"><div>Личный кабинет</div></router-link>
-                <router-link to="/info"><div>Что такое Легенды?</div></router-link>
-<!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
+                <div v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'">
+                    <router-link to="/moderator"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
+                </div>
+                <div v-if="is('PLAYER')">
+                    <router-link to="/game"><div>Задания</div></router-link>
+                    <router-link to="/team"><div>Кабинет команды</div></router-link>
+                    <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
+                </div>
+                <div v-if="is('ADMIN')">
+                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
+                    <router-link to="/revisor/answers"><div>Ответы</div></router-link>
+                    <router-link to="/revisor/team_list"><div>Список команд</div></router-link>
+                    <router-link to="/revisor/keys_generator"><div>Генерация ключей</div></router-link>
+                </div>
+                <div>
+                    <router-link to="/account"><div>Личный кабинет</div></router-link>
+                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>
+                </div>
+
             </div>
         </div>
     </div>
@@ -138,13 +150,13 @@
         box-shadow: 0 0 5px rgba(0,0,0,0.3);
         background-color: #f8e0be;
     }
-    .menu-content>img {
+    .menu-content > img {
         width: 100%;
     }
-    .menu-content>img + a {
+    .menu-content > img + div {
         border-top: 2px solid #e1bf92;
     }
-    .menu-content>a {
+    .menu-content > div > a{
         padding-top: 8px;
         font-style: none;
         box-sizing: border-box;

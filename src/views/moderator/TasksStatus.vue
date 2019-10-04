@@ -11,7 +11,7 @@
         <table class="table-xxl">
             <tr>
                 <td class="clickable" @click="sort_by_id">
-                    ID
+                    Номер команды
                     <i v-if="sort.id" class="fas fa-caret-up"></i>
                     <i v-if="sort.id !== null && sort.id !== true" class="fas fa-caret-down"></i>
                 </td>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import TaskStatusBar from "./TaskStatusBar";
+    import TaskStatusBar from "../../components/moderator/TaskStatusBar";
     export default {
         name: "TasksStatus",
         components: {
@@ -143,10 +143,4 @@
 </script>
 
 <style scoped>
-    .table-xxl {
-        width: -webkit-fill-available;
-    }
-    .table-block-xxl{
-        height: 50px;
-    }
 </style>

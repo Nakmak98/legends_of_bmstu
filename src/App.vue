@@ -102,6 +102,13 @@
         margin: 0 auto 19px;
     }
 
+    .table-xxl {
+        width: -webkit-fill-available;
+    }
+    .table-block-xxl{
+        height: 50px;
+    }
+
     .table-cont {
         background-color: #ffedd4;
 
