@@ -14,6 +14,7 @@
                 <img src="@/assets/logo1.png">
                 <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
                 <router-link v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'" to="/moderator"><div>Конструктор заданий</div></router-link>
+                <router-link v-if="this.user.role === 'MODERATOR'" to="/moderator/team_control"><div>Отслеживание команд</div></router-link>
                 <router-link v-if="is('PLAYER')" to="/game"><div>Задания</div></router-link>
                 <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
                 <router-link to="/account"><div>Личный кабинет</div></router-link>
