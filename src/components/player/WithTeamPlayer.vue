@@ -11,7 +11,7 @@
                 <td>Участник</td>
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
-            <tr v-for="member of team_members" class="table-cont">
+            <tr v-for="member of team_members" v-bind:key="member.user_id" class="table-cont">
                 <td>
                     <div class="table-block"><a :href="'https://'+member.vk_ref" target="_blank">{{member.first_name}} {{member.last_name}}</a></div>
                 </td>

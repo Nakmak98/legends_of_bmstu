@@ -13,6 +13,7 @@ import Error from "./views/Error";
 import StaticText from "./views/StaticText";
 import Game from "./views/Game";
 import AdminPanel from "./views/AdminPanel";
+import TasksStatus from "./components/moderator/TasksStatus";
 Vue.use(Router)
 
 const routes = new Router({
@@ -80,6 +81,11 @@ const routes = new Router({
       path: '/moderator/create_task',
       name: 'create_task',
       component: TaskEditor
+    },
+    {
+      path: '/moderator/tasks_status',
+      name: 'tasks_status',
+      component: TasksStatus
     },
     {
       path: '/moderator/edit_task/:task_id',
