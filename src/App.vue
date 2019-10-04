@@ -110,4 +110,8 @@
     p > img {
         max-width: 100%;
     }
+
+    .clickable {
+        cursor: pointer;
+    }
 </style>
