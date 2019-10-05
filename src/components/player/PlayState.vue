@@ -1,10 +1,12 @@
 <template>
    <div>
       <p class="ql-editor" v-html="game.task.html"></p>
-      <timer :start_time="game.task.start_time"
-             :duration="game.task.duration"
-             v-if="game.task.duration">
-      </timer>
+      <p>
+         <timer :start_time="game.task.start_time"
+                :duration="game.task.duration"
+                v-if="game.task.duration">
+         </timer>
+      </p>
       <p>Баллов за задание: {{game.task.points}}</p>
       <p><base-input placeholder="Ответ" v-model="answer"></base-input></p>
       <p><base-button title="Отправить" @click="send_answer"></base-button></p>
