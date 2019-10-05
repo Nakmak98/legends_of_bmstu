@@ -9,7 +9,7 @@ import Join from "./views/player/JoinToTeam"
 import Team from "./views/player/Team";
 import ModeratorView from "./views/moderator/ModeratorView";
 import TaskEditor from "./components/moderator/TaskEditor";
-import TeamControl from "./components/moderator/TeamControl";
+import TeamControl from "./components/moderator/TeamsStatus";
 import Error from "./views/Error";
 import StaticText from "./views/StaticText";
 import Game from "./views/Game";

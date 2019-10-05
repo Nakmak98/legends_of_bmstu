@@ -8,7 +8,6 @@ import BaseButton from "./components/base/BaseButton";
 import BaseInput from "./components/base/BaseInput";
 import BaseErrorMessage from "./components/base/BaseErrorMessage";
 import BasePopup from "./components/base/BasePopup";
-import Task from "./components/moderator/Task"
 
 const prod_backend = 'https://legends.bmstu.ru:8443';
 const test_backend = 'https://testing.legends.bmstu.ru:8443';
@@ -22,7 +21,6 @@ Vue.component('base-button', BaseButton);
 Vue.component('base-input', BaseInput);
 Vue.component('base-error-message', BaseErrorMessage);
 Vue.component('base-popup', BasePopup);
-Vue.component('base-task', Task);
 
 Vue.config.productionTip = false;
 Vue.config.silent = true;

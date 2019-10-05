@@ -1,5 +1,5 @@
 <template>
-    <p>{{tick_tack}}</p>
+    <span>{{tick_tack}}</span>
 </template>
 
 <script>
