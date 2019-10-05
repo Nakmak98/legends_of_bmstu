@@ -1,19 +1,12 @@
 <template>
-    <div class = "allTasks">
-        <div v-for="task in tasks" >   <!--TODO Впихнуть таймер-->
-            <div v-if="task.task_status =='STOP' && (task.finish_time <= task.duration)" class="circle succeed">Время</div>
-            <div v-if="task.task_status =='STOP' && (task.finish_time > task.duration)" class="circle failed">Время</div>
-            <div v-if="task.task_status =='SKIP'" class="circle skipped">Время</div>
-            <div v-if="task.task_status =='PLAY'" class="circle playing">Время</div>
-            <div v-if="task.task_status =='PAUSE'" class="circle waiting">Время</div>
-            <div class="arrow">.</div>
-            <p> {{task.task_id}}</p>
-            <!--<div class="circle waiting">{{task.task_status}}</div>-->
-            <!--<div v-bind:class="circleColor" class="circle">ww</div>-->
+    <div v-bind:style="get_route_style" class="route_container">
+        <div v-for="task in tasks" class="route_item_container">
+            <div class="circle"
+                 v-bind:class="[task.task_status.toLowerCase()]">
+            </div>
+            <div class="arrow"></div>
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -23,50 +16,56 @@
             tasks: []
         },
         computed:{
-            circleColor:function(){
+            get_status_style(){
                 let status = this.task_status;
                 return{
                     // runnung: this.task_status=='PLAY':0,
                      status
                 }
-    }
-        }
+            },
+            get_route_style() {
+                return {
+                    gridTemplateColumns: `repeat(${this.tasks.length}, 20%)`
+                }
+            }
+        },
     }
 </script>
 
 <style scoped>
 
-    .allTasks{
+    .route_container{
         display: grid;
-        grid-template-columns:repeat(3,1fr 2fr);
-        grid-template-rows:3fr 1fr ;
+    }
+    .route_item_container{
+        display: inline-flex;
     }
     p{
         grid-row-start: 2;
     }
 .circle{
-    grid-row-start: 1;
     width: 60px;
     height: 60px;
     border-radius: 100%;
 
 }
 .arrow{
-    border: 3px 0 solid black;
-    grid-template-rows:3fr 1fr ;
-    grid-row-start: 1;
+    width: 68%;
+    border-bottom: 1px solid;
+    position: relative;
+    bottom: 27px
 }
 
-.succeed{
+.success{
     background-color: #b9ff6d;
 }
-.failed{
+.fail{
     background-color: #ff605a;
 }
-.skipped{
+.skip{
     background-color: #000058;
 }
-.playing{
+.running{
     background-color: #ffed57;
 }
 .waiting{
