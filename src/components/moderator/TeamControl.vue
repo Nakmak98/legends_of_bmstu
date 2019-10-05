@@ -6,18 +6,15 @@
         <label for="checkbox">Показать завершенные</label>
 
         <div v-for="team of request_body.teams" class="about basic-block">
-            <div v-if="(team.finish_time !== null && finished === true) || finished === false">
+            <div v-if="(team.finish_timew !== NULL && finished === true) || finished === false">
                 <p>{{team.team_name}}</p>
-                <div  v-for="task in team.tasks">
-                    <task></task>
-                    <p>{{task.task_id}}.{{task.task_name}}</p>
-                </div>
+                <task v-bind:tasks="team.tasks"></task>
             </div>
         </div>
 
         <!--Test-->
         <div >
-            <div v-if="this.finished === false" class="about basic-block">
+            <div v-if="finished === false" class="about basic-block">
                 <p>Имя команды</p>
                 <div>
                     <task></task>
@@ -45,19 +42,20 @@
                     teams:[
                         {
                             team_name:"VOLVOGA",
-                            finish_time:"1",
+                            finish_timew:1,
                             tasks: [
                                 {
                                     task_id: 50,
                                     duration: 50,
                                     start_time: 1568889832,
-                                    task_status: "RUNNING",
+                                    task_status: "PLAY",
                                 },
                                 {
                                     task_id: 10,
                                     duration: 30,
                                     start_time: 1568889832,
-                                    task_status: "STOP"
+                                    task_status: "STOP",
+                                    finish_time: 22
                                 },
                                 {
                                     task_id: 22,
@@ -68,19 +66,21 @@
                             ]
                         },
                         {
-                            team_name:"VOLVOGA",
+                            team_name:"AGOVLOV",
+                            finish_time:'',
                             tasks: [
                                 {
-                                    task_id: 50,
-                                    duration: 50,
+                                    task_id: 130,
+                                    duration: 20,
                                     start_time: 1568889832,
-                                    task_status: "RUNNING"
+                                    task_status: "PLAY"
                                 },
                                 {
-                                    task_id: 10,
+                                    task_id: 60,
                                     duration: 30,
                                     start_time: 1568889832,
-                                    task_status: "STOP"
+                                    task_status: "STOP",
+                                    finish_time: 40
                                 },
                                 {
                                     task_id: 22,

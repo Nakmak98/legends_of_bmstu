@@ -1,31 +1,64 @@
 <template>
-    <div>   <!--TODO Впихнуть таймер-->
-<!--        <div v-if="task.status =='STOP' && (task.finish_time <= task.duration)" class="task succeed">{{task.start_time}}Время/Время на задание{{task.duration}}</div>-->
-<!--        <div v-if="task.status =='STOP' && (task.finish_time > task.duration)" class="task failed">{{task.start_time}}Время/Время на задание{{task.duration}}</div>-->
-<!--        <div v-if="task.status =='SKIP'" class="task skipped">{{task.start_time}}Время/Время на задание{{task.duration}}</div>-->
-<!--        <div v-if="task.status =='PLAY'" class="task playing">{{task.start_time}}Время/Время на задание{{task.duration}}</div>-->
-<!--        <div v-if="task.status =='PAUSE'" class="task waiting">{{task.start_time}}Время/Время на задание{{task.duration}}</div>-->
-        <div class="task waiting">Время/Время на задани</div>
+    <div class = "allTasks">
+        <div v-for="task in tasks" >   <!--TODO Впихнуть таймер-->
+            <div v-if="task.task_status =='STOP' && (task.finish_time <= task.duration)" class="circle succeed">Время</div>
+            <div v-if="task.task_status =='STOP' && (task.finish_time > task.duration)" class="circle failed">Время</div>
+            <div v-if="task.task_status =='SKIP'" class="circle skipped">Время</div>
+            <div v-if="task.task_status =='PLAY'" class="circle playing">Время</div>
+            <div v-if="task.task_status =='PAUSE'" class="circle waiting">Время</div>
+            <div class="arrow">.</div>
+            <p> {{task.task_id}}</p>
+            <!--<div class="circle waiting">{{task.task_status}}</div>-->
+            <!--<div v-bind:class="circleColor" class="circle">ww</div>-->
+        </div>
     </div>
+
 
 </template>
 
 <script>
     export default {
-        name: "Task"
+        name: "Task",
+        props: {
+            tasks: []
+        },
+        computed:{
+            circleColor:function(){
+                let status = this.task_status;
+                return{
+                    // runnung: this.task_status=='PLAY':0,
+                     status
+                }
+    }
+        }
     }
 </script>
 
 <style scoped>
 
-.task{
-    width: 50px;
-    height: 50px;
+    .allTasks{
+        display: grid;
+        grid-template-columns:repeat(3,1fr 2fr);
+        grid-template-rows:3fr 1fr ;
+    }
+    p{
+        grid-row-start: 2;
+    }
+.circle{
+    grid-row-start: 1;
+    width: 60px;
+    height: 60px;
     border-radius: 100%;
+
+}
+.arrow{
+    border: 3px 0 solid black;
+    grid-template-rows:3fr 1fr ;
+    grid-row-start: 1;
 }
 
 .succeed{
-    background-color: greenyellow;
+    background-color: #b9ff6d;
 }
 .failed{
     background-color: #ff605a;
