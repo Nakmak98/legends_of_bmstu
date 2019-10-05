@@ -12,20 +12,23 @@
              v-touch:swipe.left="close_by_swipe">
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
-                <div v-if="this.user.role === 'MODERATOR' || this.user.role === 'ADMIN'">
+                <div v-if="is('ADMIN')">
+                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
+                </div>
+                <div v-if="is('MODERATOR')">
                     <router-link to="/moderator"><div>Конструктор заданий</div></router-link>
                     <router-link to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
+                    <router-link to="/moderator/teams_status"><div>Cтатус команд</div></router-link>
+                </div>
+                <div v-if="is('REVISOR')">
+                    <router-link to="/revisor/answers"><div>Ответы</div></router-link>
+                    <router-link to="/revisor/team_list"><div>Список команд</div></router-link>
+                    <router-link to="/revisor/keys_generator"><div>Генерация ключей</div></router-link>
                 </div>
                 <div v-if="is('PLAYER')">
                     <router-link to="/game"><div>Задания</div></router-link>
                     <router-link to="/team"><div>Кабинет команды</div></router-link>
                     <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
-                </div>
-                <div v-if="is('ADMIN')">
-                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
-                    <router-link to="/revisor/answers"><div>Ответы</div></router-link>
-                    <router-link to="/revisor/team_list"><div>Список команд</div></router-link>
-                    <router-link to="/revisor/keys_generator"><div>Генерация ключей</div></router-link>
                 </div>
                 <div>
                     <router-link to="/account"><div>Личный кабинет</div></router-link>
@@ -77,6 +80,10 @@
                 if(!this.user) {
                     return false
                 }
+                if(this.user.role === 'ADMIN'){
+                    return true
+                }
+
                 if(expected_role === 'PLAYER') {
                     return this.user.role === 'PLAYER' || this.user.role === 'CAPTAIN'
                 }

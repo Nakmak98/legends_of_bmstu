@@ -1,5 +1,5 @@
 <template>
-    <div v-if="user.role === 'MODERATOR'" class="basic-block">
+    <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'" class="basic-block">
         <h1>Статус команд</h1>
         <input type="checkbox" id="checkbox" v-model="finished">
         <label for="checkbox">Показать завершивших</label>

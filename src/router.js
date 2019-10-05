@@ -9,7 +9,7 @@ import Join from "./views/player/JoinToTeam"
 import Team from "./views/player/Team";
 import ModeratorView from "./views/moderator/ModeratorView";
 import TaskEditor from "./components/moderator/TaskEditor";
-import TeamControl from "./components/moderator/TeamsStatus";
+import TeamStatus from "./components/moderator/TeamsStatus";
 import Error from "./views/Error";
 import StaticText from "./views/StaticText";
 import Game from "./views/Game";
@@ -91,6 +91,11 @@ const routes = new Router({
             path: '/moderator/tasks_status',
             name: 'tasks_status',
             component: TasksStatus
+        },
+        {
+            path: '/moderator/teams_status',
+            name: 'teams_status',
+            component: TeamStatus
         },
         {
             path: '/moderator/edit_task/:task_id',
