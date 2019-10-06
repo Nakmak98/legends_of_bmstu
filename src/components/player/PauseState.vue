@@ -4,23 +4,30 @@
             <div v-if="game.task.task_status === 'SUCCESS'">
                 <h1>Успешно пройдено</h1>
                 <div class="ql-editor" v-html="game.task.html"></div>
+                <br>
                 <p>Баллов получено: <strong>{{game.task.points}}</strong></p>
                 <p v-if="wasted_time">Времени потрачено: {{wasted_time}}</p>
                 <p>Засчитанный ответ: <strong>{{game.task.answer}}</strong></p>
+                <br>
             </div>
             <div v-if="game.task.task_status === 'FAIL'">
                 <h1>Задание провалено</h1>
                 <div class="ql-editor" v-html="game.task.html"></div>
+                <br>
                 <p v-if="wasted_time">Времени потрачено: {{wasted_time}}</p>
+                <br>
             </div>
             <div v-if="game.task.task_status === 'SKIP'">
                 <h1>Задание пропущено</h1>
                 <div class="ql-editor" v-html="game.task.html"></div>
+                <br>
                 <p v-if="wasted_time">Времени потрачено: {{wasted_time}}</p>
+                <br>
             </div>
             <p v-if="user.role !== 'CAPTAIN'">
                 <i>Капитан команды может взять следующее задание.</i>
             </p>
+            <br>
             <base-button v-if="user.role === 'CAPTAIN'"
                          title="Следующее задание"
                          @click="check_next_task">
@@ -28,6 +35,7 @@
         </div>
         <div v-else>
             <p>{{game.text}}</p>
+            <br>
             <base-button v-if="user.role === 'CAPTAIN'"
                          title="Взять задание"
                          @click="check_next_task">

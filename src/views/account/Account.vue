@@ -5,7 +5,7 @@
         <p>Логин: <i>{{user.login}}</i></p>
         <p>ВК: <i>{{user.vk_ref}}</i></p>
         <p>Номер учатника: <i>{{user.user_id}}</i></p>
-
+        <br>
         <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
                      @click="$router.push('/team')"
                      title="Кабинет команды">
@@ -65,7 +65,6 @@
                 })
             },
             change_vk(args, input_field) {
-                console.log(input_field);
                 Axios
                     .post('/user/update', {
                         vk_ref: input_field

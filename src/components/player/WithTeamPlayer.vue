@@ -2,12 +2,15 @@
     <div v-if="team">
         <p>Команда № <strong>{{team.team_id}}</strong></p>
         <p><strong>{{team.team_name}}</strong></p>
+        <br>
         <p>Баллы: <i>{{team.score}}</i></p>
         <p>Экстра-баллы: <i>{{team.money}}</i></p>
+        <br>
         <p>{{team.search_input_value}}</p>
         <div v-if="team.invite_code">Пригласительный код:
             <p class="bold-text">{{team.invite_code}}</p></div>
         <p class="cursive-text">(сообщите его членам своей команды)</p>
+        <br>
         <table>
             <tr>
                 <td>Участник</td>

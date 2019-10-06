@@ -20,6 +20,9 @@
         font-family: 'Neucha', cursive;
         font-size: 18px;
     }
+    p {
+        margin: 4px 1px;
+    }
 
     h1 {
         font-family: BemountLine;
