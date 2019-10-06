@@ -64,7 +64,11 @@
                         }
                     })
             }
-        }
+        },
+        beforeDestroy() {
+            if (this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
     }
 </script>
 

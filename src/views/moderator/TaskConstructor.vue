@@ -19,6 +19,10 @@
             user() {
                 return this.$store.state.user
             }
-        }
+        },
+        beforeDestroy() {
+            if (this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
     }
 </script>

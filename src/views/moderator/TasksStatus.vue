@@ -130,6 +130,10 @@
                 });
             }
         },
+        beforeDestroy() {
+            if (this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         watch: {
             stage: function () { this.request_tasks_status(); }
         }

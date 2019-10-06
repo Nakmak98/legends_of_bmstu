@@ -45,6 +45,10 @@
             this.request_game_status();
             this.$store.dispatch('updateTaskStatus')
         },
+        beforeDestroy() {
+            if (this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             request_game_status() {
                 Axios
