@@ -13,7 +13,7 @@ const prod_backend = 'https://legends.bmstu.ru:8443';
 const test_backend = 'https://testing.legends.bmstu.ru:8443';
 
 //Axios global config
-Axios.defaults.baseURL = test_backend;
+Axios.defaults.baseURL = prod_backend;
 Axios.defaults.withCredentials = true;
 
 //global components registration
