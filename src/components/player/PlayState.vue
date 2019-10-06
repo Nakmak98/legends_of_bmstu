@@ -11,7 +11,7 @@
       <p><base-input placeholder="Ответ" v-model="answer"></base-input></p>
       <br>
       <p><base-button title="Отправить" @click="send_answer"></base-button></p>
-      <p><base-button v-if="game.task.skip" title="Пропустить" @click="check_skip"></base-button></p>
+      <p><base-button v-if="game.task.skip && user.role === 'CAPTAIN'" title="Пропустить" @click="check_skip"></base-button></p>
    </div>
 </template>
 
@@ -47,7 +47,7 @@
                Axios
                        .get('/game/skip')
                        .then(() => {
-                          this.$store.dispatch('updateTaskStatus')
+                          this.$store.dispatch('updateTaskStatus', undefined, this)
                        })
                        .catch(error => {
                           if(error.response) {
@@ -61,7 +61,7 @@
                if(this.answer === ''){
                   this.$store.commit('setErrorMessage', {
                      message: "Нельзя отослать пустой ответ"
-                  })
+                  });
                   return
                }
                Axios
@@ -70,8 +70,8 @@
                           task_id: this.game.task.task_id,
                           answer: this.answer
                        })
-                       .then(response => {
-                          this.$store.dispatch('updateTaskStatus')
+                       .then(() => {
+                          this.$store.dispatch('updateTaskStatus', undefined, this)
                        })
                        .catch(error => {
                           if(error.response.status === 400) {

@@ -77,7 +77,7 @@
                 Axios
                     .get('/game/next')
                     .then(response => {
-                        this.$store.dispatch('updateTaskStatus', response.data)
+                        this.$store.dispatch('updateTaskStatus', response.data, this)
                     })
                     .catch(error => {
                         if(error.response) {

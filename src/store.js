@@ -83,21 +83,22 @@ export default new Vuex.Store({
                     context.commit('setUserData', response.data)
                 })
         },
-        updateTaskStatus(context, data) {
+        updateTaskStatus(context, data, obj) {
             context.commit('deleteTaskStatus');
             if(data !== undefined) {
-                context.commit('setTaskStatus', data);
+                context.commit('setTaskStatus', data);;
                 return;
             }
+
             Axios
                 .get('/game/info')
                 .then(response => {
                     context.commit('deleteErrorMessage');
-                    context.commit('setTaskStatus', response.data);
+                    context.commit('setTaskStatus', response.data);;
                 })
                 .catch(error => {
                     if(error.response){
-                        new ErrorHandler(error.response, this)
+                        new ErrorHandler(error.response, obj)
                     } else {
                         this.$router.push("/connection_error");
                     }

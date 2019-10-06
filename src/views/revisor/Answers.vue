@@ -49,12 +49,10 @@
                     })
                     .catch(error => {
                         if(error.response.status === 404) {
-                            console.log('d');
                             this.$store.commit('setErrorMessage', {
                                 header: "Ошибка",
                                 message: error.response.data.message
-                            });
-                            console.log('asd');
+                            });;
                             return
                         }
                         if(error.response) {

@@ -43,7 +43,7 @@
         },
         mounted() {
             this.request_game_status();
-            this.$store.dispatch('updateTaskStatus')
+            this.$store.dispatch('updateTaskStatus', undefined, this)
         },
         beforeDestroy() {
             if (this.$store.state.error.message !== null)

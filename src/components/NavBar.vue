@@ -5,7 +5,7 @@
             <strong style="font-size: 21px;">Легенды Бауманки</strong>
             <i v-if="$route.fullPath === '/game'"
                class="fas fa-sync"
-               @click="$store.dispatch('updateTaskStatus')">
+               @click="sync_with_game_server">
             </i>
             <div v-else style="width: 24px;"></div>
         </div>
@@ -68,6 +68,9 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            sync_with_game_server() {
+                this.$store.dispatch('updateTaskStatus', undefined, this)
+            },
             close_by_swipe() {
                 if(this.show_menu) {
                     this.show_menu = false;
