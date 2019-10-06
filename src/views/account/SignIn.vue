@@ -78,13 +78,16 @@
             },
             redirect(user_role) {
                 if (user_role === 'PLAYER' || user_role === 'CAPTAIN' || user_role === 'TESTER') {
-                    this.$router.push("/team")
+                    this.$router.push("/game")
                 }
                 if (user_role === 'MODERATOR') {
                     this.$router.push("/moderator")
                 }
                 if (user_role === 'ADMIN') {
                     this.$router.push("/admin")
+                }
+                if (user_role === 'REVISOR') {
+                    this.$router.push("/revisor/answers")
                 }
             }
         }

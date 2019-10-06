@@ -1,8 +1,9 @@
 <template>
     <div class="basic-block">
+        <h1>Ответы на задания</h1>
         <p>
+            Номер команды
             <base-input
-                    placeholder="Номер команды"
                     v-model="team_id"
                     text_align="center">
             </base-input>
@@ -11,8 +12,14 @@
             <base-button title="Найти" @click="request_answer"></base-button>
         </p>
         <div v-if="task">
-            <div>Задание</div>
-            <div>Ответ</div>
+            <p><strong>{{task.task_name}}</strong></p>
+            <p v-html="task.html"></p>
+            <p>Ответы:</p>
+            <ol class="revisor_answers">
+                <li v-for="answer in task.answers">
+                    <i>{{answer}}</i>
+                </li>
+            </ol>
         </div>
     </div>
 </template>
@@ -31,7 +38,11 @@
         methods: {
             request_answer() {
                 Axios
-                    .get('')
+                    .get('/manage/quest', {
+                        params: {
+                            team_id: this.team_id
+                        }
+                    })
                     .then(response => {
                         this.task = response.data
                     })
@@ -48,5 +59,8 @@
 </script>
 
 <style scoped>
-
+    .revisor_answers {
+        text-align: left;
+        display: inline-block;
+    }
 </style>

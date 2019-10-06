@@ -2,10 +2,12 @@
     <div id="nav" v-touch:swipe.right="open_by_swipe">
         <div class="burger">
             <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
+            <strong>Легенды Бауманки</strong>
             <i v-if="$route.fullPath === '/game'"
                class="fas fa-sync"
                @click="$store.dispatch('updateTaskStatus')">
             </i>
+            <div v-else style="width: 24px;"></div>
         </div>
         <div v-if="show_menu" class="menu"
              @click="show_menu = !show_menu"
@@ -131,6 +133,9 @@
         padding-left: 10px;
         text-align: left;
     }
+    .burger {
+        color: black;
+    }
     .burger>span>i {
         cursor: pointer;
         font-size: 30px;
@@ -139,6 +144,7 @@
         outline: none;
     }
     .fa-sync {
+        margin-left: 6px;
         color: black;
         font-size: 25px;
     }

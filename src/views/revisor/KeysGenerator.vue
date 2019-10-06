@@ -1,6 +1,7 @@
 <template>
     <div class="basic-block">
-        <h1>Введите номер команды</h1>
+        <h1>Генерация ключей</h1>
+        <p>Введите номер команды</p>
         <p><base-input v-model="team_id"></base-input></p>
         <p><base-button title="Поиск" @click="request_keys"></base-button></p>
     </div>

@@ -114,7 +114,7 @@
             },
             request_tasks_status() {
                 Axios
-                    .get('/moderator/tasks', {
+                    .get('/manage/tasks', {
                         params: {
                             task_type:this.stage
                         }

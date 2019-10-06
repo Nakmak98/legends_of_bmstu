@@ -1,13 +1,16 @@
 <template>
     <div v-if="user" class="about basic-block">
         <h1>Личный кабинет</h1>
-        <p>{{user.first_name}} {{user.last_name}}</p>
-        <p>{{user.login}}</p>
-        <p>id: {{user.user_id}}</p>
+        <strong>{{user.first_name}} {{user.last_name}}</strong>
+        <p>Логин: <i>{{user.login}}</i></p>
+        <p>ВК: <i>{{user.vk_ref}}</i></p>
+        <p>Номер учатника: <i>{{user.user_id}}</i></p>
+
         <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
                      @click="$router.push('/team')"
                      title="Кабинет команды">
         </base-button>
+        <base-button @click="check_change_vk" title="Изменить VK"></base-button>
         <base-button title="Выйти" @click="check_logout"></base-button>
         <base-button title="Удалить аккаунт" @click="check_delete_account" class="red-button-parent"></base-button>
     </div>
@@ -32,6 +35,15 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            check_change_vk() {
+                this.$store.commit('setPopupOptions', {
+                    message: 'Введите новую ссылку',
+                    input_field: true,
+                    show: true,
+                    callback: this.change_vk,
+                    args: null
+                })
+            },
             check_delete_account() {
                 this.$store.commit('setPopupOptions', {
                     message: 'Вы уверены, что хотите удалить аккаунт?',
@@ -52,7 +64,23 @@
                     args: null
                 })
             },
-
+            change_vk(args, input_field) {
+                console.log(input_field);
+                Axios
+                    .post('/user/update', {
+                        vk_ref: input_field
+                    })
+                    .then(response => {
+                        this.$store.commit('setUserData', response.data)
+                    })
+                    .catch(error => {
+                        if(error.response){
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
+                        }
+                    })
+            },
             delete_account() {
                 Axios
                     .delete('/user/delete')
