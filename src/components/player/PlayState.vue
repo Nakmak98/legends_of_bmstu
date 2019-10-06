@@ -23,7 +23,8 @@
         components: {Timer},
         data() {
             return {
-                timer: null
+                timer: null,
+                answer: ''
             }
         },
         computed: {
@@ -60,6 +61,7 @@
                   this.$store.commit('setErrorMessage', {
                      message: "Нельзя отослать пустой ответ"
                   })
+                  return
                }
                Axios
                        .post('/game/answer', {
@@ -74,7 +76,7 @@
                           if(error.response.status === 400) {
                              let popup_options = {
                                 header: false,
-                                message: error.response.data,
+                                message: error.response.data.message,
                                 show: true,
                                 callback: null,
                                 args: null

@@ -69,14 +69,16 @@
         position: absolute;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0,0,0,0.3);
     }
-    .base-popup {margin: 0;
+    .base-popup {
+        margin: 0;
         top: 50%;
         left: 50%;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         border-radius: 10px;
+        background-color: #e1bf92;
+        border: 10px solid #e1bf92;
         max-width: 350px;
         box-shadow: 0 0 8px black;
         position: fixed;

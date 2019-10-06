@@ -4,22 +4,22 @@
             <div v-bind:style="bar_element_style"></div>
             <div></div>
         </div>
-        <div class="status_bar_percentage">{{this.loaded}}/{{this.all_capacity}}</div>
+        <div class="status_bar_percentage">{{this.loaded}}/{{this.capacity}}</div>
     </div>
 </template>
 
 <script>
     export default {
         name: "TaskStatusBar",
-        props: ['all_capacity', 'loaded'],
+        props: ['capacity', 'loaded'],
         computed: {
             bar_container_style() {
                 return {
-                    gridTemplateColumns: `repeat(${this.all_capacity}, 1fr)`,
+                    gridTemplateColumns: `repeat(${this.capacity}, 1fr)`,
                 }
             },
             bar_element_style() {
-                let progress = this.loaded / this.all_capacity;
+                let progress = this.loaded / this.capacity;
                 let color = 'green';
                 if(progress >= 0.5 && progress <= 0.8){
                     color = 'orange'
@@ -28,11 +28,10 @@
                     color = 'red'
                 }
                 return {
-                    gridColumn: `1 / ${ this.loaded + 1}`,
+                    gridColumn: `1 / ${ this.loaded + 2}`,
                     backgroundColor: color,
                 }
             }
-
         },
     }
 </script>
