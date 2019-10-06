@@ -46,7 +46,9 @@
             request_traces() {
                 Axios
                     .get('/manage/traces', {
-                        params: this.complete
+                        params: {
+                          complete: this.complete
+                        }
                     })
                     .then(response => {
                         this.traces = response.data;

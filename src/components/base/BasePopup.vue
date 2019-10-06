@@ -14,6 +14,7 @@
                             autocapitalize="off"
                             text_align="center">
                     </base-input>
+                    <br>
                     <div v-if="popup.callback">
                         <base-button @click="handleAccess" title="ОК"></base-button>
                         <base-button @click="popup.show = false" title="Отмена"></base-button>
