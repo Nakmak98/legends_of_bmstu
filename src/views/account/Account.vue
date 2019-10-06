@@ -1,7 +1,8 @@
 <template>
     <div v-if="user" class="about basic-block">
         <h1>Личный кабинет</h1>
-        <strong>{{user.first_name}} {{user.last_name}}</strong>
+        <p><strong>{{user.first_name}} {{user.last_name}}</strong></p>
+        <br>
         <p>Логин: <i>{{user.login}}</i></p>
         <p>ВК: <i>{{user.vk_ref}}</i></p>
         <p>Номер учатника: <i>{{user.user_id}}</i></p>
@@ -26,9 +27,9 @@
             },
         },
         mounted() {
-            if (!this.user) {
-                this.request_user_data();
-            }
+            // if (!this.user) {
+            //     this.request_user_data();
+            // }
         },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
@@ -113,6 +114,7 @@
                 })
             },
             request_user_data() {
+                alert('Запрос из ЛК')
                 Axios
                     .get('/user/info')
                     .then(response => {

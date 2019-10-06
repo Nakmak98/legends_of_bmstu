@@ -2,7 +2,7 @@
     <div id="nav" v-touch:swipe.right="open_by_swipe">
         <div class="burger">
             <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
-            <strong>Легенды Бауманки</strong>
+            <strong style="font-size: 21px;">Легенды Бауманки</strong>
             <i v-if="$route.fullPath === '/game'"
                class="fas fa-sync"
                @click="$store.dispatch('updateTaskStatus')">

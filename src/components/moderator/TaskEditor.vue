@@ -88,9 +88,10 @@
                 customToolbar: [[{'header': [1, 2, 3, 4, 5, 6, false]}],
                     ["bold", "italic", "underline", "strike"],
                     ["blockquote"],
+                    ["link"],
                     [{align: ''}, {align: 'center'}, {align: 'right'}, {align: 'justify'}],
                     [{list: "ordered"}, {list: "bullet"}, {list: "check"}],
-                    [{color: ["black", "white", "green", "blue", "purple", "yellow"]},],
+                    [{color: ["black", "white", "green", "blue", "purple", "yellow", "#f8e0be","#f8e0be", "#e1bf92", "#5f3e3b", "#d66363", "#32203a"]},],
                     ["image", "code-block"],],
                 answer: "",
                 show_preview: false
