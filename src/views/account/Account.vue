@@ -26,11 +26,6 @@
                 return this.$store.state.user
             },
         },
-        mounted() {
-            // if (!this.user) {
-            //     this.request_user_data();
-            // }
-        },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
@@ -40,6 +35,7 @@
                 this.$store.commit('setPopupOptions', {
                     message: 'Введите новую ссылку',
                     input_field: true,
+                    input_value: this.user.vk_ref,
                     show: true,
                     callback: this.change_vk,
                     args: null
