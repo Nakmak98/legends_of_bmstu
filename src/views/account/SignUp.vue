@@ -1,6 +1,6 @@
 <template>
     <div class="basic-block auth">
-        <img src="../assets/orn_top.png" id="ornament-top">
+        <img src="../../assets/orn_top.png" id="ornament-top">
         <h1>Регистрация</h1>
         <base-input type="text" placeholder="Имя" v-model="request_body.first_name"></base-input>
         <base-input type="text" placeholder="Фамилия" v-model="request_body.last_name"></base-input>
@@ -11,13 +11,13 @@
         <base-input type="password" placeholder="Подтверждение пароля" v-model="confirm_password"></base-input>
         <br>
         <base-button class="sign-up-btn" title="Зарегистрироваться" @click="sign_up"></base-button>
-        <img src="../assets/orn_bot.png" id="ornament-bottom">
+        <img src="../../assets/orn_bot.png" id="ornament-bottom">
     </div>
 </template>
 
 <script>
     import Axios from 'axios'
-    import {ErrorHandler} from "../ErrorHandler";
+    import {ErrorHandler} from "../../ErrorHandler";
     export default {
         name: "signUp",
         data: function () {

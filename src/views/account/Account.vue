@@ -14,7 +14,7 @@
 </template>
 <script>
     import Axios from 'axios'
-    import {ErrorHandler} from "../ErrorHandler";
+    import {ErrorHandler} from "../../ErrorHandler";
     export default {
         name: "account",
         computed: {

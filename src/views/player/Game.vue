@@ -21,10 +21,10 @@
 </template>
 
 <script>
-    import PauseState from "../components/player/PauseState";
-    import StopState from "../components/player/StopState";
-    import PlayState from "../components/player/PlayState";
-    import {ErrorHandler} from "../ErrorHandler";
+    import PauseState from "../../components/player/PauseState";
+    import StopState from "../../components/player/StopState";
+    import PlayState from "../../components/player/PlayState";
+    import {ErrorHandler} from "../../ErrorHandler";
     import Axios from 'axios'
     export default {
         name: "Game",

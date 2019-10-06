@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import {ErrorHandler} from "../ErrorHandler";
+    import {ErrorHandler} from "../../ErrorHandler";
     import Axios from 'axios';
     export default {
         name: "AdminPanel",

@@ -15,7 +15,7 @@
 <script>
     import Axios from "axios";
     import {ErrorHandler} from "../../ErrorHandler";
-    import Task from "./TeamTrace";
+    import Task from "../../components/moderator/TeamTrace";
 
     export default {
         name: 'TaskControl',

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import TaskStatusBar from "../../components/moderator/TaskStatusBar";
+    import TaskStatusBar from "./TaskStatusBar";
     export default {
         name: "TasksStatus",
         components: {
