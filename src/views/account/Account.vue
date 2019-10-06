@@ -5,7 +5,7 @@
         <br>
         <p>Логин: <i>{{user.login}}</i></p>
         <p>ВК: <i>{{user.vk_ref}}</i></p>
-        <p>Номер учатника: <i>{{user.user_id}}</i></p>
+        <p>Номер участника: <i>{{user.user_id}}</i></p>
         <br>
         <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
                      @click="$router.push('/team')"

@@ -30,7 +30,7 @@
                 <div v-if="is('PLAYER')">
                     <router-link to="/game"><div>Задания</div></router-link>
                     <router-link to="/team"><div>Кабинет команды</div></router-link>
-                    <!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
+                    <a href="/download/Pravila_LB-2019.pdf" download><div>Методичка</div></a>
                 </div>
                 <div>
                     <router-link to="/account"><div>Личный кабинет</div></router-link>

@@ -1,5 +1,9 @@
 <template>
     <div class="basic-block">
+        <h1>Список команд</h1>
+        <p>Общее количество участников: <strong>{{all_players}}</strong></p>
+        <p>Общее количество команд: <strong>{{teams.length}}</strong></p>
+        <br>
         <table class="table-xxl">
             <tr>
                 <td>Номер команды</td>
@@ -29,6 +33,17 @@
         data() {
             return {
                 teams: null
+            }
+        },
+        computed: {
+            all_players() {
+                let players_count = 0;
+                if(this.teams){
+                    for(let team of this.teams) {
+                        players_count += team.size;
+                    }
+                }
+                return players_count;
             }
         },
         mounted() {
