@@ -8,6 +8,7 @@
                     text_align="center">
             </base-input>
         </p>
+        <br>
         <p>
             <base-button title="Найти" @click="request_answer"></base-button>
         </p>
@@ -47,6 +48,15 @@
                         this.task = response.data
                     })
                     .catch(error => {
+                        if(error.response.status === 404) {
+                            console.log('d');
+                            this.$store.commit('setErrorMessage', {
+                                header: "Ошибка",
+                                message: error.response.data.message
+                            });
+                            console.log('asd');
+                            return
+                        }
                         if(error.response) {
                             new ErrorHandler(error.response, this)
                         } else {

@@ -9,6 +9,7 @@
       </p>
       <p>Баллов за задание: {{game.task.points}}</p>
       <p><base-input placeholder="Ответ" v-model="answer"></base-input></p>
+      <br>
       <p><base-button title="Отправить" @click="send_answer"></base-button></p>
       <p><base-button v-if="game.task.skip" title="Пропустить" @click="check_skip"></base-button></p>
    </div>
