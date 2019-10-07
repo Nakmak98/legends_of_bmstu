@@ -30,6 +30,10 @@
                 }
             }
         },
+        beforeDestroy() {
+            if(this.$store.state.error.message !== null)
+                this.$store.commit('deleteErrorMessage')
+        },
         methods: {
             check_change_stage() {
                 let popup_options = {
@@ -44,7 +48,7 @@
             },
             change_stage(args, input_value) {
                 Axios
-                    .post('/game/status', {
+                    .post('/manage/stage', {
                         status: args,
                         secret: input_value
                     })
