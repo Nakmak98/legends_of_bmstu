@@ -1,19 +1,24 @@
 <template>
     <div v-if="team">
-        <p>Команда № {{team.team_id}}</p>
-        <p>{{team.team_name}}</p>
+        <p>Команда № <strong>{{team.team_id}}</strong></p>
+        <p><strong>{{team.team_name}}</strong></p>
+        <br>
+        <p>Баллы: <i>{{team.score}}</i></p>
+        <p>Экстра-баллы: <i>{{team.money}}</i></p>
+        <br>
         <p>{{team.search_input_value}}</p>
         <div v-if="team.invite_code">Пригласительный код:
-            <p class="cursive-text">(сообщите его членам своей команды)</p>
             <p class="bold-text">{{team.invite_code}}</p></div>
+        <p class="cursive-text">(сообщите его членам своей команды)</p>
+        <br>
         <table>
             <tr>
                 <td>Участник</td>
                 <td v-if="user.role === 'CAPTAIN'">Удалить участника</td>
             </tr>
-            <tr v-for="member of team_members" class="table-cont">
+            <tr v-for="member of team_members" v-bind:key="member.user_id" class="table-cont">
                 <td>
-                    <div class="table-block"><a :href="'https://'+member.vk_ref" target="_blank">{{member.first_name}} {{member.last_name}}</a></div>
+                    <div class="table-block"><a :href="get_vk_ref(member)" target="_blank">{{member.first_name}} {{member.last_name}}</a></div>
                 </td>
                 <td v-if="user.role === 'CAPTAIN'" class="kick-btn">
                     <img src="@/assets/captain.png" v-if="member.role === 'CAPTAIN'">
@@ -22,6 +27,7 @@
                 </td>
             </tr>
         </table>
+        <base-button title="Перейти к заданиям" @click="$router.push('/game')"></base-button>
 <!--        <base-button title="Старт!"></base-button>-->
         <base-button v-if="user.role === 'CAPTAIN'" title="Изменить название" @click="check_change_team_name"></base-button>
         <base-button title="Выйти из команды" @click="check_leave_team"></base-button>
@@ -52,7 +58,7 @@
             },
             user() {
                 return this.$store.state.user
-            }
+            },
         },
         mounted() {
             if (!this.team_members) {
@@ -70,6 +76,13 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            get_vk_ref(member) {
+                if(member.vk_ref.startsWith('https://')){
+                    return member.vk_ref
+                } else {
+                    return 'https://' + member.vk_ref
+                }
+            },
             check_change_team_name() {
                 let popup_options = {
                     message: 'Введите новое название команды',

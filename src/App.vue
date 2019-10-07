@@ -20,6 +20,9 @@
         font-family: 'Neucha', cursive;
         font-size: 18px;
     }
+    p {
+        margin: 4px 1px;
+    }
 
     h1 {
         font-family: BemountLine;
@@ -102,6 +105,13 @@
         margin: 0 auto 19px;
     }
 
+    .table-xxl {
+        width: -webkit-fill-available;
+    }
+    .table-block-xxl{
+        height: 50px;
+    }
+
     .table-cont {
         background-color: #ffedd4;
 
@@ -109,5 +119,9 @@
 
     p > img {
         max-width: 100%;
+    }
+
+    .clickable {
+        cursor: pointer;
     }
 </style>

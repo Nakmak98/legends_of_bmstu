@@ -6,6 +6,7 @@
             <div class="error-content">
                 <h3>{{error.header}}</h3>
                 <p>{{error.message}}</p>
+                <br>
             </div>
         </div>
     </transition>

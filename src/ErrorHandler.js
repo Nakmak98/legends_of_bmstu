@@ -15,7 +15,7 @@ export class ErrorHandler {
     }
 
     redirect_to_login() {
-            this.obj.$router.push('/auth');
+        this.obj.$router.push('/auth');
     }
 
     show_standart_message() {

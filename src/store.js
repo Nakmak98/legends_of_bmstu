@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from "axios";
+import {ErrorHandler} from "./ErrorHandler";
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         user: null,
         team: null,
         team_members: null,
+        game: null,
         error: error,
         popup: popup_default_options
     },
@@ -46,7 +48,13 @@ export default new Vuex.Store({
         setErrorMessage(state, data) {
             state.error = data
         },
+        setTaskStatus(state, data) {
+           state.game = data
+        },
 
+        deleteTaskStatus(state) {
+            state.game = null;
+        },
         deleteTeamMembers(state) {
             state.team_members = null;
         },
@@ -73,6 +81,27 @@ export default new Vuex.Store({
                 .get('/user/info')
                 .then(response => {
                     context.commit('setUserData', response.data)
+                })
+        },
+        updateTaskStatus(context, data, obj) {
+            context.commit('deleteTaskStatus');
+            if(data !== undefined) {
+                context.commit('setTaskStatus', data);;
+                return;
+            }
+
+            Axios
+                .get('/game/info')
+                .then(response => {
+                    context.commit('deleteErrorMessage');
+                    context.commit('setTaskStatus', response.data);;
+                })
+                .catch(error => {
+                    if(error.response){
+                        new ErrorHandler(error.response, obj)
+                    } else {
+                        this.$router.push("/connection_error");
+                    }
                 })
         },
         updateTeamMembers(context) {

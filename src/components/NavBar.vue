@@ -1,19 +1,42 @@
 <template>
     <div id="nav" v-touch:swipe.right="open_by_swipe">
         <div class="burger">
-            <span @click="show_menu = !show_menu"><i class="fa fa-bars"></i></span>
+            <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
+            <strong style="font-size: 21px;">Легенды Бауманки</strong>
+            <i v-if="$route.fullPath === '/game'"
+               class="fas fa-sync"
+               @click="sync_with_game_server">
+            </i>
+            <div v-else style="width: 24px;"></div>
         </div>
         <div v-if="show_menu" class="menu"
              @click="show_menu = !show_menu"
              v-touch:swipe.left="close_by_swipe">
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
-                <router-link v-if="is('MODERATOR')" to="/moderator"><div>Конструктор заданий</div></router-link>
-                <router-link v-if="is('PLAYER')" to="/team"><div>Кабинет команды</div></router-link>
-                <router-link v-if="is('ADMIN')" to="/admin"><div>Перейти к власти!</div></router-link>
-                <router-link to="/account"><div>Личный кабинет</div></router-link>
-                <router-link to="/info"><div>Что такое Легенды?</div></router-link>
-<!--                <router-link to="/metoda"><div>Методичка</div></router-link>-->
+                <div v-if="is('ADMIN')">
+                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
+                </div>
+                <div v-if="is('MODERATOR')">
+                    <router-link to="/moderator"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
+                    <router-link to="/moderator/teams_status"><div>Cтатус команд</div></router-link>
+                </div>
+                <div v-if="is('REVISOR')">
+                    <router-link to="/revisor/answers"><div>Ответы</div></router-link>
+                    <router-link to="/revisor/team_list"><div>Список команд</div></router-link>
+                    <router-link to="/revisor/keys_generator"><div>Генерация ключей</div></router-link>
+                </div>
+                <div v-if="is('PLAYER')">
+                    <router-link to="/game"><div>Задания</div></router-link>
+                    <router-link to="/team"><div>Кабинет команды</div></router-link>
+                </div>
+                <div>
+                    <router-link to="/account"><div>Личный кабинет</div></router-link>
+                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>
+                    <a href="/images/Pravila_LB-2019.pdf" download><div>Методичка</div></a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -45,6 +68,9 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            sync_with_game_server() {
+                this.$store.dispatch('updateTaskStatus', undefined, this)
+            },
             close_by_swipe() {
                 if(this.show_menu) {
                     this.show_menu = false;
@@ -59,9 +85,14 @@
                 if(!this.user) {
                     return false
                 }
+                if(this.user.role === 'ADMIN'){
+                    return true
+                }
+
                 if(expected_role === 'PLAYER') {
                     return this.user.role === 'PLAYER' || this.user.role === 'CAPTAIN'
                 }
+
                 if(this.user.role === expected_role){
                     return true
                 }
@@ -86,7 +117,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     #nav {
         background-color: #f8e0be;
         height: 50px;
@@ -95,17 +126,18 @@
         margin-bottom: 20px;
         box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         box-sizing: border-box;
-
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-    }
     }
     .burger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin: 0 auto;
         max-width: 800px;
         padding-left: 10px;
         text-align: left;
+    }
+    .burger {
+        color: black;
     }
     .burger>span>i {
         cursor: pointer;
@@ -113,6 +145,11 @@
         color: black;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         outline: none;
+    }
+    .fa-sync {
+        margin-left: 6px;
+        color: black;
+        font-size: 25px;
     }
     .menu {
         position: fixed;
@@ -129,13 +166,13 @@
         box-shadow: 0 0 5px rgba(0,0,0,0.3);
         background-color: #f8e0be;
     }
-    .menu-content>img {
+    .menu-content > img {
         width: 100%;
     }
-    .menu-content>img + a {
+    .menu-content > img + div {
         border-top: 2px solid #e1bf92;
     }
-    .menu-content>a {
+    .menu-content > div > a{
         padding-top: 8px;
         font-style: none;
         box-sizing: border-box;

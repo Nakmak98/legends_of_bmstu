@@ -1,20 +1,24 @@
 <template>
     <div v-if="user" class="about basic-block">
         <h1>Личный кабинет</h1>
-        <p>{{user.first_name}} {{user.last_name}}</p>
-        <p>{{user.login}}</p>
-        <p>id: {{user.user_id}}</p>
+        <p><strong>{{user.first_name}} {{user.last_name}}</strong></p>
+        <br>
+        <p>Логин: <i>{{user.login}}</i></p>
+        <p>ВК: <i>{{user.vk_ref}}</i></p>
+        <p>Номер участника: <i>{{user.user_id}}</i></p>
+        <br>
         <base-button v-if="this.user.role == 'PLAYER' || this.user.role == 'CAPTAIN'"
                      @click="$router.push('/team')"
                      title="Кабинет команды">
         </base-button>
+        <base-button @click="check_change_vk" title="Изменить VK"></base-button>
         <base-button title="Выйти" @click="check_logout"></base-button>
         <base-button title="Удалить аккаунт" @click="check_delete_account" class="red-button-parent"></base-button>
     </div>
 </template>
 <script>
     import Axios from 'axios'
-    import {ErrorHandler} from "../ErrorHandler";
+    import {ErrorHandler} from "../../ErrorHandler";
     export default {
         name: "account",
         computed: {
@@ -23,8 +27,8 @@
             },
         },
         mounted() {
-            if (!this.user) {
-                this.request_user_data();
+            if(!this.user){
+                this.$router.push('/auth')
             }
         },
         beforeDestroy() {
@@ -32,6 +36,16 @@
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            check_change_vk() {
+                this.$store.commit('setPopupOptions', {
+                    message: 'Введите новую ссылку',
+                    input_field: true,
+                    input_value: this.user.vk_ref,
+                    show: true,
+                    callback: this.change_vk,
+                    args: null
+                })
+            },
             check_delete_account() {
                 this.$store.commit('setPopupOptions', {
                     message: 'Вы уверены, что хотите удалить аккаунт?',
@@ -52,7 +66,22 @@
                     args: null
                 })
             },
-
+            change_vk(args, input_field) {
+                Axios
+                    .post('/user/update', {
+                        vk_ref: input_field
+                    })
+                    .then(response => {
+                        this.$store.commit('setUserData', response.data)
+                    })
+                    .catch(error => {
+                        if(error.response){
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
+                        }
+                    })
+            },
             delete_account() {
                 Axios
                     .delete('/user/delete')
@@ -86,6 +115,7 @@
                 })
             },
             request_user_data() {
+                alert('Запрос из ЛК')
                 Axios
                     .get('/user/info')
                     .then(response => {
@@ -94,23 +124,9 @@
                     .catch(error => {
                         if(error.response){
                             new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push("/connection_error");
                         }
-                        //     if (error.response.status === 401) {
-                        //         this.$router.push("/auth");
-                        //         this.$store.commit('setErrorMessage', {
-                        //             header: "Ошибка авторизации",
-                        //             message: error.response.data.message
-                        //         });
-                        //     }
-                        //     if(error.response.status >= 500) {
-                        //         this.$store.commit('setErrorMessage', {
-                        //             header: "Ошибка",
-                        //             message: "Что-то пошло не так"
-                        //         });
-                        //     }
-                        // } else {
-                        //     this.$router.push("/connection_error");
-                        // }
                     });
             },
         }
