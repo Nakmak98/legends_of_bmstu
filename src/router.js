@@ -27,7 +27,7 @@ const routes = new Router({
     routes: [
         {
             path: '/',
-            redirect: Account
+            redirect: '/game'
         },
         {
             path: '/account',
