@@ -12,6 +12,7 @@ import TaskEditor from "./components/moderator/TaskEditor";
 import TeamStatus from "./views/moderator/TeamsStatus";
 import Error from "./views/Error";
 import StaticText from "./views/StaticText";
+import PartnersPage from "./views/PartnersPage";
 import Game from "./views/player/Game";
 import AdminPanel from "./views/admin/AdminPanel";
 import TasksStatus from "./views/moderator/TasksStatus";
@@ -43,6 +44,11 @@ const routes = new Router({
             path: '/info',
             name: 'info',
             component: StaticText
+        },
+        {
+            path: '/partners',
+            name: 'partners',
+            component: PartnersPage
         },
         {
             path: '/auth',
