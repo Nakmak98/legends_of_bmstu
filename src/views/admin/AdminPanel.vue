@@ -30,11 +30,28 @@
                 }
             }
         },
+        mounted() {
+          this.get_actual_stage()
+        },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            get_actual_stage(){
+                Axios
+                    .get('/game/status')
+                    .then(response => {
+                        this.status = response.data
+                    })
+                    .catch(error => {
+                        if (error.response){
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('/connection_error')
+                        }
+                    })
+            },
             check_change_stage() {
                 let popup_options = {
                     message: 'А вы точно не долбоеб?',

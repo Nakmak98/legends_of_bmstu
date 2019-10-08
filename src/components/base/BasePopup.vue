@@ -80,7 +80,7 @@
         border-radius: 10px;
         background-color: #e1bf92;
         border: 10px solid #e1bf92;
-        max-width: 350px;
+        max-width: 240px;
         box-shadow: 0 0 8px black;
         position: fixed;
         z-index: 100;
