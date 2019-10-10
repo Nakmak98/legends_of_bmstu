@@ -69,7 +69,7 @@
     .popup-bg {
         position: absolute;
         width: 100vw;
-        height: 100vh;
+        height: 85vh;
     }
     .base-popup {
         margin: 0;

@@ -26,11 +26,6 @@
                 return this.$store.state.user
             },
         },
-        mounted() {
-            if(!this.user){
-                this.$router.push('/auth')
-            }
-        },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')

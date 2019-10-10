@@ -17,6 +17,9 @@
         },
         computed: {
             tick_tack() {
+                if(this.timer <= 0 && this.timer != null){
+                    return 'Время вышло. Обновите страницу'
+                }
                 let x = moment.unix(this.timer);
                 return x.format('mm:ss')
             }
@@ -27,15 +30,20 @@
         methods: {
             start_timer() {
                     var time = this.duration - (moment([]).unix() - this.start_time);
+                    if(time <= 0) {
+                        this.timer = 0;
+                        return
+                    }
                     let x = setInterval(() => {
-                        if(time <= 0) {
-                            clearInterval(x);
+                        if(time === 0) {
+                            this.timer = 0;
                             this.$store.dispatch('updateTaskStatus', undefined, this)
+                            clearInterval(x);
                         }
-                        this.timer =  time--;
+                        this.timer = time--;
                     }, 1000)
             }
-        }
+        },
     }
 </script>
 
