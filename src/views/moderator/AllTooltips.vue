@@ -2,11 +2,12 @@
     <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'" class="basic-block">
         <h3>Подсказки</h3>
         <div v-if="tasks">
-            <div v-for="task in tasks">
+            <div v-for="task in tasks" v-bind:key="task.task_id">
                 <h3>Задание № {{task.task_id}}</h3>
                 <div class="task-container">
                     <div class="task-card"
-                         v-for="hint in sorted_hints(task.hints)"
+                         v-for="hint in task.hints"
+                         v-bind:key="hint.hint_id"
                          @click="$router.push({name: 'edit_tooltip', params:{
                                 task_id: task.task_id,
                                 hint_id: hint.hint_id,
@@ -62,9 +63,9 @@
                         }
                     })
             },
-            sorted_hints(hints) {
-                return hints.sort((a,b) => a.cost - b.cost)
-            }
+            // sorted_hints(hints) {
+            //     return hints.sort((a,b) => a.cost - b.cost)
+            // }
         }
     }
 </script>
