@@ -3,7 +3,7 @@
         <div class="burger">
             <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
             <strong style="font-size: 21px;">Легенды Бауманки</strong>
-            <i v-if="$route.fullPath === '/game'"
+            <i v-if="$route.fullPath === '/game' || $route.fullPath === '/game#error-message'"
                class="fas fa-sync"
                @click="sync_with_game_server">
             </i>
@@ -61,6 +61,7 @@
             }
         },
         mounted(){
+            this.user = this.$store.state.user;
             if (!this.user) {
                 this.request_user_data();
             }
@@ -107,7 +108,7 @@
                     })
                     .catch(error => {
                         if (error.response) {
-                            if(this.$router.currentRoute.fullPath === '/info' && error.response.status === 401)
+                            if((this.$router.currentRoute.fullPath === '/info' || this.$router.currentRoute.fullPath === '/partners') && error.response.status === 401)
                                 return
                            new ErrorHandler(error.response, this)
                         } else {

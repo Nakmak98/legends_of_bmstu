@@ -86,10 +86,9 @@ export default new Vuex.Store({
         updateTaskStatus(context, data, obj) {
             context.commit('deleteTaskStatus');
             if(data !== undefined) {
-                context.commit('setTaskStatus', data);;
+                context.commit('setTaskStatus', data);
                 return;
             }
-
             Axios
                 .get('/game/info')
                 .then(response => {
@@ -98,6 +97,7 @@ export default new Vuex.Store({
                 })
                 .catch(error => {
                     if(error.response){
+
                         new ErrorHandler(error.response, obj)
                     } else {
                         this.$router.push("/connection_error");

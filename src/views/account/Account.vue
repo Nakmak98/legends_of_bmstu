@@ -26,6 +26,11 @@
                 return this.$store.state.user
             },
         },
+        created() {
+            if(!this.user) {
+                this.request_user_data()
+            }
+        },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
@@ -110,7 +115,6 @@
                 })
             },
             request_user_data() {
-                alert('Запрос из ЛК')
                 Axios
                     .get('/user/info')
                     .then(response => {
