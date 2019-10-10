@@ -6,7 +6,7 @@
                 <h3>Задание № {{task.task_id}}</h3>
                 <div class="task-container">
                     <div class="task-card"
-                         v-for="hint in sorted_hints(task.hints)"
+                         v-for="hint in task.hints"
                          v-bind:key="hint.hint_id"
                          @click="$router.push({name: 'edit_tooltip', params:{
                                 task_id: task.task_id,
@@ -57,9 +57,6 @@
                         }
                     })
             },
-            sorted_hints(hints) {
-                return hints.sort((a,b) => a.cost - b.cost)
-            }
         }
     }
 </script>
