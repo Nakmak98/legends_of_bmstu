@@ -21,6 +21,7 @@ import TeamList from "./views/revisor/TeamList";
 import KeysGenerator from "./views/revisor/KeysGenerator";
 import TooltipEditor from "./views/moderator/TooltipEditor";
 import AllTooltips from "./views/moderator/AllTooltips";
+import Ghosts from "./views/player/Ghosts";
 
 Vue.use(Router)
 
@@ -74,6 +75,10 @@ const routes = new Router({
         {
             path: '/game',
             component: Game,
+        },
+        {
+            path: '/ghosts',
+            component: Ghosts,
         },
         {
             path: '/team/create',

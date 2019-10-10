@@ -30,6 +30,7 @@
                 </div>
                 <div v-if="is('PLAYER')">
                     <router-link to="/game"><div>Задания</div></router-link>
+                    <router-link to="/ghosts"><div>Легенды</div></router-link>
                     <router-link to="/team"><div>Кабинет команды</div></router-link>
                 </div>
                 <div>

@@ -13,7 +13,7 @@
         <table class="table-xxl">
             <tr>
                 <td class="clickable" @click="sort_by_id">
-                    Номер команды
+                    Номер задания
                     <i v-if="sort.id" class="fas fa-caret-up"></i>
                     <i v-if="sort.id !== null && sort.id !== true" class="fas fa-caret-down"></i>
                 </td>
