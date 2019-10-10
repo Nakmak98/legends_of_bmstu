@@ -1,5 +1,6 @@
 <template>
    <div>
+      <game-tooltip :show="show_tooltip" @close-tooltip="show_tooltip=false"></game-tooltip>
       <p class="ql-editor" v-html="game.task.html"></p>
       <p>
          <timer :start_time="game.task.start_time"
@@ -12,20 +13,26 @@
       <br>
       <p><base-button title="Отправить" @click="send_answer"></base-button></p>
       <p><base-button v-if="game.task.skip && user.role === 'CAPTAIN'" title="Пропустить" @click="check_skip"></base-button></p>
+      <p><base-button v-if="user.role === 'CAPTAIN'" title="Подсказка" @click="show_tooltip = true"></base-button></p>
    </div>
 </template>
 
 <script>
     import Timer from "./Timer";
+    import GameTooltip from "./GameTooltip";
     import {ErrorHandler} from "../../ErrorHandler";
     import Axios from 'axios';
     export default {
         name: "PlayState",
-        components: {Timer},
+        components: {
+           Timer,
+           GameTooltip
+        },
         data() {
             return {
-                timer: null,
-                answer: ''
+               timer: null,
+               answer: '',
+               show_tooltip: false
             }
         },
         computed: {

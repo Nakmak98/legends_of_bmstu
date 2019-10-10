@@ -7,7 +7,7 @@ import SignUp from "./views/account/SignUp";
 import CreateTeam from "./views/player/CreateTeam";
 import Join from "./views/player/JoinToTeam"
 import Team from "./views/player/Team";
-import ModeratorView from "./views/moderator/TaskConstructor";
+import TaskConstructor from "./views/moderator/TaskConstructor";
 import TaskEditor from "./components/moderator/TaskEditor";
 import TeamStatus from "./views/moderator/TeamsStatus";
 import Error from "./views/Error";
@@ -19,6 +19,8 @@ import TasksStatus from "./views/moderator/TasksStatus";
 import Answers from "./views/revisor/Answers";
 import TeamList from "./views/revisor/TeamList";
 import KeysGenerator from "./views/revisor/KeysGenerator";
+import TooltipEditor from "./views/moderator/TooltipEditor";
+import AllTooltips from "./views/moderator/AllTooltips";
 
 Vue.use(Router)
 
@@ -36,7 +38,7 @@ const routes = new Router({
             component: Account
         },
         {
-            path: '/admin',
+            path: '/admin_control_panel',
             name: 'admin',
             component: AdminPanel
         },
@@ -84,9 +86,24 @@ const routes = new Router({
             component: Join
         },
         {
-            path: '/moderator',
+            path: '/moderator/all_tasks',
             name: 'moderator',
-            component: ModeratorView
+            component: TaskConstructor
+        },
+        {
+            path: '/moderator/all_tooltips',
+            name: 'all_tooltips',
+            component: AllTooltips
+        },
+        {
+            path: '/moderator/create_tooltip',
+            name: 'create_tooltip',
+            component: TooltipEditor
+        },
+        {
+            path: '/moderator/edit_tooltip/',
+            name: 'edit_tooltip',
+            component: TooltipEditor
         },
         {
             path: '/moderator/create_task',

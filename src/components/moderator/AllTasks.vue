@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'">
         <h3>Основные задания:</h3>
         <div class="task-container">
             <div class="task-card" v-for="task in main_tasks"
@@ -114,7 +114,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .task-container {
         display: flex;
         align-items: center;

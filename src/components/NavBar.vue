@@ -15,10 +15,11 @@
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
                 <div v-if="is('ADMIN')">
-                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
+                    <router-link to="/admin_control_panel"><div>Панель администратора</div></router-link>
                 </div>
                 <div v-if="is('MODERATOR')">
-                    <router-link to="/moderator"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/all_tasks"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/all_tooltips"><div>Конструктор подсказок</div></router-link>
                     <router-link to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
                     <router-link to="/moderator/teams_status"><div>Cтатус команд</div></router-link>
                 </div>

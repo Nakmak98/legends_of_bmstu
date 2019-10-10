@@ -1,15 +1,15 @@
 <template>
-    <div class="basic-block">
+    <div v-if="user.role === 'ADMIN'" class="basic-block">
         <p>Смена этапа</p>
         <p>
             <select v-model="status" size="4">
                 <option :value="status_enum.REGISTRATION">Регистрация</option>
                 <option :value="status_enum.PILOT">Разогрев</option>
                 <option :value="status_enum.FINAL">Финал</option>
-                <option :value="status_enum.FINISH">Легенды окончены, съебите нахуй!</option>
+                <option :value="status_enum.FINISH">Финиш</option>
             </select>
         </p>
-        <p><base-button title="Хуяк" @click="check_change_stage"></base-button></p>
+        <p><base-button title="Сменить этап" @click="check_change_stage"></base-button></p>
     </div>
 
 </template>
@@ -29,6 +29,9 @@
                     FINISH: "FINISH"
                 }
             }
+        },
+        computed: {
+          user() { return this.$store.state.user }
         },
         mounted() {
           this.get_actual_stage()
@@ -54,9 +57,9 @@
             },
             check_change_stage() {
                 let popup_options = {
-                    message: 'А вы точно не долбоеб?',
+                    message: 'Подтвердите действие',
                     show: true,
-                    placeholder: "Код недолбоеба",
+                    placeholder: "",
                     input_field: true,
                     callback: this.change_stage,
                     args: this.status
@@ -70,7 +73,7 @@
                         secret: input_value
                     })
                     .then(response => {
-                        alert("ЗАебись")
+                        alert("Успешно")
                     })
                     .catch(error => {
                         if (error.response){

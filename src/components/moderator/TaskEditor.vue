@@ -45,7 +45,7 @@
             <button class="moderator_btn red-button" v-if="this.$route.params.task_id" @click="check_delete_task">Удалить задание</button>
             <button class="moderator_btn" v-else @click="send_task">Сохранить</button>
             <button class="moderator_btn" @click="show_preview = !show_preview">Предпросмотр</button>
-            <button class="moderator_btn" @click="$router.push('/moderator')">Назад</button>
+            <button class="moderator_btn" @click="$router.push('/moderator/all_tasks')">Назад</button>
         </div>
         <div v-if="show_preview">
             <div class="preview basic-block"><h1 v-html="request_body.task_name"></h1>

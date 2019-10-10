@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block">
+    <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'" class="basic-block">
         <p>
             Тип задания
             <select v-model="stage">
@@ -74,6 +74,9 @@
                     hints: null
                 }
             }
+        },
+        computed: {
+            user() { return this.$store.state.user }
         },
         methods: {
             sort_by_id() {
