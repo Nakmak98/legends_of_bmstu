@@ -10,6 +10,9 @@
                 <option :value="stage_enum.DRAFT">Черновик</option>
             </select>
         </p>
+        <br>
+        <base-button title="Обновить" @click="update_tasks_status"></base-button>
+        <br>
         <table class="table-xxl">
             <tr>
                 <td class="clickable" @click="sort_by_id">
@@ -114,6 +117,9 @@
                 } else {
                     this.tasks.sort((a, b) => b.hints - a.hints)
                 }
+            },
+            update_tasks_status() {
+                this.request_tasks_status()
             },
             request_tasks_status() {
                 Axios
