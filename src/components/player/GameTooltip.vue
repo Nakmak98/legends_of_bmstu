@@ -41,7 +41,10 @@
         },
         watch: {
             show() {
-                this.$store.commit('deleteErrorMessage')
+                if (this.show){
+                    this.$store.commit('deleteErrorMessage')
+                }
+
                 this.request_hints()
             }
         },
