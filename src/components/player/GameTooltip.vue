@@ -36,7 +36,7 @@
         },
         computed: {
             hints_list() {
-                return this.hints
+                return this.hints.sort((a,b) => a.cost - b.cost)
             }
         },
         watch: {
