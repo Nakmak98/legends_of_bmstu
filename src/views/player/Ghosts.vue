@@ -59,6 +59,7 @@
                         keyword: this.keyword
                     })
                     .then(response => {
+                        this.keyword = '';
                         for (let ghost of this.ghosts) {
                             if (ghost.ghost_id === response.data.ghost_id) {
                                 ghost.history = response.data.history;
@@ -66,6 +67,7 @@
                         }
                     })
                     .catch(error => {
+                        this.keyword = '';
                         if(error.response) {
                             new ErrorHandler(error.response, this)
                         } else {
