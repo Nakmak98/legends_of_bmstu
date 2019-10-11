@@ -7,6 +7,7 @@
         <div v-if="ghosts" class="history-container">
             <div class="ghost-history" v-for="(ghost, index) in ghosts" v-bind:key="ghost.ghost_id">
                 <p v-if="ghost.history" :class="'history' + index">{{ghost.history}}</p>
+                <p v-else class="empty_ghost">? ? ?</p>
             </div>
         </div>
     </div>
@@ -77,7 +78,7 @@
 </script>
 
 <style scoped>
-    @import url('https://fonts.googleapis.com/css?family=Andika|Bad+Script|Caveat|Marck+Script|Pacifico|Pattaya&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Andika|Bad+Script|Caveat|Marck+Script|Pacifico&display=swap');
     .history-container{}
     .ghost-history{
         min-width: 200px;
@@ -100,7 +101,6 @@
     }
     .ghost-history > .history2{
         font-family: 'Bad Script', cursive;
-
     }
     .ghost-history > .history3{
         font-family: 'Marck Script', cursive;
@@ -113,10 +113,11 @@
 
     }
     .ghost-history > .history5{
-        font-family: 'Pattaya', sans-serif;
-        font-size: 21px;
+        font-family: 'Bad Script', cursive;
     }
-
+    .empty_ghost {
+        font-size: 30px;
+    }
     .ghost-history > p {
         padding: 17px;
     }

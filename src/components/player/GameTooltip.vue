@@ -41,6 +41,7 @@
         },
         watch: {
             show() {
+                this.$store.commit('deleteErrorMessage')
                 this.request_hints()
             }
         },
@@ -93,7 +94,7 @@
         border: 1px solid #9b7c55;
     }
     .tooltips {
-        position: absolute;
+        position: fixed;
         min-width: 250px;
     }
 </style>
