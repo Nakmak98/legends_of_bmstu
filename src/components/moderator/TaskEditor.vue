@@ -293,6 +293,11 @@
         background-color: white;
     }
 
+    .ql-editor img {
+        width: 100%;
+        height: 100%;
+    }
+
     .answer {
         color: black;
     }
