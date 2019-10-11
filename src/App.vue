@@ -21,6 +21,7 @@
         font-size: 18px;
     }
     p {
+        word-wrap: break-word;
         margin: 4px 1px;
     }
 

@@ -81,10 +81,10 @@
                     this.$router.push("/game")
                 }
                 if (user_role === 'MODERATOR') {
-                    this.$router.push("/moderator")
+                    this.$router.push("/moderator/all_tasks")
                 }
                 if (user_role === 'ADMIN') {
-                    this.$router.push("/admin")
+                    this.$router.push("/admin_control_panel")
                 }
                 if (user_role === 'REVISOR') {
                     this.$router.push("/revisor/answers")

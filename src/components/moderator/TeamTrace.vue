@@ -9,7 +9,7 @@
                     / {{circle_duration(circle)}}
                 </div>
                 <div v-if="circle.duration && circle.finish_time">
-                    {{circle_finish_time(circle)}}
+                    {{circle_finish_time(circle)}} {{circle.duration}}
                 </div>
                 <div v-if="!circle.duration && circle.finish_time">
                     {{circle_wasted_time(circle)}}
@@ -50,7 +50,9 @@
                 return moment.unix(task.finish_time - task.start_time).format('mm:ss')
             },
             circle_finish_time(task) {
-                return `${moment.unix(task.finish_time - task.start_time).format('mm:ss')} / ${moment.unix(task.duration).format('mm:ss')}`
+                let nom = moment.unix(task.finish_time - task.start_time).utc();
+                let denom = moment.unix(task.duration).utc()
+                return `${nom.format('HH:mm:ss')} / ${denom.format('HH:mm:ss')}`
             },
             is_last_task(task_index){
                 if(task_index === this.trace.circles.length-1 && this.trace.complete){

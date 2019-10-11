@@ -2,7 +2,6 @@
     <div>
         <div class="status_bar_container" v-bind:style="bar_container_style">
             <div v-bind:style="bar_element_style"></div>
-            <div></div>
         </div>
         <div class="status_bar_percentage">{{this.loaded}}/{{this.capacity}}</div>
     </div>
@@ -12,14 +11,23 @@
     export default {
         name: "TaskStatusBar",
         props: ['capacity', 'loaded'],
+        data() {
+            return {
+                local_load: (this.loaded) / 10,
+                local_capacity: this.capacity / 10
+            }
+        },
         computed: {
             bar_container_style() {
                 return {
-                    gridTemplateColumns: `repeat(${this.capacity}, 1fr)`,
+                    gridTemplateColumns: `repeat(${this.local_capacity}, 1fr)`,
                 }
             },
             bar_element_style() {
-                let progress = this.loaded / this.capacity;
+                if(!this.local_load){
+                    return
+                }
+                let progress = this.local_load / this.local_capacity;
                 let color = 'green';
                 if(progress >= 0.5 && progress <= 0.8){
                     color = 'orange'
@@ -27,12 +35,15 @@
                 if(progress >= 0.8){
                     color = 'red'
                 }
+                let grid_line = Math.round(this.local_load);
+                console.log(grid_line)
                 return {
-                    gridColumn: `1 / ${ this.loaded + 2}`,
+                    gridColumn: `1 / ${ grid_line + 2}`,
                     backgroundColor: color,
                 }
-            }
+            },
         },
+
     }
 </script>
 

@@ -154,7 +154,7 @@
         border: 1px solid #e1bf92;
 
         div {
-            height: 30px;
+            min-height: 30px;
             border: 1px solid #e1bf92;
             padding-top: 10px;
         }

@@ -3,7 +3,7 @@
         <div class="burger">
             <span @click="show_menu = !show_menu"><i class="fas fa-bars"></i></span>
             <strong style="font-size: 21px;">Легенды Бауманки</strong>
-            <i v-if="$route.fullPath === '/game'"
+            <i v-if="$route.fullPath === '/game' || $route.fullPath === '/game#error-message'"
                class="fas fa-sync"
                @click="sync_with_game_server">
             </i>
@@ -15,10 +15,11 @@
             <div class="menu-content">
                 <img src="@/assets/logo1.png">
                 <div v-if="is('ADMIN')">
-                    <router-link to="/admin"><div>Перейти к власти!</div></router-link>
+                    <router-link to="/admin_control_panel"><div>Панель администратора</div></router-link>
                 </div>
                 <div v-if="is('MODERATOR')">
-                    <router-link to="/moderator"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/all_tasks"><div>Конструктор заданий</div></router-link>
+                    <router-link to="/moderator/all_tooltips"><div>Конструктор подсказок</div></router-link>
                     <router-link to="/moderator/tasks_status"><div>Статус заданий</div></router-link>
                     <router-link to="/moderator/teams_status"><div>Cтатус команд</div></router-link>
                 </div>
@@ -29,11 +30,13 @@
                 </div>
                 <div v-if="is('PLAYER')">
                     <router-link to="/game"><div>Задания</div></router-link>
+                    <router-link to="/ghosts"><div>Легенды</div></router-link>
                     <router-link to="/team"><div>Кабинет команды</div></router-link>
                 </div>
                 <div>
                     <router-link to="/account"><div>Личный кабинет</div></router-link>
-                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>
+<!--                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>-->
+                    <router-link to="/partners"><div>Партнеры</div></router-link>
                     <a href="/images/Pravila_LB-2019.pdf" download><div>Методичка</div></a>
                 </div>
 
@@ -59,6 +62,7 @@
             }
         },
         mounted(){
+            this.user = this.$store.state.user;
             if (!this.user) {
                 this.request_user_data();
             }
@@ -105,7 +109,7 @@
                     })
                     .catch(error => {
                         if (error.response) {
-                            if(this.$router.currentRoute.fullPath === '/info' && error.response.status === 401)
+                            if((this.$router.currentRoute.fullPath === '/info' || this.$router.currentRoute.fullPath === '/partners') && error.response.status === 401)
                                 return
                            new ErrorHandler(error.response, this)
                         } else {

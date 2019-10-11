@@ -26,9 +26,9 @@
                 return this.$store.state.user
             },
         },
-        mounted() {
-            if(!this.user){
-                this.$router.push('/auth')
+        created() {
+            if(!this.user) {
+                this.request_user_data()
             }
         },
         beforeDestroy() {
@@ -115,7 +115,6 @@
                 })
             },
             request_user_data() {
-                alert('Запрос из ЛК')
                 Axios
                     .get('/user/info')
                     .then(response => {

@@ -1,13 +1,12 @@
 <template>
     <div class="basic-block">
-        Упс, сервер прилёг отдохнуть. Если после обновления страницы вы продолжаете это видеть, пожалуйста, напишите <a
-            href="https://vk.com/trubnikovdv" target="_blank">Диме Трубникову</a>
+        Не удалось загрузить данные, пожалуйста, перейдите на <span style="text-decoration: underline" @click="$router.push('/game')">эту страницу</span>.
     </div>
 </template>
 
 <script>
     export default {
-        name: "Error"
+        name: "Error",
     }
 </script>
 

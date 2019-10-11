@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block" v-if="user.role === 'ADMIN'">
+    <div v-if="user.role === 'ADMIN'" class="basic-block">
         <p>Смена этапа</p>
         <p>
             <select v-model="status" size="4">
@@ -31,18 +31,34 @@
             }
         },
         computed: {
-            user() { return this.$store.state.user }
+          user() { return this.$store.state.user }
+        },
+        mounted() {
+          this.get_actual_stage()
         },
         beforeDestroy() {
             if(this.$store.state.error.message !== null)
                 this.$store.commit('deleteErrorMessage')
         },
         methods: {
+            get_actual_stage(){
+                Axios
+                    .get('/game/status')
+                    .then(response => {
+                        this.status = response.data
+                    })
+                    .catch(error => {
+                        if (error.response){
+                            new ErrorHandler(error.response, this)
+                        } else {
+                            this.$router.push('/connection_error')
+                        }
+                    })
+            },
             check_change_stage() {
                 let popup_options = {
-                    message: 'Введите секретное слово',
+                    message: 'Подтвердите действие',
                     show: true,
-                    placeholder: '',
                     input_field: true,
                     callback: this.change_stage,
                     args: this.status

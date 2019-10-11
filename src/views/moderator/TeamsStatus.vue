@@ -1,6 +1,8 @@
 <template>
     <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'" class="basic-block">
         <h1>Статус команд</h1>
+        <base-button title="Обновить" @click="request_traces"></base-button>
+        <br>
         <input type="checkbox" id="checkbox" v-model="complete">
         <label for="checkbox">Показать завершивших</label>
         <div v-for="trace of teams_traces" v-bind:key="trace" class="about">

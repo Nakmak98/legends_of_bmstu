@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block">
+    <div class="basic-block" v-if="user.role == 'REVISOR' || user.role == 'ADMIN'">
         <h1>Список команд</h1>
         <p>Общее количество участников: <strong>{{all_players}}</strong></p>
         <p>Общее количество команд: <strong>{{teams.length}}</strong></p>
@@ -44,7 +44,8 @@
                     }
                 }
                 return players_count;
-            }
+            },
+            user() { return this.$store.state.user }
         },
         mounted() {
           this.request_teams_info()

@@ -46,7 +46,7 @@
                         .post('/user/sign_up', this.request_body)
                         .then(response => {
                             this.$store.commit('setUserData', response.data);
-                            this.$router.push("/info")
+                            this.$router.push("/team")
                         })
                         .catch(error => {
                             if(error.response){

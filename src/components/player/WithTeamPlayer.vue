@@ -8,8 +8,10 @@
         <br>
         <p>{{team.search_input_value}}</p>
         <div v-if="team.invite_code">Пригласительный код:
-            <p class="bold-text">{{team.invite_code}}</p></div>
-        <p class="cursive-text">(сообщите его членам своей команды)</p>
+            <p class="bold-text">{{team.invite_code}}</p>
+            <p class="cursive-text">(сообщите его членам своей команды)</p>
+        </div>
+
         <br>
         <table>
             <tr>

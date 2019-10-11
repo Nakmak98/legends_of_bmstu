@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block">
+    <div class="basic-block" v-if="user.role == 'REVISOR' || user.role == 'ADMIN'">
         <h1>Генерация ключей</h1>
         <p>Введите номер команды</p>
         <p><base-input v-model="team_id"></base-input></p>
@@ -18,6 +18,9 @@
                 team_id: null,
                 data: null
             }
+        },
+        computed: {
+            user() { return this.$store.state.user }
         },
         methods: {
             request_keys() {

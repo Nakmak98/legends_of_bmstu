@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block">
+    <div class="basic-block" v-if="user.role == 'REVISOR' || user.role == 'ADMIN'">
         <h1>Ответы на задания</h1>
         <p>
             Номер команды
@@ -35,6 +35,9 @@
                 team_id: null,
                 task: null
             }
+        },
+        computed: {
+            user() { return this.$store.state.user }
         },
         methods: {
             request_answer() {

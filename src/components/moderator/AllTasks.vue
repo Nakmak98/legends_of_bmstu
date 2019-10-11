@@ -114,7 +114,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .task-container {
         display: flex;
         align-items: center;

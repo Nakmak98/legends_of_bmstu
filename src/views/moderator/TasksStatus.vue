@@ -1,5 +1,5 @@
 <template>
-    <div class="basic-block">
+    <div v-if="user.role === 'MODERATOR' || user.role === 'ADMIN'" class="basic-block">
         <p>
             Тип задания
             <select v-model="stage">
@@ -13,7 +13,7 @@
         <table class="table-xxl">
             <tr>
                 <td class="clickable" @click="sort_by_id">
-                    Номер команды
+                    Номер задания
                     <i v-if="sort.id" class="fas fa-caret-up"></i>
                     <i v-if="sort.id !== null && sort.id !== true" class="fas fa-caret-down"></i>
                 </td>
@@ -74,6 +74,9 @@
                     hints: null
                 }
             }
+        },
+        computed: {
+            user() { return this.$store.state.user }
         },
         methods: {
             sort_by_id() {

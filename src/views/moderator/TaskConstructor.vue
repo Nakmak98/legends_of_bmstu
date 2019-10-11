@@ -11,7 +11,7 @@
 <script>
     import AllTasks from "../../components/moderator/AllTasks";
     export default {
-        name: "ModeratorView",
+        name: "TaskConstructor",
         components: {
             AllTasks
         },
