@@ -37,7 +37,6 @@
                     let x = setInterval(() => {
                         if(time === 0) {
                             this.timer = 0;
-                            this.$store.dispatch('updateTaskStatus', undefined, this)
                             clearInterval(x);
                         }
                         this.timer = time--;

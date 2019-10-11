@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <router-link to="/account"><div>Личный кабинет</div></router-link>
-                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>
+<!--                    <router-link to="/info"><div>Что такое Легенды?</div></router-link>-->
                     <router-link to="/partners"><div>Партнеры</div></router-link>
                     <a href="/images/Pravila_LB-2019.pdf" download><div>Методичка</div></a>
                 </div>

@@ -13,7 +13,7 @@
       <br>
       <p><base-button title="Отправить" @click="send_answer"></base-button></p>
       <p><base-button v-if="game.task.skip && user.role === 'CAPTAIN'" title="Пропустить" @click="check_skip"></base-button></p>
-      <p><base-button v-if="user.role === 'CAPTAIN' && status === 'FINAL'" title="Подсказка" @click="show_tooltip = true"></base-button></p>
+      <p><base-button v-if="status === 'FINAL'" title="Подсказка" @click="show_tooltip = true"></base-button></p>
    </div>
 </template>
 
