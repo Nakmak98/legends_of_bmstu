@@ -11,23 +11,17 @@
     export default {
         name: "TaskStatusBar",
         props: ['capacity', 'loaded'],
-        data() {
-            return {
-                local_load: (this.loaded) / 10,
-                local_capacity: this.capacity / 10
-            }
-        },
         computed: {
             bar_container_style() {
                 return {
-                    gridTemplateColumns: `repeat(${this.local_capacity}, 1fr)`,
+                    gridTemplateColumns: `repeat(${this.capacity}, 1fr)`,
                 }
             },
             bar_element_style() {
-                if(!this.local_load){
+                if(!this.loaded){
                     return
                 }
-                let progress = this.local_load / this.local_capacity;
+                let progress = this.loaded / this.capacity;
                 let color = 'green';
                 if(progress >= 0.5 && progress <= 0.8){
                     color = 'orange'
@@ -35,10 +29,8 @@
                 if(progress >= 0.8){
                     color = 'red'
                 }
-                let grid_line = Math.round(this.local_load);
-                console.log(grid_line)
                 return {
-                    gridColumn: `1 / ${ grid_line + 2}`,
+                    gridColumn: `1 / ${ this.loaded + 1}`,
                     backgroundColor: color,
                 }
             },

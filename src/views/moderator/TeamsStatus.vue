@@ -5,10 +5,15 @@
         <br>
         <input type="checkbox" id="checkbox" v-model="complete">
         <label for="checkbox">Показать завершивших</label>
+        <br>
+        <br>
         <div v-for="trace of teams_traces" v-bind:key="trace" class="about">
             <div>
-                <p>Команда №{{trace.team_id}}</p>
+                <strong>Команда №{{trace.team_id}}</strong>
+                <br>
+                <br>
                 <task v-bind:trace="trace"></task>
+                <br>
             </div>
         </div>
     </div>
