@@ -48,11 +48,11 @@ const routes = new Router({
         //     name: 'info',
         //     component: StaticText
         // },
-        // {
-        //     path: '/partners',
-        //     name: 'partners',
-        //     component: PartnersPage
-        // },
+        {
+            path: '/partners',
+            name: 'partners',
+            component: PartnersPage
+        },
         // {
         //     path: '/auth',
         //     name: 'auth',
