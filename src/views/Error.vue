@@ -1,6 +1,6 @@
 <template>
     <div class="basic-block">
-        Не удалось загрузить данные, пожалуйста, перейдите на <span style="text-decoration: underline" @click="$router.push('/game')">эту страницу</span>.
+       Ведется подсчет баллов.
     </div>
 </template>
 

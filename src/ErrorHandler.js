@@ -25,9 +25,9 @@ export class ErrorHandler {
         });
     }
     show_error() {
-        this.obj.$store.commit('setErrorMessage', {
-            header: "Ошибка",
-            message: "Что-то пошло не так"
-        });
+        // this.obj.$store.commit('setErrorMessage', {
+        //     header: "Не отвлекайте, пожалуйста, сервер",
+        //     message: "Ведется подсчет баллов."
+        // });
     }
 }
