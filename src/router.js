@@ -22,6 +22,7 @@ import KeysGenerator from "./views/revisor/KeysGenerator";
 import TooltipEditor from "./views/moderator/TooltipEditor";
 import AllTooltips from "./views/moderator/AllTooltips";
 import Ghosts from "./views/player/Ghosts";
+import FeedbackForm from "./views/FeedbackForm";
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ const routes = new Router({
             path: '/account',
             name: 'account',
             component: Account
+        },
+        {
+            path: '/feedback',
+            name: 'feedback',
+            component: FeedbackForm
         },
         {
             path: '/admin_control_panel',

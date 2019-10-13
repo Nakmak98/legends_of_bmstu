@@ -109,7 +109,9 @@
                     })
                     .catch(error => {
                         if (error.response) {
-                            if((this.$router.currentRoute.fullPath === '/info' || this.$router.currentRoute.fullPath === '/partners') && error.response.status === 401)
+                            if((this.$router.currentRoute.fullPath === '/info' ||
+                                this.$router.currentRoute.fullPath === '/partners' ||
+                                this.$router.currentRoute.fullPath === '/feedback') && error.response.status === 401)
                                 return
                            new ErrorHandler(error.response, this)
                         } else {
