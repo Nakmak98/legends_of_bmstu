@@ -29,6 +29,7 @@
                     <router-link to="/revisor/keys_generator"><div>Генерация ключей</div></router-link>
                 </div>
                 <div v-if="is('PLAYER')">
+                    <router-link to="/feedback"><div>Обратная свзяь</div></router-link>
                     <router-link to="/game"><div>Задания</div></router-link>
                     <router-link to="/ghosts"><div>Легенды</div></router-link>
                     <router-link to="/team"><div>Кабинет команды</div></router-link>
@@ -110,8 +111,7 @@
                     .catch(error => {
                         if (error.response) {
                             if((this.$router.currentRoute.fullPath === '/info' ||
-                                this.$router.currentRoute.fullPath === '/partners' ||
-                                this.$router.currentRoute.fullPath === '/feedback') && error.response.status === 401)
+                                this.$router.currentRoute.fullPath === '/partners') && error.response.status === 401)
                                 return
                            new ErrorHandler(error.response, this)
                         } else {

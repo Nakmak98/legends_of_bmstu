@@ -78,7 +78,7 @@
             },
             redirect(user_role) {
                 if (user_role === 'PLAYER' || user_role === 'CAPTAIN' || user_role === 'TESTER') {
-                    this.$router.push("/game")
+                    this.$router.push("/feedback")
                 }
                 if (user_role === 'MODERATOR') {
                     this.$router.push("/moderator/all_tasks")
