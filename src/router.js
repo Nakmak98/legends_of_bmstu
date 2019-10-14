@@ -22,6 +22,7 @@ import KeysGenerator from "./views/revisor/KeysGenerator";
 import TooltipEditor from "./views/moderator/TooltipEditor";
 import AllTooltips from "./views/moderator/AllTooltips";
 import Ghosts from "./views/player/Ghosts";
+import FeedbackForm from "./views/FeedbackForm";
 
 Vue.use(Router)
 
@@ -30,123 +31,143 @@ const routes = new Router({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '*',
-            component: Error
+            path: '/',
+            redirect: '/game'
         },
-        // {
-        //     path: '/account',
-        //     name: 'account',
-        //     component: Account
-        // },
-        // {
-        //     path: '/admin_control_panel',
-        //     name: 'admin',
-        //     component: AdminPanel
-        // },
-        // {
-        //     path: '/info',
-        //     name: 'info',
-        //     component: StaticText
-        // },
+        {
+            path: '/account',
+            name: 'account',
+            component: Account
+        },
+        {
+            path: '/feedback',
+            name: 'feedback',
+            component: FeedbackForm
+        },
+        {
+            path: '/admin_control_panel',
+            name: 'admin',
+            component: AdminPanel
+        },
+        {
+            path: '/info',
+            name: 'info',
+            component: StaticText
+        },
+        {
+            path: '/account',
+            name: 'account',
+            component: Account
+        },
+        {
+            path: '/admin_control_panel',
+            name: 'admin',
+            component: AdminPanel
+        },
+        {
+            path: '/info',
+            name: 'info',
+            component: StaticText
+        },
         {
             path: '/partners',
             name: 'partners',
             component: PartnersPage
         },
-        // {
-        //     path: '/auth',
-        //     name: 'auth',
-        //     component: Auth
-        // },
-        // {
-        //     path: '/sign_in',
-        //     name: 'sign_in',
-        //     component: SignIn
-        // },
-        // {
-        //     path: '/sign_up',
-        //     name: 'sign_up',
-        //     component: SignUp
-        // },
-        // {
-        //     path: '/team',
-        //     component: Team,
-        // },
-        // {
-        //     path: '/game',
-        //     component: Game,
-        // },
-        // {
-        //     path: '/ghosts',
-        //     component: Ghosts,
-        // },
-        // {
-        //     path: '/team/create',
-        //     name: 'team_create',
-        //     component: CreateTeam,
-        // },
-        // {
-        //     path: '/team/join',
-        //     name: 'join',
-        //     component: Join
-        // },
-        // {
-        //     path: '/moderator/all_tasks',
-        //     name: 'moderator',
-        //     component: TaskConstructor
-        // },
-        // {
-        //     path: '/moderator/all_tooltips',
-        //     name: 'all_tooltips',
-        //     component: AllTooltips
-        // },
-        // {
-        //     path: '/moderator/create_tooltip',
-        //     name: 'create_tooltip',
-        //     component: TooltipEditor
-        // },
-        // {
-        //     path: '/moderator/edit_tooltip/',
-        //     name: 'edit_tooltip',
-        //     component: TooltipEditor
-        // },
-        // {
-        //     path: '/moderator/create_task',
-        //     name: 'create_task',
-        //     component: TaskEditor
-        // },
-        // {
-        //     path: '/moderator/tasks_status',
-        //     name: 'tasks_status',
-        //     component: TasksStatus
-        // },
-        // {
-        //     path: '/moderator/teams_status',
-        //     name: 'teams_status',
-        //     component: TeamStatus
-        // },
-        // {
-        //     path: '/moderator/edit_task/:task_id',
-        //     name: 'edit_task',
-        //     component: TaskEditor
-        // },
-        // {
-        //     path: '/revisor/answers',
-        //     component: Answers
-        // },
-        // {
-        //     path: '/revisor/team_list',
-        //     component: TeamList
-        // },
-        // {
-        //     path: '/revisor/keys_generator',
-        //     component: KeysGenerator
-        // },
-        // {
-        //     path: '/connection_error',
-        //     name: 'error',
-        //     component: Error
-        // }
+        {
+            path: '/auth',
+            name: 'auth',
+            component: Auth
+        },
+        {
+            path: '/sign_in',
+            name: 'sign_in',
+            component: SignIn
+        },
+        {
+            path: '/sign_up',
+            name: 'sign_up',
+            component: SignUp
+        },
+        {
+            path: '/team',
+            component: Team,
+        },
+        {
+            path: '/game',
+            component: Game,
+        },
+        {
+            path: '/ghosts',
+            component: Ghosts,
+        },
+        {
+            path: '/team/create',
+            name: 'team_create',
+            component: CreateTeam,
+        },
+        {
+            path: '/team/join',
+            name: 'join',
+            component: Join
+        },
+        {
+            path: '/moderator/all_tasks',
+            name: 'moderator',
+            component: TaskConstructor
+        },
+        {
+            path: '/moderator/all_tooltips',
+            name: 'all_tooltips',
+            component: AllTooltips
+        },
+        {
+            path: '/moderator/create_tooltip',
+            name: 'create_tooltip',
+            component: TooltipEditor
+        },
+        {
+            path: '/moderator/edit_tooltip/',
+            name: 'edit_tooltip',
+            component: TooltipEditor
+        },
+        {
+            path: '/moderator/create_task',
+            name: 'create_task',
+            component: TaskEditor
+        },
+        {
+            path: '/moderator/tasks_status',
+            name: 'tasks_status',
+            component: TasksStatus
+        },
+        {
+            path: '/moderator/teams_status',
+            name: 'teams_status',
+            component: TeamStatus
+        },
+        {
+            path: '/moderator/edit_task/:task_id',
+            name: 'edit_task',
+            component: TaskEditor
+        },
+        {
+            path: '/revisor/answers',
+            component: Answers
+        },
+        {
+            path: '/revisor/team_list',
+            component: TeamList
+        },
+        {
+            path: '/revisor/keys_generator',
+            component: KeysGenerator
+        },
+        {
+            path: '/connection_error',
+            name: 'error',
+            component: Error
+        }
     ]
 });
 
